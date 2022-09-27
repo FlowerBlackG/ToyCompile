@@ -1,0 +1,2482 @@
+  -> curr: 0
+  -> dfa: 47, |/|
+  -> curr: 15
+  -> dfa: 42, |*|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 42, |*|
+  -> curr: 18
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 104, |h|
+  -> curr: 14
+  -> dfa: 97, |a|
+  -> curr: 14
+  -> dfa: 104, |h|
+  -> curr: 14
+  -> dfa: 97, |a|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 42, |*|
+  -> curr: 18
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 35, |#|
+  -> curr: 14
+  -> dfa: 105, |i|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 108, |l|
+  -> curr: 14
+  -> dfa: 117, |u|
+  -> curr: 14
+  -> dfa: 100, |d|
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 60, |<|
+  -> curr: 14
+  -> dfa: 105, |i|
+  -> curr: 14
+  -> dfa: 111, |o|
+  -> curr: 14
+  -> dfa: 115, |s|
+  -> curr: 14
+  -> dfa: 116, |t|
+  -> curr: 14
+  -> dfa: 114, |r|
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 97, |a|
+  -> curr: 14
+  -> dfa: 109, |m|
+  -> curr: 14
+  -> dfa: 62, |>|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 35, |#|
+  -> curr: 14
+  -> dfa: 105, |i|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 108, |l|
+  -> curr: 14
+  -> dfa: 117, |u|
+  -> curr: 14
+  -> dfa: 100, |d|
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 60, |<|
+  -> curr: 14
+  -> dfa: 102, |f|
+  -> curr: 14
+  -> dfa: 115, |s|
+  -> curr: 14
+  -> dfa: 116, |t|
+  -> curr: 14
+  -> dfa: 114, |r|
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 97, |a|
+  -> curr: 14
+  -> dfa: 109, |m|
+  -> curr: 14
+  -> dfa: 62, |>|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 35, |#|
+  -> curr: 14
+  -> dfa: 105, |i|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 108, |l|
+  -> curr: 14
+  -> dfa: 117, |u|
+  -> curr: 14
+  -> dfa: 100, |d|
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 60, |<|
+  -> curr: 14
+  -> dfa: 116, |t|
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 47, |/|
+  -> curr: 14
+  -> dfa: 109, |m|
+  -> curr: 14
+  -> dfa: 97, |a|
+  -> curr: 14
+  -> dfa: 105, |i|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 47, |/|
+  -> curr: 14
+  -> dfa: 76, |L|
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 120, |x|
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 114, |r|
+  -> curr: 14
+  -> dfa: 83, |S|
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 114, |r|
+  -> curr: 14
+  -> dfa: 118, |v|
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 114, |r|
+  -> curr: 14
+  -> dfa: 47, |/|
+  -> curr: 14
+  -> dfa: 76, |L|
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 120, |x|
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 114, |r|
+  -> curr: 14
+  -> dfa: 83, |S|
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 114, |r|
+  -> curr: 14
+  -> dfa: 118, |v|
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 114, |r|
+  -> curr: 14
+  -> dfa: 46, |.|
+  -> curr: 14
+  -> dfa: 104, |h|
+  -> curr: 14
+  -> dfa: 62, |>|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 35, |#|
+  -> curr: 14
+  -> dfa: 105, |i|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 108, |l|
+  -> curr: 14
+  -> dfa: 117, |u|
+  -> curr: 14
+  -> dfa: 100, |d|
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 60, |<|
+  -> curr: 14
+  -> dfa: 116, |t|
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 47, |/|
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 111, |o|
+  -> curr: 14
+  -> dfa: 114, |r|
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 47, |/|
+  -> curr: 14
+  -> dfa: 68, |D|
+  -> curr: 14
+  -> dfa: 102, |f|
+  -> curr: 14
+  -> dfa: 97, |a|
+  -> curr: 14
+  -> dfa: 46, |.|
+  -> curr: 14
+  -> dfa: 104, |h|
+  -> curr: 14
+  -> dfa: 62, |>|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 117, |u|
+  -> curr: 14
+  -> dfa: 115, |s|
+  -> curr: 14
+  -> dfa: 105, |i|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 103, |g|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 97, |a|
+  -> curr: 14
+  -> dfa: 109, |m|
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 115, |s|
+  -> curr: 14
+  -> dfa: 112, |p|
+  -> curr: 14
+  -> dfa: 97, |a|
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 115, |s|
+  -> curr: 14
+  -> dfa: 116, |t|
+  -> curr: 14
+  -> dfa: 100, |d|
+  -> curr: 14
+  -> dfa: 59, |;|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 105, |i|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 116, |t|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 109, |m|
+  -> curr: 14
+  -> dfa: 97, |a|
+  -> curr: 14
+  -> dfa: 105, |i|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 40, |(|
+  -> curr: 14
+  -> dfa: 105, |i|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 116, |t|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 97, |a|
+  -> curr: 14
+  -> dfa: 114, |r|
+  -> curr: 14
+  -> dfa: 103, |g|
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 44, |,|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 111, |o|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 115, |s|
+  -> curr: 14
+  -> dfa: 116, |t|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 104, |h|
+  -> curr: 14
+  -> dfa: 97, |a|
+  -> curr: 14
+  -> dfa: 114, |r|
+  -> curr: 14
+  -> dfa: 42, |*|
+  -> curr: 18
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 97, |a|
+  -> curr: 14
+  -> dfa: 114, |r|
+  -> curr: 14
+  -> dfa: 103, |g|
+  -> curr: 14
+  -> dfa: 118, |v|
+  -> curr: 14
+  -> dfa: 91, |[|
+  -> curr: 14
+  -> dfa: 93, |]|
+  -> curr: 14
+  -> dfa: 41, |)|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 123, |{|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 105, |i|
+  -> curr: 14
+  -> dfa: 102, |f|
+  -> curr: 14
+  -> dfa: 115, |s|
+  -> curr: 14
+  -> dfa: 116, |t|
+  -> curr: 14
+  -> dfa: 114, |r|
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 97, |a|
+  -> curr: 14
+  -> dfa: 109, |m|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 102, |f|
+  -> curr: 14
+  -> dfa: 105, |i|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 40, |(|
+  -> curr: 14
+  -> dfa: 34, |"|
+  -> curr: 14
+  -> dfa: 46, |.|
+  -> curr: 14
+  -> dfa: 46, |.|
+  -> curr: 14
+  -> dfa: 47, |/|
+  -> curr: 14
+  -> dfa: 74, |J|
+  -> curr: 14
+  -> dfa: 70, |F|
+  -> curr: 14
+  -> dfa: 76, |L|
+  -> curr: 14
+  -> dfa: 65, |A|
+  -> curr: 14
+  -> dfa: 80, |P|
+  -> curr: 14
+  -> dfa: 47, |/|
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 45, |-|
+  -> curr: 14
+  -> dfa: 100, |d|
+  -> curr: 14
+  -> dfa: 102, |f|
+  -> curr: 14
+  -> dfa: 97, |a|
+  -> curr: 14
+  -> dfa: 46, |.|
+  -> curr: 14
+  -> dfa: 116, |t|
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 100, |d|
+  -> curr: 14
+  -> dfa: 102, |f|
+  -> curr: 14
+  -> dfa: 34, |"|
+  -> curr: 14
+  -> dfa: 41, |)|
+  -> curr: 14
+  -> dfa: 59, |;|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 68, |D|
+  -> curr: 14
+  -> dfa: 102, |f|
+  -> curr: 14
+  -> dfa: 97, |a|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 100, |d|
+  -> curr: 14
+  -> dfa: 102, |f|
+  -> curr: 14
+  -> dfa: 97, |a|
+  -> curr: 14
+  -> dfa: 40, |(|
+  -> curr: 14
+  -> dfa: 102, |f|
+  -> curr: 14
+  -> dfa: 105, |i|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 41, |)|
+  -> curr: 14
+  -> dfa: 59, |;|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 119, |w|
+  -> curr: 14
+  -> dfa: 104, |h|
+  -> curr: 14
+  -> dfa: 105, |i|
+  -> curr: 14
+  -> dfa: 108, |l|
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 40, |(|
+  -> curr: 14
+  -> dfa: 116, |t|
+  -> curr: 14
+  -> dfa: 114, |r|
+  -> curr: 14
+  -> dfa: 117, |u|
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 41, |)|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 123, |{|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 105, |i|
+  -> curr: 14
+  -> dfa: 102, |f|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 40, |(|
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 105, |i|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 46, |.|
+  -> curr: 14
+  -> dfa: 112, |p|
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 107, |k|
+  -> curr: 14
+  -> dfa: 40, |(|
+  -> curr: 14
+  -> dfa: 41, |)|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 61, |=|
+  -> curr: 14
+  -> dfa: 61, |=|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 69, |E|
+  -> curr: 14
+  -> dfa: 79, |O|
+  -> curr: 14
+  -> dfa: 70, |F|
+  -> curr: 14
+  -> dfa: 41, |)|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 123, |{|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 98, |b|
+  -> curr: 14
+  -> dfa: 114, |r|
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 97, |a|
+  -> curr: 14
+  -> dfa: 107, |k|
+  -> curr: 14
+  -> dfa: 59, |;|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 125, |}|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 97, |a|
+  -> curr: 14
+  -> dfa: 117, |u|
+  -> curr: 14
+  -> dfa: 116, |t|
+  -> curr: 14
+  -> dfa: 111, |o|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 105, |i|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 80, |P|
+  -> curr: 14
+  -> dfa: 111, |o|
+  -> curr: 14
+  -> dfa: 115, |s|
+  -> curr: 14
+  -> dfa: 49, |1|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 61, |=|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 105, |i|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 46, |.|
+  -> curr: 14
+  -> dfa: 116, |t|
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 108, |l|
+  -> curr: 14
+  -> dfa: 108, |l|
+  -> curr: 14
+  -> dfa: 103, |g|
+  -> curr: 14
+  -> dfa: 40, |(|
+  -> curr: 14
+  -> dfa: 41, |)|
+  -> curr: 14
+  -> dfa: 59, |;|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 111, |o|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 115, |s|
+  -> curr: 14
+  -> dfa: 116, |t|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 68, |D|
+  -> curr: 14
+  -> dfa: 102, |f|
+  -> curr: 14
+  -> dfa: 97, |a|
+  -> curr: 14
+  -> dfa: 83, |S|
+  -> curr: 14
+  -> dfa: 116, |t|
+  -> curr: 14
+  -> dfa: 97, |a|
+  -> curr: 14
+  -> dfa: 116, |t|
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 78, |N|
+  -> curr: 14
+  -> dfa: 111, |o|
+  -> curr: 14
+  -> dfa: 100, |d|
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 42, |*|
+  -> curr: 18
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 111, |o|
+  -> curr: 14
+  -> dfa: 100, |d|
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 61, |=|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 100, |d|
+  -> curr: 14
+  -> dfa: 102, |f|
+  -> curr: 14
+  -> dfa: 97, |a|
+  -> curr: 14
+  -> dfa: 46, |.|
+  -> curr: 14
+  -> dfa: 114, |r|
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 111, |o|
+  -> curr: 14
+  -> dfa: 103, |g|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 105, |i|
+  -> curr: 14
+  -> dfa: 122, |z|
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 40, |(|
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 105, |i|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 41, |)|
+  -> curr: 14
+  -> dfa: 59, |;|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 97, |a|
+  -> curr: 14
+  -> dfa: 117, |u|
+  -> curr: 14
+  -> dfa: 116, |t|
+  -> curr: 14
+  -> dfa: 111, |o|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 105, |i|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 80, |P|
+  -> curr: 14
+  -> dfa: 111, |o|
+  -> curr: 14
+  -> dfa: 115, |s|
+  -> curr: 14
+  -> dfa: 50, |2|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 61, |=|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 105, |i|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 46, |.|
+  -> curr: 14
+  -> dfa: 116, |t|
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 108, |l|
+  -> curr: 14
+  -> dfa: 108, |l|
+  -> curr: 14
+  -> dfa: 103, |g|
+  -> curr: 14
+  -> dfa: 40, |(|
+  -> curr: 14
+  -> dfa: 41, |)|
+  -> curr: 14
+  -> dfa: 59, |;|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 111, |o|
+  -> curr: 14
+  -> dfa: 117, |u|
+  -> curr: 14
+  -> dfa: 116, |t|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 60, |<|
+  -> curr: 14
+  -> dfa: 60, |<|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 34, |"|
+  -> curr: 14
+  -> dfa: 105, |i|
+  -> curr: 14
+  -> dfa: 100, |d|
+  -> curr: 14
+  -> dfa: 58, |:|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 34, |"|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 60, |<|
+  -> curr: 14
+  -> dfa: 60, |<|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 111, |o|
+  -> curr: 14
+  -> dfa: 100, |d|
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 45, |-|
+  -> curr: 14
+  -> dfa: 62, |>|
+  -> curr: 14
+  -> dfa: 115, |s|
+  -> curr: 14
+  -> dfa: 116, |t|
+  -> curr: 14
+  -> dfa: 97, |a|
+  -> curr: 14
+  -> dfa: 116, |t|
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 73, |I|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 102, |f|
+  -> curr: 14
+  -> dfa: 111, |o|
+  -> curr: 14
+  -> dfa: 46, |.|
+  -> curr: 14
+  -> dfa: 105, |i|
+  -> curr: 14
+  -> dfa: 100, |d|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 60, |<|
+  -> curr: 14
+  -> dfa: 60, |<|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 100, |d|
+  -> curr: 14
+  -> dfa: 108, |l|
+  -> curr: 14
+  -> dfa: 59, |;|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 111, |o|
+  -> curr: 14
+  -> dfa: 117, |u|
+  -> curr: 14
+  -> dfa: 116, |t|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 60, |<|
+  -> curr: 14
+  -> dfa: 60, |<|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 34, |"|
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 105, |i|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 112, |p|
+  -> curr: 14
+  -> dfa: 111, |o|
+  -> curr: 14
+  -> dfa: 115, |s|
+  -> curr: 14
+  -> dfa: 49, |1|
+  -> curr: 14
+  -> dfa: 58, |:|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 34, |"|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 60, |<|
+  -> curr: 14
+  -> dfa: 60, |<|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 105, |i|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 80, |P|
+  -> curr: 14
+  -> dfa: 111, |o|
+  -> curr: 14
+  -> dfa: 115, |s|
+  -> curr: 14
+  -> dfa: 49, |1|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 60, |<|
+  -> curr: 14
+  -> dfa: 60, |<|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 100, |d|
+  -> curr: 14
+  -> dfa: 108, |l|
+  -> curr: 14
+  -> dfa: 59, |;|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 111, |o|
+  -> curr: 14
+  -> dfa: 117, |u|
+  -> curr: 14
+  -> dfa: 116, |t|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 60, |<|
+  -> curr: 14
+  -> dfa: 60, |<|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 34, |"|
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 105, |i|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 112, |p|
+  -> curr: 14
+  -> dfa: 111, |o|
+  -> curr: 14
+  -> dfa: 115, |s|
+  -> curr: 14
+  -> dfa: 50, |2|
+  -> curr: 14
+  -> dfa: 58, |:|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 34, |"|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 60, |<|
+  -> curr: 14
+  -> dfa: 60, |<|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 105, |i|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 80, |P|
+  -> curr: 14
+  -> dfa: 111, |o|
+  -> curr: 14
+  -> dfa: 115, |s|
+  -> curr: 14
+  -> dfa: 50, |2|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 60, |<|
+  -> curr: 14
+  -> dfa: 60, |<|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 100, |d|
+  -> curr: 14
+  -> dfa: 108, |l|
+  -> curr: 14
+  -> dfa: 59, |;|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 111, |o|
+  -> curr: 14
+  -> dfa: 117, |u|
+  -> curr: 14
+  -> dfa: 116, |t|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 60, |<|
+  -> curr: 14
+  -> dfa: 60, |<|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 34, |"|
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 105, |i|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 103, |g|
+  -> curr: 14
+  -> dfa: 111, |o|
+  -> curr: 14
+  -> dfa: 111, |o|
+  -> curr: 14
+  -> dfa: 100, |d|
+  -> curr: 14
+  -> dfa: 58, |:|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 34, |"|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 60, |<|
+  -> curr: 14
+  -> dfa: 60, |<|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 105, |i|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 46, |.|
+  -> curr: 14
+  -> dfa: 103, |g|
+  -> curr: 14
+  -> dfa: 111, |o|
+  -> curr: 14
+  -> dfa: 111, |o|
+  -> curr: 14
+  -> dfa: 100, |d|
+  -> curr: 14
+  -> dfa: 40, |(|
+  -> curr: 14
+  -> dfa: 41, |)|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 60, |<|
+  -> curr: 14
+  -> dfa: 60, |<|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 100, |d|
+  -> curr: 14
+  -> dfa: 108, |l|
+  -> curr: 14
+  -> dfa: 59, |;|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 111, |o|
+  -> curr: 14
+  -> dfa: 117, |u|
+  -> curr: 14
+  -> dfa: 116, |t|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 60, |<|
+  -> curr: 14
+  -> dfa: 60, |<|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 34, |"|
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 105, |i|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 102, |f|
+  -> curr: 14
+  -> dfa: 97, |a|
+  -> curr: 14
+  -> dfa: 105, |i|
+  -> curr: 14
+  -> dfa: 108, |l|
+  -> curr: 14
+  -> dfa: 58, |:|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 34, |"|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 60, |<|
+  -> curr: 14
+  -> dfa: 60, |<|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 105, |i|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 46, |.|
+  -> curr: 14
+  -> dfa: 102, |f|
+  -> curr: 14
+  -> dfa: 97, |a|
+  -> curr: 14
+  -> dfa: 105, |i|
+  -> curr: 14
+  -> dfa: 108, |l|
+  -> curr: 14
+  -> dfa: 40, |(|
+  -> curr: 14
+  -> dfa: 41, |)|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 60, |<|
+  -> curr: 14
+  -> dfa: 60, |<|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 100, |d|
+  -> curr: 14
+  -> dfa: 108, |l|
+  -> curr: 14
+  -> dfa: 59, |;|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 105, |i|
+  -> curr: 14
+  -> dfa: 102, |f|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 40, |(|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 111, |o|
+  -> curr: 14
+  -> dfa: 100, |d|
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 41, |)|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 123, |{|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 105, |i|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 46, |.|
+  -> curr: 14
+  -> dfa: 115, |s|
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 107, |k|
+  -> curr: 14
+  -> dfa: 103, |g|
+  -> curr: 14
+  -> dfa: 40, |(|
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 105, |i|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 80, |P|
+  -> curr: 14
+  -> dfa: 111, |o|
+  -> curr: 14
+  -> dfa: 115, |s|
+  -> curr: 14
+  -> dfa: 49, |1|
+  -> curr: 14
+  -> dfa: 41, |)|
+  -> curr: 14
+  -> dfa: 59, |;|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 111, |o|
+  -> curr: 14
+  -> dfa: 117, |u|
+  -> curr: 14
+  -> dfa: 116, |t|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 60, |<|
+  -> curr: 14
+  -> dfa: 60, |<|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 34, |"|
+  -> curr: 14
+  -> dfa: 124, |||
+  -> curr: 14
+  -> dfa: 34, |"|
+  -> curr: 14
+  -> dfa: 59, |;|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 102, |f|
+  -> curr: 14
+  -> dfa: 111, |o|
+  -> curr: 14
+  -> dfa: 114, |r|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 40, |(|
+  -> curr: 14
+  -> dfa: 105, |i|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 116, |t|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 105, |i|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 61, |=|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 48, |0|
+  -> curr: 14
+  -> dfa: 120, |x|
+  -> curr: 14
+  -> dfa: 48, |0|
+  -> curr: 14
+  -> dfa: 59, |;|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 105, |i|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 60, |<|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 105, |i|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 80, |P|
+  -> curr: 14
+  -> dfa: 111, |o|
+  -> curr: 14
+  -> dfa: 115, |s|
+  -> curr: 14
+  -> dfa: 50, |2|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 45, |-|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 105, |i|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 80, |P|
+  -> curr: 14
+  -> dfa: 111, |o|
+  -> curr: 14
+  -> dfa: 115, |s|
+  -> curr: 14
+  -> dfa: 49, |1|
+  -> curr: 14
+  -> dfa: 59, |;|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 105, |i|
+  -> curr: 14
+  -> dfa: 43, |+|
+  -> curr: 14
+  -> dfa: 43, |+|
+  -> curr: 14
+  -> dfa: 41, |)|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 123, |{|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 111, |o|
+  -> curr: 14
+  -> dfa: 117, |u|
+  -> curr: 14
+  -> dfa: 116, |t|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 60, |<|
+  -> curr: 14
+  -> dfa: 60, |<|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 104, |h|
+  -> curr: 14
+  -> dfa: 97, |a|
+  -> curr: 14
+  -> dfa: 114, |r|
+  -> curr: 14
+  -> dfa: 40, |(|
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 105, |i|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 46, |.|
+  -> curr: 14
+  -> dfa: 103, |g|
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 116, |t|
+  -> curr: 14
+  -> dfa: 40, |(|
+  -> curr: 14
+  -> dfa: 41, |)|
+  -> curr: 14
+  -> dfa: 41, |)|
+  -> curr: 14
+  -> dfa: 59, |;|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 125, |}|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 111, |o|
+  -> curr: 14
+  -> dfa: 117, |u|
+  -> curr: 14
+  -> dfa: 116, |t|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 60, |<|
+  -> curr: 14
+  -> dfa: 60, |<|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 34, |"|
+  -> curr: 14
+  -> dfa: 124, |||
+  -> curr: 14
+  -> dfa: 92, |\|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 34, |"|
+  -> curr: 14
+  -> dfa: 59, |;|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 125, |}|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 108, |l|
+  -> curr: 14
+  -> dfa: 115, |s|
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 123, |{|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 111, |o|
+  -> curr: 14
+  -> dfa: 117, |u|
+  -> curr: 14
+  -> dfa: 116, |t|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 60, |<|
+  -> curr: 14
+  -> dfa: 60, |<|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 34, |"|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 117, |u|
+  -> curr: 14
+  -> dfa: 108, |l|
+  -> curr: 14
+  -> dfa: 108, |l|
+  -> curr: 14
+  -> dfa: 112, |p|
+  -> curr: 14
+  -> dfa: 116, |t|
+  -> curr: 14
+  -> dfa: 114, |r|
+  -> curr: 14
+  -> dfa: 46, |.|
+  -> curr: 14
+  -> dfa: 34, |"|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 60, |<|
+  -> curr: 14
+  -> dfa: 60, |<|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 100, |d|
+  -> curr: 14
+  -> dfa: 108, |l|
+  -> curr: 14
+  -> dfa: 59, |;|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 98, |b|
+  -> curr: 14
+  -> dfa: 114, |r|
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 97, |a|
+  -> curr: 14
+  -> dfa: 107, |k|
+  -> curr: 14
+  -> dfa: 59, |;|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 125, |}|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 105, |i|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 116, |t|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 104, |h|
+  -> curr: 14
+  -> dfa: 59, |;|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 119, |w|
+  -> curr: 14
+  -> dfa: 104, |h|
+  -> curr: 14
+  -> dfa: 105, |i|
+  -> curr: 14
+  -> dfa: 108, |l|
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 40, |(|
+  -> curr: 14
+  -> dfa: 40, |(|
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 104, |h|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 61, |=|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 105, |i|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 46, |.|
+  -> curr: 14
+  -> dfa: 112, |p|
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 107, |k|
+  -> curr: 14
+  -> dfa: 40, |(|
+  -> curr: 14
+  -> dfa: 41, |)|
+  -> curr: 14
+  -> dfa: 41, |)|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 61, |=|
+  -> curr: 14
+  -> dfa: 61, |=|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 39, |'|
+  -> curr: 14
+  -> dfa: 92, |\|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 39, |'|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 124, |||
+  -> curr: 14
+  -> dfa: 124, |||
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 104, |h|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 61, |=|
+  -> curr: 14
+  -> dfa: 61, |=|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 39, |'|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 39, |'|
+  -> curr: 14
+  -> dfa: 41, |)|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 123, |{|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 105, |i|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 46, |.|
+  -> curr: 14
+  -> dfa: 103, |g|
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 116, |t|
+  -> curr: 14
+  -> dfa: 40, |(|
+  -> curr: 14
+  -> dfa: 41, |)|
+  -> curr: 14
+  -> dfa: 59, |;|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 125, |}|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 99, |c|
+  -> curr: 14
+  -> dfa: 111, |o|
+  -> curr: 14
+  -> dfa: 117, |u|
+  -> curr: 14
+  -> dfa: 116, |t|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 60, |<|
+  -> curr: 14
+  -> dfa: 60, |<|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 100, |d|
+  -> curr: 14
+  -> dfa: 108, |l|
+  -> curr: 14
+  -> dfa: 59, |;|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 125, |}|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 114, |r|
+  -> curr: 14
+  -> dfa: 101, |e|
+  -> curr: 14
+  -> dfa: 116, |t|
+  -> curr: 14
+  -> dfa: 117, |u|
+  -> curr: 14
+  -> dfa: 114, |r|
+  -> curr: 14
+  -> dfa: 110, |n|
+  -> curr: 14
+  -> dfa: 32, | |
+  -> curr: 14
+  -> dfa: 48, |0|
+  -> curr: 14
+  -> dfa: 59, |;|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: 125, |}|
+  -> curr: 14
+  -> dfa: 10, |
+|
+  -> curr: 14
+  -> dfa: -1, ||
+    -> dfa rec end.
+id: 14
+peek: -1
+cin pos1: 0
+cin pos2: -1
+||
+not final!
+

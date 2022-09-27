@@ -6,4 +6,12 @@
 add_library(
     core
     Lexer.cpp
+    Dfa.cpp
 )
+
+target_include_directories(
+    core PUBLIC
+    ${PROJECT_SOURCE_DIR}/include
+    ${PROJECT_BINARY_DIR}
+)
+

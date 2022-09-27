@@ -1,0 +1,10 @@
+{
+    "editor.fontFamily": "JetBrains Mono, MiSans, Consolas, 'Courier New', monospace",
+    "files.associations": {
+        "iostream": "cpp",
+        "map": "cpp",
+        "iosfwd": "cpp",
+        "ostream": "cpp",
+        "istream": "cpp"
+    }
+}

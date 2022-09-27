@@ -1,0 +1,58 @@
+/*
+ * haha
+ */
+
+#include <iostream>
+#include <fstream>
+
+#include <tc/main/LexerServer/LexerServer.h>
+#include <tc/core/Dfa.h>
+
+using namespace std;
+
+int main(int argc, const char* argv[]) {
+
+    ifstream fin("../JFLAP/c-dfa.tcdf");
+    Dfa dfa(fin);
+
+    while (true) {
+
+        if (cin.peek() == EOF) {
+            break;
+        }
+
+        auto cinPos1 = cin.tellg();
+
+        const DfaStateNode* node = dfa.recognize(cin);
+
+        auto cinPos2 = cin.tellg();
+
+        cout << "id: " << node->stateInfo.id << endl;
+            cout << "cin pos1: " << cinPos1 << endl;
+            cout << "cin pos2: " << cinPos2 << endl;
+            cout << "cin good: " << cin.good() << endl;
+            cout << "cin fail: " << cin.fail() << endl;
+
+        if (node) {
+            
+            cin.seekg(cinPos1);
+            cout << "|";
+            for (int i = 0x0; i < cinPos2 - cinPos1; i++) {
+                cout << char(cin.get());
+            }
+            cout << "|\n";
+        } else {
+            cout << "nullptr." << endl;
+            break;
+        }
+
+        int ch;
+        while ((ch = cin.peek()) == '\n' || ch == ' ') {
+            cin.get();
+        }
+
+        cout << endl;
+    }
+
+    return 0;
+}

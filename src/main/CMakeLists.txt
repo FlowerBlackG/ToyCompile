@@ -11,3 +11,9 @@ add_library(
     # LexerServer
     LexerServer/LexerServer.cpp
 )
+
+target_include_directories(
+    main PUBLIC
+    ${PROJECT_SOURCE_DIR}/include
+    ${PROJECT_BINARY_DIR}
+)

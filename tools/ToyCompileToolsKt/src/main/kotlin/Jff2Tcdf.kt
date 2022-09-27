@@ -30,11 +30,13 @@
  *       def 5 normal
  *
  *   2. 定义转移
- *     [id1: Integer] [id2: Integer] [ch: ASCII Integer]
+ *     trans [id1: Integer] [id2: Integer] [ch: ASCII Integer]
  *       表示使用字符 ch，可以完成从 id1 到 id2 的转移。
  *     例：
  *       7 8 x
  *       12 17 ~
+ *
+ * 为方便判断结尾，在最后一行之后额外添加一行，内容为：eof
  */
 
 /*
@@ -46,6 +48,10 @@
  *   any but a|b|c|...
  *     特别的，用 \vln 表示 | 本身。
  *   eof：-1
+ *
+ * 特殊转义：
+ *   \vln: |
+ *   \bs: 空格
  *
  *
  * 不允许有多余空格等奇怪字符。
@@ -96,6 +102,10 @@ fun String.decodeEscapeCh(): Char {
             "\\vln" -> '|'
             else -> 'v'
         }
+        'b' -> when (this) {
+            "\\bs" -> ' '
+            else -> 'b'
+        }
         else -> Char(0)
     }
 }
@@ -127,14 +137,22 @@ fun String.parseAsJffRead(): List<Int> {
 
     } else if (read.startsWith("any")) { // any but xxx
 
+        val rmList = ArrayList<Int>()
+
         val segments = read.split(" ")
         if (segments.size >= 3 && segments[1] == "but") {
             segments[2].split("|").forEach { str ->
                 if (str.length == 1) {
-                    res.add(str[0].code)
+                    rmList.add(str[0].code)
                 } else if (str.length > 1 && str[0] == '\\') {
-                    res.add(str.decodeEscapeCh().code)
+                    rmList.add(str.decodeEscapeCh().code)
                 }
+            }
+        }
+
+        asciiVisibleCharRange.forEach { ch ->
+            if (!rmList.contains(ch)) {
+                res.add(ch)
             }
         }
 
@@ -166,7 +184,7 @@ fun processTransitionNode(transitionNode: Element, tcdfWriter: BufferedWriter) {
     val read = transitionNode.getElementsByTag("read")[0].text()
 
     read.parseAsJffRead().forEach { code ->
-        tcdfWriter.write("$idFrom $idTo $code\n")
+        tcdfWriter.write("trans $idFrom $idTo $code\n")
     }
 }
 
@@ -209,6 +227,10 @@ fun main(args: Array<String>) {
     }
 
     println("transition process done.")
+
+    tcdfWriter.write("eof\n")
+
+    println("conversion done.")
 
     // clean up
     tcdfWriter.close()
