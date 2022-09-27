@@ -5,96 +5,143 @@
  * 职责：解析命令行参数，启动子程序。
  */
 
+/*
+
+    命令行设计：
+        ToyCompile (optional: s[sub program]) (0 or more: -[param name]:[param value])
+
+    例：
+        ToyCompile sLexerCli -file:in.cpp
+            使用 LexerCli 子程序，将参数 file 传递给该子程序。
+
+*/
+
 #include <iostream>
 #include <fstream>
 
+#include <map>
+#include <set>
+#include <string>
+#include <vector>
+
+#include <magic_enum/magic_enum.hpp>
+
 #include <tc/main/LexerServer/LexerServer.h>
 #include <tc/core/Dfa.h>
+#include <tc/core/Token.h>
+
+#include <tc/core/Lexer.h>
+#include <tc/core/TokenKinds.h>
 
 using namespace std;
 
-int readCh(istream& in, int& r, int& c) {
-    int ch = in.get();
-    if (ch == '\n') {
-        c = 1;
-        r++;
-    } else if (ch == '\r') {
-        // nothing
-    } else {
-        c++;
+/**
+ * 解析命令行参数。
+ * 
+ * @param argc main 函数收到的 argc。
+ * @param argv main 函数收到的 argv。
+ * @param paramMap 存储 params 键值对映射的 map。
+ * @param paramSet 存储 params 开关的集合。
+ * @param subProgramName 存储子程序名字的值。
+ * @param additionalValues 存储独立参数的列表。
+ * 
+ * @return 是否遇到错误。如果返回为 false，表示命令行解析遇到致命问题。
+ */
+bool parseCli(
+    int argc, const char** argv,
+    map<string, string>& paramMap,
+    set<string>& paramSet,
+    string& subProgramName,
+    vector<string>& additionalValues
+) {
+
+    if (argc < 2) {
+        cout << "[Error] main: too much cli arguments." << endl;
+        paramSet.insert("help");
+        return false;
     }
 
-    return ch;
+    for (int idx = 2; idx < argc; idx++) {
+        const char* & argCStr = argv[idx];
+        
+        if (argCStr[0] != '-') {
+            additionalValues.push_back(argCStr);
+            continue;
+        }
+        
+        string arg = argCStr;
+        auto colonPos = arg.find(':');
+        
+        if (colonPos == string::npos) {
+            paramSet.insert(arg.substr(1));
+            continue;
+        }
+
+        string paramKey = arg.substr(1, colonPos - 1);
+        string paramVal = arg.substr(colonPos + 1);
+
+        if (paramMap.count(paramKey)) {
+            cout << "[Warning] main: redefine param key: " << paramKey << endl;
+        }
+
+        paramMap[paramKey] = paramVal;
+    
+    }
+
+}
+
+void printUsage(const char* procName = nullptr) {
+    const char* outProcName = procName ? procName : "ToyCompile.exe";
+
 }
 
 int main(int argc, const char* argv[]) {
+    map<string, string> paramMap;
+    set<string> paramSet;
+    string subProgramName;
+    vector<string> additionalValues;
 
-    ifstream fin("resources/c-dfa.tcdf");
-    ofstream fout("./testout.txt");
-    if (!fout.is_open()) {
-        cout << "failed to open fout." << endl;
+    if (!parseCli(argc, argv, paramMap, paramSet, subProgramName, additionalValues)) {
+        cout << "[Error] main: failed to parse commandline arguments." << endl;
         return -1;
     }
-    Dfa dfa(fin);
+// todo.
+    TokenKind u = TokenKind::kw_typename;
+    cout << magic_enum::enum_name(u) << endl;
 
-    int row = 1;
-    int col = 1;
-
-    while (true) {
-
-        if (cin.peek() == EOF) {
-            break;
-        }
-
-        auto cinPos1 = cin.tellg();
-        fout << "<" << row << ", " << col << "> ";
-        const DfaStateNode* node = dfa.recognize(cin);
-
-        auto cinPos2 = cin.tellg();
-
-        cout << "id: " << node->stateInfo.id << endl;
-        cout << "peek: " << cin.peek() << endl;
-        cout << "cin pos1: " << cinPos1 << endl;
-        cout << "cin pos2: " << cinPos2 << endl;
-        // cout << "cin good: " << cin.good() << endl;
-        // cout << "cin fail: " << cin.fail() << endl;
-
-        if (node) {
-            
-            cin.seekg(cinPos1);
-            cout << "|";
-            
-            fout << "|";
-            for (int i = 0; i < cinPos2 - cinPos1; i++) {
-                int ch = readCh(cin, row, col);
-                if (ch < 32 || ch > 126) {
-                    ch = '@';
-                }
-                cout << char(ch);
-                fout << char(ch);
-            }
-
-            fout << "|";
-            fout << endl;
-            cout << "|\n";
-
-            if (!node->stateInfo.isFinal) {
-                cout << "not final!" << endl;
-            }
-        } else {
-            cout << "nullptr." << endl;
-            break;
-        }
-
-        int ch;
-        while ((ch = cin.peek()) == '\n' || ch == ' ' || ch == '\r') {
-            cout << "ignore ch: " << ch << endl;
-            readCh(cin, row, col);
-            
-        }
-
-        cout << endl;
+    ifstream fin("infile.txt", ios::binary);
+    if (!fin.is_open()) {
+        cout << "failed to open file" << endl;
+        return -2;
     }
 
+    Lexer lexer;
+    if (!lexer.dfaIsReady()) {
+        cout << "lexer failed." << endl;
+        return -1;
+    }
+
+
+    vector<Token> tkList;
+    vector<LexerAnalyzeError> tkErrList;
+
+    lexer.analyze(fin, tkList, tkErrList);
+    cout << tkList.size() << endl;
+    cout << tkErrList.size() << endl;
+
+    for (auto& tk : tkList) {
+        cout << "\n ---\n";
+        cout << "<" << tk.row << ", " << tk.col << "> " << tk.content << endl;
+        cout << "kind: " << magic_enum::enum_name(tk.kind) << " : " << int(tk.kind) << endl;
+    }
+
+    cout << "\n----++++----\n\n";
+
+    for (auto& err : tkErrList) {
+        cout << "err: " << err.dfaNodeInfo.id << endl;
+        cout << "  tk: " << err.token.content << endl;
+        cout << "  <" << err.row << ", " << err.col << ">\n";
+    }
+    
     return 0;
 }

@@ -1,0 +1,238 @@
+/*
+ * Token 类别定义。
+ *
+ * 创建：2022.9.27
+ * 参考：llvm clang
+ * 
+ *     clang-15.0.1.src/include/clang/Basic/TokenKinds.def
+ *     clang-15.0.1.src/include/clang/Basic/TokenKinds.h
+ * 
+ */
+
+// 下面的内容大量摘录自 llvm clang。
+// 参考：clang-15.0.1.src/include/clang/Basic/TokenKinds.def
+
+#ifndef TOK
+    /**
+     * 符号。应在包含 TokenKinds.def 文件前定义。
+     */
+    #define TOK(X)
+#endif
+
+
+#ifndef PUNCTUATOR
+    /**
+     * 标点符号。
+     * 
+     * @param X 标点符号描述名。
+     * @param Y 标点符号样式。不会被保存。
+     */
+    #define PUNCTUATOR(X, Y) TOK(X)
+#endif
+
+#ifndef KEYWORD
+    #define KEYWORD(X, Y) TOK(kw_ ## X)
+#endif
+
+/** not a token. */
+TOK(unknown)
+
+/** end of file. */
+TOK(eof)
+
+// C99 6.4.2: Identifiers.
+TOK(identifier)          // abcde123
+
+// C99 6.4.4.1: Integer Constants
+// C99 6.4.4.2: Floating Constants
+TOK(numeric_constant)    // 0x123
+
+// C99 6.4.4: Character Constants
+TOK(char_constant)       // 'a'
+
+// C99 6.4.5: String Literals.
+TOK(string_literal)      // "foo"
+
+// C99 6.4.6: Punctuators.
+PUNCTUATOR(l_square,            "[")
+PUNCTUATOR(r_square,            "]")
+PUNCTUATOR(l_paren,             "(")
+PUNCTUATOR(r_paren,             ")")
+PUNCTUATOR(l_brace,             "{")
+PUNCTUATOR(r_brace,             "}")
+PUNCTUATOR(period,              ".")
+PUNCTUATOR(ellipsis,            "...")
+PUNCTUATOR(amp,                 "&")
+PUNCTUATOR(ampamp,              "&&")
+PUNCTUATOR(ampequal,            "&=")
+PUNCTUATOR(star,                "*")
+PUNCTUATOR(starequal,           "*=")
+PUNCTUATOR(plus,                "+")
+PUNCTUATOR(plusplus,            "++")
+PUNCTUATOR(plusequal,           "+=")
+PUNCTUATOR(minus,               "-")
+PUNCTUATOR(arrow,               "->")
+PUNCTUATOR(minusminus,          "--")
+PUNCTUATOR(minusequal,          "-=")
+PUNCTUATOR(tilde,               "~")
+PUNCTUATOR(exclaim,             "!")
+PUNCTUATOR(exclaimequal,        "!=")
+PUNCTUATOR(slash,               "/")
+PUNCTUATOR(slashequal,          "/=")
+PUNCTUATOR(percent,             "%")
+PUNCTUATOR(percentequal,        "%=")
+PUNCTUATOR(less,                "<")
+PUNCTUATOR(lessless,            "<<")
+PUNCTUATOR(lessequal,           "<=")
+PUNCTUATOR(lesslessequal,       "<<=")
+PUNCTUATOR(spaceship,           "<=>")
+PUNCTUATOR(greater,             ">")
+PUNCTUATOR(greatergreater,      ">>")
+PUNCTUATOR(greaterequal,        ">=")
+PUNCTUATOR(greatergreaterequal, ">>=")
+PUNCTUATOR(caret,               "^")
+PUNCTUATOR(caretequal,          "^=")
+PUNCTUATOR(pipe,                "|")
+PUNCTUATOR(pipepipe,            "||")
+PUNCTUATOR(pipeequal,           "|=")
+PUNCTUATOR(question,            "?")
+PUNCTUATOR(colon,               ":")
+PUNCTUATOR(semi,                ";")
+PUNCTUATOR(equal,               "=")
+PUNCTUATOR(equalequal,          "==")
+PUNCTUATOR(comma,               ",")
+PUNCTUATOR(hash,                "#")
+PUNCTUATOR(hashhash,            "##")
+PUNCTUATOR(hashat,              "#@")
+
+// C++ Support
+PUNCTUATOR(periodstar,          ".*")
+PUNCTUATOR(arrowstar,           "->*")
+PUNCTUATOR(coloncolon,          "::")
+
+// Objective C support.
+PUNCTUATOR(at,                  "@")
+
+// CUDA support.
+PUNCTUATOR(lesslessless,          "<<<")
+PUNCTUATOR(greatergreatergreater, ">>>")
+
+// CL support
+PUNCTUATOR(caretcaret,            "^^")
+
+// C99 6.4.1: Keywords.  These turn into kw_* tokens.
+// Flags allowed:
+//   KEYALL   - This is a keyword in all variants of C and C++, or it
+//              is a keyword in the implementation namespace that should
+//              always be treated as a keyword
+//   KEYC99   - This is a keyword introduced to C in C99
+//   KEYC11   - This is a keyword introduced to C in C11
+//   KEYCXX   - This is a C++ keyword, or a C++-specific keyword in the
+//              implementation namespace
+//   KEYNOCXX - This is a keyword in every non-C++ dialect.
+//   KEYCXX11 - This is a C++ keyword introduced to C++ in C++11
+//   KEYCXX20 - This is a C++ keyword introduced to C++ in C++20
+//   KEYCONCEPTS - This is a keyword if the C++ extensions for concepts
+//                 are enabled.
+//   KEYMODULES - This is a keyword if the C++ extensions for modules
+//                are enabled.
+//   KEYGNU   - This is a keyword if GNU extensions are enabled
+//   KEYMS    - This is a keyword if Microsoft extensions are enabled
+//   KEYMSCOMPAT - This is a keyword if Microsoft compatibility mode is enabled
+//   KEYNOMS18 - This is a keyword that must never be enabled under
+//               MSVC <= v18.
+//   KEYOPENCLC   - This is a keyword in OpenCL C
+//   KEYOPENCLCXX - This is a keyword in C++ for OpenCL
+//   KEYNOOPENCL  - This is a keyword that is not supported in OpenCL
+//   KEYALTIVEC - This is a keyword in AltiVec
+//   KEYZVECTOR - This is a keyword for the System z vector extensions,
+//                which are heavily based on AltiVec
+//   KEYBORLAND - This is a keyword if Borland extensions are enabled
+//   KEYCOROUTINES - This is a keyword if support for C++ coroutines is enabled
+//   BOOLSUPPORT - This is a keyword if 'bool' is a built-in type
+//   HALFSUPPORT - This is a keyword if 'half' is a built-in type
+//   WCHARSUPPORT - This is a keyword if 'wchar_t' is a built-in type
+//   CHAR8SUPPORT - This is a keyword if 'char8_t' is a built-in type
+//
+KEYWORD(auto                        , KEYALL)
+KEYWORD(break                       , KEYALL)
+KEYWORD(case                        , KEYALL)
+KEYWORD(char                        , KEYALL)
+KEYWORD(const                       , KEYALL)
+KEYWORD(continue                    , KEYALL)
+KEYWORD(default                     , KEYALL)
+KEYWORD(do                          , KEYALL)
+KEYWORD(double                      , KEYALL)
+KEYWORD(else                        , KEYALL)
+KEYWORD(enum                        , KEYALL)
+KEYWORD(extern                      , KEYALL)
+KEYWORD(float                       , KEYALL)
+KEYWORD(for                         , KEYALL)
+KEYWORD(goto                        , KEYALL)
+KEYWORD(if                          , KEYALL)
+KEYWORD(inline                      , KEYC99|KEYCXX|KEYGNU)
+KEYWORD(int                         , KEYALL)
+KEYWORD(_ExtInt                     , KEYALL)
+KEYWORD(_BitInt                     , KEYALL)
+KEYWORD(long                        , KEYALL)
+KEYWORD(register                    , KEYALL)
+KEYWORD(restrict                    , KEYC99)
+KEYWORD(return                      , KEYALL)
+KEYWORD(short                       , KEYALL)
+KEYWORD(signed                      , KEYALL)
+
+KEYWORD(static                      , KEYALL)
+KEYWORD(struct                      , KEYALL)
+KEYWORD(switch                      , KEYALL)
+KEYWORD(typedef                     , KEYALL)
+KEYWORD(union                       , KEYALL)
+KEYWORD(unsigned                    , KEYALL)
+KEYWORD(void                        , KEYALL)
+KEYWORD(volatile                    , KEYALL)
+KEYWORD(while                       , KEYALL)
+KEYWORD(_Alignas                    , KEYALL)
+KEYWORD(_Alignof                    , KEYALL)
+KEYWORD(_Atomic                     , KEYALL|KEYNOOPENCL)
+KEYWORD(_Bool                       , KEYNOCXX)
+KEYWORD(_Complex                    , KEYALL)
+KEYWORD(_Generic                    , KEYALL)
+KEYWORD(_Imaginary                  , KEYALL)
+KEYWORD(_Noreturn                   , KEYALL)
+KEYWORD(_Static_assert              , KEYALL)
+KEYWORD(_Thread_local               , KEYALL)
+KEYWORD(__func__                    , KEYALL)
+KEYWORD(__objc_yes                  , KEYALL)
+KEYWORD(__objc_no                   , KEYALL)
+
+
+// C++ 2.11p1: Keywords.
+KEYWORD(asm                         , KEYCXX|KEYGNU)
+KEYWORD(bool                        , BOOLSUPPORT)
+KEYWORD(catch                       , KEYCXX)
+KEYWORD(class                       , KEYCXX)
+KEYWORD(const_cast                  , KEYCXX)
+KEYWORD(delete                      , KEYCXX)
+KEYWORD(dynamic_cast                , KEYCXX)
+KEYWORD(explicit                    , KEYCXX)
+KEYWORD(export                      , KEYCXX)
+KEYWORD(false                       , BOOLSUPPORT)
+KEYWORD(friend                      , KEYCXX)
+KEYWORD(mutable                     , KEYCXX)
+KEYWORD(namespace                   , KEYCXX)
+KEYWORD(new                         , KEYCXX)
+KEYWORD(operator                    , KEYCXX)
+KEYWORD(private                     , KEYCXX)
+KEYWORD(protected                   , KEYCXX)
+KEYWORD(public                      , KEYCXX)
+KEYWORD(reinterpret_cast            , KEYCXX)
+KEYWORD(static_cast                 , KEYCXX)
+KEYWORD(template                    , KEYCXX)
+KEYWORD(this                        , KEYCXX)
+KEYWORD(throw                       , KEYCXX)
+KEYWORD(true                        , BOOLSUPPORT)
+KEYWORD(try                         , KEYCXX)
+KEYWORD(typename                    , KEYCXX)
+KEYWORD(typeid                      , KEYCXX)
+KEYWORD(using                       , KEYCXX)
+KEYWORD(virtual                     , KEYCXX)
+KEYWORD(wchar_t                     , WCHARSUPPORT)

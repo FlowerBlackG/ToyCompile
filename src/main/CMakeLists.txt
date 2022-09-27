@@ -16,4 +16,5 @@ target_include_directories(
     main PUBLIC
     ${PROJECT_SOURCE_DIR}/include
     ${PROJECT_BINARY_DIR}
+    ${PROJECT_SOURCE_DIR}/lib/include
 )

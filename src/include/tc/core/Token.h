@@ -6,7 +6,10 @@
 
 #pragma once
 
-#include <string>
+#include <string_view>
+
+#include "tc/core/TokenKinds.h"
+#include "tc/utils/CppReflect.h"
 
 struct Token {
 
@@ -23,6 +26,13 @@ struct Token {
     /**
      * 所在行号。从1开始索引。
      */
-    int line;
+    int row;
+
+    /**
+     * 符号类型。
+     */
+    TokenKind kind;
+
+    std::string_view getKindName();
 
 };

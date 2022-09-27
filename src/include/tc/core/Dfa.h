@@ -77,7 +77,14 @@ public:
     /* ------------ 公开方法。 ------------ */
 
     Dfa();
+
+    /**
+     * 立即构建 DFA。
+     * 
+     * @param inStream 遵循 tcdf 格式的字符流。
+     */
     Dfa(std::istream& inStream);
+    
     ~Dfa();
 
     /**
@@ -88,6 +95,10 @@ public:
      * @param inStream 输入流。内含构建命令。
      */
     void build(std::istream& inStream);
+
+    /**
+     * 清空已经构建的自动机。
+     */
     void clear();
 
     /**
@@ -107,9 +118,13 @@ protected:
 
     /* ------------ 私有成员。 ------------ */
 
+    /** 登记所有状态节点。用于方便内存管理。 */
     std::vector<DfaStateNode*> stateNodeList;
+
+    /** 节点id到对象映射表。用于快速获取节点。 */
     std::map<int, DfaStateNode*> stateNodeMap;
 
+    /** 自动机进入节点。 */
     DfaStateNode* dfaEntry = nullptr;
 
 public:
@@ -124,6 +139,10 @@ public:
 
 
 private:
+
+    /**
+     * 复制构造函数。禁止使用。
+     */
     Dfa(const Dfa& dfa) {}
 
 };

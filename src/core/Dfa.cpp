@@ -3,15 +3,12 @@
  * 创建于 2022年9月26日
  */
 
-#include <iostream>
-#include <map>
-#include <vector>
-
 #include "tc/core/Dfa.h"
 
 using namespace std;
 
 /* ------------ 公开方法。 ------------ */
+
 Dfa::Dfa() {
 
 }
@@ -38,6 +35,7 @@ void Dfa::build(istream& inStream) {
     ) {
 
         inStream >> operation;
+
         if (operation == "def") {
 
             // 读入。
@@ -55,6 +53,7 @@ void Dfa::build(istream& inStream) {
             bool isFinal = tag == "final";
             bool isStart = tag == "start";
 
+            // 检查标签是否正常。正常的话，上面三个值有且仅有1个为true。
             if (!!isNormal + !!isFinal + !!isStart != 1) {
                 this->errmsg += "(d2) bad tag.\n";
                 this->errlevel = DfaError::CRITICAL;
@@ -78,7 +77,7 @@ void Dfa::build(istream& inStream) {
             this->stateNodeList.push_back(node);
             this->stateNodeMap[id] = node;
             
-            if (isStart) {
+            if (isStart) { // 设置进入节点。
                 this->dfaEntry = node;
             }
 
@@ -133,16 +132,6 @@ void Dfa::build(istream& inStream) {
         this->errmsg += "(d4) stream failed.\n";
     }
 
-/*
-    for (auto& it : this->stateNodeList) {
-        cout << "id   : " << it->stateInfo.id << endl;
-        cout << "final: " << it->stateInfo.isFinal << endl;
-        cout << "init : " << it->stateInfo.isInit << endl;
-        cout << "trans: " << it->nextStates.size() << endl;
-        cout << endl;
-    }
-*/
-
 }
 
 void Dfa::clear() {
@@ -164,25 +153,31 @@ const DfaStateNode* Dfa::recognize(istream& inStream) {
     DfaStateNode* currentNode = this->dfaEntry;
 
     while (currentNode && inStream.good() && !inStream.fail()) {
+
+        // 由于流的 unget 和 putback 都很不好用，此处非必要不 get。
         int ch = inStream.peek();
-     //   cout << "  -> in pos: " << inStream.tellg() << endl;
-    //    cout << "  -> in good: " << inStream.good() << endl;
-     //   cout << "  -> in fail: " << inStream.fail() << endl;
 
-        cout << "  -> curr: " << currentNode->stateInfo.id << endl;
-        cout << "  -> dfa: " << ch << ", |" << char(ch) << "|" << endl;
-
+        // 别管 \r.
+        if (ch == '\r') {
+            inStream.get();
+            continue;
+        }
 
         DfaStateNode* nextNode = currentNode->nextState(ch);
 
         if (nextNode) {
-      //      cout << "  -> curr: " << currentNode->stateInfo.id << endl;
-            currentNode = nextNode;
-            cin.get();
+            
+            currentNode = nextNode; // 切换到下一状态。
+
+            // 只有确定吃下当前字符，才真的 get。
+            inStream.get();
 
         } else {
-            cout << "    -> dfa rec end." << endl;
+            
+            // 下一状态是空的。识别结束。
+
             break;
+
         }
     }
 
