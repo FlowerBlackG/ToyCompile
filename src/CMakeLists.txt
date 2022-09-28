@@ -29,7 +29,7 @@ target_include_directories(
 
 # 链接库。
 target_link_libraries(
-    ${PROJECT_NAME} PUBLIC
+    ${PROJECT_NAME} 
     core
     main
 )

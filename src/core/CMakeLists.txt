@@ -4,7 +4,7 @@
 ]]
 
 add_library(
-    core
+    core 
     Lexer.cpp
     Dfa.cpp
     Token.cpp

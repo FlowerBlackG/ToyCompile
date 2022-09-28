@@ -159,6 +159,7 @@ const DfaStateNode* Dfa::recognize(istream& inStream) {
 
         // 别管 \r.
         if (ch == '\r') {
+            
             inStream.get();
             continue;
         }

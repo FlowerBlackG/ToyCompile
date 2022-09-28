@@ -6,10 +6,13 @@
 ]]
 
 add_library(
-    main
+    main 
 
     # LexerServer
     LexerServer/LexerServer.cpp
+
+    # LexerCli
+    LexerCli/LexerCli.cpp
 )
 
 target_include_directories(
@@ -18,3 +21,10 @@ target_include_directories(
     ${PROJECT_BINARY_DIR}
     ${PROJECT_SOURCE_DIR}/lib/include
 )
+
+# 链接库。
+target_link_libraries(
+    main 
+    core
+)
+

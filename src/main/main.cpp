@@ -24,14 +24,9 @@
 #include <string>
 #include <vector>
 
-#include <magic_enum/magic_enum.hpp>
-
 #include <tc/main/LexerServer/LexerServer.h>
-#include <tc/core/Dfa.h>
-#include <tc/core/Token.h>
-
-#include <tc/core/Lexer.h>
-#include <tc/core/TokenKinds.h>
+#include <tc/main/TcSubProgram.h>
+#include <tc/main/LexerCli/LexerCli.h>
 
 using namespace std;
 
@@ -56,12 +51,19 @@ bool parseCli(
 ) {
 
     if (argc < 2) {
-        cout << "[Error] main: too much cli arguments." << endl;
+        cout << "[Error] main: too less cli arguments." << endl;
         paramSet.insert("help");
         return false;
     }
 
-    for (int idx = 2; idx < argc; idx++) {
+    int idx = 1;
+    if (argv[idx][0] == 's') {
+        string arg = argv[idx];
+        subProgramName = arg.substr(1);
+        idx++;
+    }
+
+    for ( ; idx < argc; idx++) {
         const char* & argCStr = argv[idx];
         
         if (argCStr[0] != '-') {
@@ -70,6 +72,7 @@ bool parseCli(
         }
         
         string arg = argCStr;
+
         auto colonPos = arg.find(':');
         
         if (colonPos == string::npos) {
@@ -85,14 +88,30 @@ bool parseCli(
         }
 
         paramMap[paramKey] = paramVal;
-    
+
     }
 
+    return true;
 }
 
 void printUsage(const char* procName = nullptr) {
     const char* outProcName = procName ? procName : "ToyCompile.exe";
 
+}
+
+/**
+ * 创建一个子程序。调用者需要负责对该程序执行释放操作（delete）。
+ * 
+ * @param programName 程序名称。错误或空则返回默认程序。
+ * @return 返回子程序指针。调用者负责释放其内存。
+ */
+TcSubProgram* createSubProgram(const std::string programName) {
+    if (programName == "LexerCli") {
+        return new LexerCli;
+    } else {
+        cout << "[Info] not subprogram specified. use LexerCli as default." << endl;
+        return new LexerCli;
+    }
 }
 
 int main(int argc, const char* argv[]) {
@@ -105,43 +124,13 @@ int main(int argc, const char* argv[]) {
         cout << "[Error] main: failed to parse commandline arguments." << endl;
         return -1;
     }
-// todo.
-    TokenKind u = TokenKind::kw_typename;
-    cout << magic_enum::enum_name(u) << endl;
 
-    ifstream fin("infile.txt", ios::binary);
-    if (!fin.is_open()) {
-        cout << "failed to open file" << endl;
-        return -2;
-    }
+    TcSubProgram* subProgram = createSubProgram(subProgramName);
 
-    Lexer lexer;
-    if (!lexer.dfaIsReady()) {
-        cout << "lexer failed." << endl;
-        return -1;
-    }
+    int resCode = subProgram->run(
+        paramMap, paramSet, additionalValues, cin, cout
+    );
 
-
-    vector<Token> tkList;
-    vector<LexerAnalyzeError> tkErrList;
-
-    lexer.analyze(fin, tkList, tkErrList);
-    cout << tkList.size() << endl;
-    cout << tkErrList.size() << endl;
-
-    for (auto& tk : tkList) {
-        cout << "\n ---\n";
-        cout << "<" << tk.row << ", " << tk.col << "> " << tk.content << endl;
-        cout << "kind: " << magic_enum::enum_name(tk.kind) << " : " << int(tk.kind) << endl;
-    }
-
-    cout << "\n----++++----\n\n";
-
-    for (auto& err : tkErrList) {
-        cout << "err: " << err.dfaNodeInfo.id << endl;
-        cout << "  tk: " << err.token.content << endl;
-        cout << "  <" << err.row << ", " << err.col << ">\n";
-    }
-    
-    return 0;
+    delete subProgram;
+    return resCode;
 }

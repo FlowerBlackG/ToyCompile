@@ -100,12 +100,18 @@ void Lexer::analyze(
     int rowNum = 1;
     int colNum = 1;
 
+    const int READCH_FAILED = -2;
+
     /**
      * 读取一个字符。同时会推动 rowNum 和 colNum 的改变。
+     * 
+     * @param maxPos 流位置右界限。设为 -1 表示不限制。
+     * 
+     * @return 读取得到的字符的 ascii 码。返回 -2 (READCH_FAILED) 表示已经抵达末尾，无法读取。
      */
-    const auto readCh = [&] () {
+    const auto readCh = [&] (const streampos maxPos = -1) {
     
-        while (true) {
+        while (maxPos == -1 || in.tellg() < maxPos) {
 
             int ch = in.get();
 
@@ -127,25 +133,15 @@ void Lexer::analyze(
             return ch;
 
         }
+
+        return READCH_FAILED;
     };
 
     /* --- 拆分字符。 --- */
     
     while (true) {
+
         int ch;
-
-
-        /*
-        cout << endl;
-        cout << "pos1: " << in.tellg() << endl;
-        cout << "good1: " << in.good() << endl;
-        cout << "fail1: " << in.fail() << endl;
-        cout << "inp: " << in.peek() << endl;
-        cout << "good2: " << in.good() << endl;
-        cout << "fail2: " << in.fail() << endl;
-        cout << "pos2: " << in.tellg() << endl;
-*/
-
 
         // 过滤空白内容。
         while (
@@ -153,10 +149,6 @@ void Lexer::analyze(
             || ch == ' ' || ch == '\r'
             || ch == '\t'
         ) {
-
-            /*
-            cout << "ignore ch at: " << in.tellg() << endl;
-            cout << "  ch: " << ch << endl; */
 
             readCh();
         }
@@ -170,7 +162,6 @@ void Lexer::analyze(
         auto node = lexDfa.recognize(in);
         auto inPos2 = in.tellg();
 
-
         if (node) {
 
             Token token;
@@ -183,7 +174,13 @@ void Lexer::analyze(
             stringstream tokenStream;
 
             while (in.tellg() < inPos2) {
-                tokenStream << char(readCh());
+
+                int ch = readCh(inPos2);
+                
+                if (ch != READCH_FAILED) {
+                    tokenStream << char(ch);
+                }
+
             }
 
             string tokenString = tokenStream.str();
