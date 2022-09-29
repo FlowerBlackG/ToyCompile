@@ -412,6 +412,18 @@ void Lexer::fillTokenKind(Token& token) {
         return;
     } catch (...) {}
 
+    // 单行注释么？
+    if (token.content.find("//") == 0) {
+        token.kind = TokenKind::single_line_comment;
+        return;
+    }
+
+    // 多行注释么？
+    if (token.content.find("/*") == 0) {
+        token.kind = TokenKind::multi_line_comment;
+        return;
+    }
+
     // 字符串么？
     if (token.content[0] == '\"') {
         token.kind = TokenKind::string_literal;

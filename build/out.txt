@@ -1,0 +1,1650 @@
+symbol count: 235
+error count : 0
+
+token
+pos    : <1, 1>
+kind   : multi_line_comment
+kind id: 7
+content: 
+/*
+ * haha
+ */
+--- end of token ---
+token
+pos    : <5, 1>
+kind   : identifier
+kind id: 2
+content: 
+#include <iostream>
+--- end of token ---
+token
+pos    : <6, 1>
+kind   : identifier
+kind id: 2
+content: 
+#include <fstream>
+--- end of token ---
+token
+pos    : <8, 1>
+kind   : identifier
+kind id: 2
+content: 
+#include <tc/main/LexerServer/LexerServer.h>
+--- end of token ---
+token
+pos    : <9, 1>
+kind   : identifier
+kind id: 2
+content: 
+#include <tc/core/Dfa.h>
+--- end of token ---
+token
+pos    : <11, 1>
+kind   : 
+kind id: 140
+content: 
+using
+--- end of token ---
+token
+pos    : <11, 7>
+kind   : kw_namespace
+kind id: 125
+content: 
+namespace
+--- end of token ---
+token
+pos    : <11, 17>
+kind   : identifier
+kind id: 2
+content: 
+std
+--- end of token ---
+token
+pos    : <11, 20>
+kind   : semi
+kind id: 51
+content: 
+;
+--- end of token ---
+token
+pos    : <13, 1>
+kind   : kw_int
+kind id: 82
+content: 
+int
+--- end of token ---
+token
+pos    : <13, 5>
+kind   : identifier
+kind id: 2
+content: 
+main
+--- end of token ---
+token
+pos    : <13, 9>
+kind   : l_paren
+kind id: 10
+content: 
+(
+--- end of token ---
+token
+pos    : <13, 10>
+kind   : kw_int
+kind id: 82
+content: 
+int
+--- end of token ---
+token
+pos    : <13, 14>
+kind   : identifier
+kind id: 2
+content: 
+argc
+--- end of token ---
+token
+pos    : <13, 18>
+kind   : comma
+kind id: 54
+content: 
+,
+--- end of token ---
+token
+pos    : <13, 20>
+kind   : kw_const
+kind id: 69
+content: 
+const
+--- end of token ---
+token
+pos    : <13, 26>
+kind   : kw_char
+kind id: 68
+content: 
+char
+--- end of token ---
+token
+pos    : <13, 30>
+kind   : star
+kind id: 19
+content: 
+*
+--- end of token ---
+token
+pos    : <13, 32>
+kind   : identifier
+kind id: 2
+content: 
+argv
+--- end of token ---
+token
+pos    : <13, 36>
+kind   : l_square
+kind id: 8
+content: 
+[
+--- end of token ---
+token
+pos    : <13, 37>
+kind   : r_square
+kind id: 9
+content: 
+]
+--- end of token ---
+token
+pos    : <13, 38>
+kind   : r_paren
+kind id: 11
+content: 
+)
+--- end of token ---
+token
+pos    : <13, 40>
+kind   : l_brace
+kind id: 12
+content: 
+{
+--- end of token ---
+token
+pos    : <15, 5>
+kind   : identifier
+kind id: 2
+content: 
+ifstream
+--- end of token ---
+token
+pos    : <15, 14>
+kind   : identifier
+kind id: 2
+content: 
+fin
+--- end of token ---
+token
+pos    : <15, 17>
+kind   : l_paren
+kind id: 10
+content: 
+(
+--- end of token ---
+token
+pos    : <15, 18>
+kind   : string_literal
+kind id: 5
+content: 
+"../JFLAP/c-dfa.tcdf"
+--- end of token ---
+token
+pos    : <15, 39>
+kind   : r_paren
+kind id: 11
+content: 
+)
+--- end of token ---
+token
+pos    : <15, 40>
+kind   : semi
+kind id: 51
+content: 
+;
+--- end of token ---
+token
+pos    : <16, 5>
+kind   : identifier
+kind id: 2
+content: 
+Dfa
+--- end of token ---
+token
+pos    : <16, 9>
+kind   : identifier
+kind id: 2
+content: 
+dfa
+--- end of token ---
+token
+pos    : <16, 12>
+kind   : l_paren
+kind id: 10
+content: 
+(
+--- end of token ---
+token
+pos    : <16, 13>
+kind   : identifier
+kind id: 2
+content: 
+fin
+--- end of token ---
+token
+pos    : <16, 16>
+kind   : r_paren
+kind id: 11
+content: 
+)
+--- end of token ---
+token
+pos    : <16, 17>
+kind   : semi
+kind id: 51
+content: 
+;
+--- end of token ---
+token
+pos    : <18, 5>
+kind   : kw_while
+kind id: 99
+content: 
+while
+--- end of token ---
+token
+pos    : <18, 11>
+kind   : l_paren
+kind id: 10
+content: 
+(
+--- end of token ---
+token
+pos    : <18, 12>
+kind   : 
+kind id: 136
+content: 
+true
+--- end of token ---
+token
+pos    : <18, 16>
+kind   : r_paren
+kind id: 11
+content: 
+)
+--- end of token ---
+token
+pos    : <18, 18>
+kind   : l_brace
+kind id: 12
+content: 
+{
+--- end of token ---
+token
+pos    : <20, 9>
+kind   : kw_if
+kind id: 80
+content: 
+if
+--- end of token ---
+token
+pos    : <20, 12>
+kind   : l_paren
+kind id: 10
+content: 
+(
+--- end of token ---
+token
+pos    : <20, 13>
+kind   : identifier
+kind id: 2
+content: 
+cin
+--- end of token ---
+token
+pos    : <20, 16>
+kind   : period
+kind id: 14
+content: 
+.
+--- end of token ---
+token
+pos    : <20, 17>
+kind   : identifier
+kind id: 2
+content: 
+peek
+--- end of token ---
+token
+pos    : <20, 21>
+kind   : l_paren
+kind id: 10
+content: 
+(
+--- end of token ---
+token
+pos    : <20, 22>
+kind   : r_paren
+kind id: 11
+content: 
+)
+--- end of token ---
+token
+pos    : <20, 24>
+kind   : equalequal
+kind id: 53
+content: 
+==
+--- end of token ---
+token
+pos    : <20, 27>
+kind   : identifier
+kind id: 2
+content: 
+EOF
+--- end of token ---
+token
+pos    : <20, 30>
+kind   : r_paren
+kind id: 11
+content: 
+)
+--- end of token ---
+token
+pos    : <20, 32>
+kind   : l_brace
+kind id: 12
+content: 
+{
+--- end of token ---
+token
+pos    : <21, 13>
+kind   : kw_break
+kind id: 66
+content: 
+break
+--- end of token ---
+token
+pos    : <21, 18>
+kind   : semi
+kind id: 51
+content: 
+;
+--- end of token ---
+token
+pos    : <22, 9>
+kind   : r_brace
+kind id: 13
+content: 
+}
+--- end of token ---
+token
+pos    : <24, 9>
+kind   : kw_auto
+kind id: 65
+content: 
+auto
+--- end of token ---
+token
+pos    : <24, 14>
+kind   : identifier
+kind id: 2
+content: 
+cinPos1
+--- end of token ---
+token
+pos    : <24, 22>
+kind   : equal
+kind id: 52
+content: 
+=
+--- end of token ---
+token
+pos    : <24, 24>
+kind   : identifier
+kind id: 2
+content: 
+cin
+--- end of token ---
+token
+pos    : <24, 27>
+kind   : period
+kind id: 14
+content: 
+.
+--- end of token ---
+token
+pos    : <24, 28>
+kind   : identifier
+kind id: 2
+content: 
+tellg
+--- end of token ---
+token
+pos    : <24, 33>
+kind   : l_paren
+kind id: 10
+content: 
+(
+--- end of token ---
+token
+pos    : <24, 34>
+kind   : r_paren
+kind id: 11
+content: 
+)
+--- end of token ---
+token
+pos    : <24, 35>
+kind   : semi
+kind id: 51
+content: 
+;
+--- end of token ---
+token
+pos    : <26, 9>
+kind   : kw_const
+kind id: 69
+content: 
+const
+--- end of token ---
+token
+pos    : <26, 15>
+kind   : identifier
+kind id: 2
+content: 
+DfaStateNode
+--- end of token ---
+token
+pos    : <26, 27>
+kind   : star
+kind id: 19
+content: 
+*
+--- end of token ---
+token
+pos    : <26, 29>
+kind   : identifier
+kind id: 2
+content: 
+node
+--- end of token ---
+token
+pos    : <26, 34>
+kind   : equal
+kind id: 52
+content: 
+=
+--- end of token ---
+token
+pos    : <26, 36>
+kind   : identifier
+kind id: 2
+content: 
+dfa
+--- end of token ---
+token
+pos    : <26, 39>
+kind   : period
+kind id: 14
+content: 
+.
+--- end of token ---
+token
+pos    : <26, 40>
+kind   : identifier
+kind id: 2
+content: 
+recognize
+--- end of token ---
+token
+pos    : <26, 49>
+kind   : l_paren
+kind id: 10
+content: 
+(
+--- end of token ---
+token
+pos    : <26, 50>
+kind   : identifier
+kind id: 2
+content: 
+cin
+--- end of token ---
+token
+pos    : <26, 53>
+kind   : r_paren
+kind id: 11
+content: 
+)
+--- end of token ---
+token
+pos    : <26, 54>
+kind   : semi
+kind id: 51
+content: 
+;
+--- end of token ---
+token
+pos    : <28, 9>
+kind   : kw_auto
+kind id: 65
+content: 
+auto
+--- end of token ---
+token
+pos    : <28, 14>
+kind   : identifier
+kind id: 2
+content: 
+cinPos2
+--- end of token ---
+token
+pos    : <28, 22>
+kind   : equal
+kind id: 52
+content: 
+=
+--- end of token ---
+token
+pos    : <28, 24>
+kind   : identifier
+kind id: 2
+content: 
+cin
+--- end of token ---
+token
+pos    : <28, 27>
+kind   : period
+kind id: 14
+content: 
+.
+--- end of token ---
+token
+pos    : <28, 28>
+kind   : identifier
+kind id: 2
+content: 
+tellg
+--- end of token ---
+token
+pos    : <28, 33>
+kind   : l_paren
+kind id: 10
+content: 
+(
+--- end of token ---
+token
+pos    : <28, 34>
+kind   : r_paren
+kind id: 11
+content: 
+)
+--- end of token ---
+token
+pos    : <28, 35>
+kind   : semi
+kind id: 51
+content: 
+;
+--- end of token ---
+token
+pos    : <30, 9>
+kind   : identifier
+kind id: 2
+content: 
+cout
+--- end of token ---
+token
+pos    : <30, 14>
+kind   : lessless
+kind id: 36
+content: 
+<<
+--- end of token ---
+token
+pos    : <30, 17>
+kind   : string_literal
+kind id: 5
+content: 
+"id: "
+--- end of token ---
+token
+pos    : <30, 24>
+kind   : lessless
+kind id: 36
+content: 
+<<
+--- end of token ---
+token
+pos    : <30, 27>
+kind   : identifier
+kind id: 2
+content: 
+node
+--- end of token ---
+token
+pos    : <30, 31>
+kind   : arrow
+kind id: 25
+content: 
+->
+--- end of token ---
+token
+pos    : <30, 33>
+kind   : identifier
+kind id: 2
+content: 
+stateInfo
+--- end of token ---
+token
+pos    : <30, 42>
+kind   : period
+kind id: 14
+content: 
+.
+--- end of token ---
+token
+pos    : <30, 43>
+kind   : identifier
+kind id: 2
+content: 
+id
+--- end of token ---
+token
+pos    : <30, 46>
+kind   : lessless
+kind id: 36
+content: 
+<<
+--- end of token ---
+token
+pos    : <30, 49>
+kind   : identifier
+kind id: 2
+content: 
+endl
+--- end of token ---
+token
+pos    : <30, 53>
+kind   : semi
+kind id: 51
+content: 
+;
+--- end of token ---
+token
+pos    : <31, 13>
+kind   : identifier
+kind id: 2
+content: 
+cout
+--- end of token ---
+token
+pos    : <31, 18>
+kind   : lessless
+kind id: 36
+content: 
+<<
+--- end of token ---
+token
+pos    : <31, 21>
+kind   : string_literal
+kind id: 5
+content: 
+"cin pos1: "
+--- end of token ---
+token
+pos    : <31, 34>
+kind   : lessless
+kind id: 36
+content: 
+<<
+--- end of token ---
+token
+pos    : <31, 37>
+kind   : identifier
+kind id: 2
+content: 
+cinPos1
+--- end of token ---
+token
+pos    : <31, 45>
+kind   : lessless
+kind id: 36
+content: 
+<<
+--- end of token ---
+token
+pos    : <31, 48>
+kind   : identifier
+kind id: 2
+content: 
+endl
+--- end of token ---
+token
+pos    : <31, 52>
+kind   : semi
+kind id: 51
+content: 
+;
+--- end of token ---
+token
+pos    : <32, 13>
+kind   : identifier
+kind id: 2
+content: 
+cout
+--- end of token ---
+token
+pos    : <32, 18>
+kind   : lessless
+kind id: 36
+content: 
+<<
+--- end of token ---
+token
+pos    : <32, 21>
+kind   : string_literal
+kind id: 5
+content: 
+"cin pos2: "
+--- end of token ---
+token
+pos    : <32, 34>
+kind   : lessless
+kind id: 36
+content: 
+<<
+--- end of token ---
+token
+pos    : <32, 37>
+kind   : identifier
+kind id: 2
+content: 
+cinPos2
+--- end of token ---
+token
+pos    : <32, 45>
+kind   : lessless
+kind id: 36
+content: 
+<<
+--- end of token ---
+token
+pos    : <32, 48>
+kind   : identifier
+kind id: 2
+content: 
+endl
+--- end of token ---
+token
+pos    : <32, 52>
+kind   : semi
+kind id: 51
+content: 
+;
+--- end of token ---
+token
+pos    : <33, 13>
+kind   : identifier
+kind id: 2
+content: 
+cout
+--- end of token ---
+token
+pos    : <33, 18>
+kind   : lessless
+kind id: 36
+content: 
+<<
+--- end of token ---
+token
+pos    : <33, 21>
+kind   : string_literal
+kind id: 5
+content: 
+"cin good: "
+--- end of token ---
+token
+pos    : <33, 34>
+kind   : lessless
+kind id: 36
+content: 
+<<
+--- end of token ---
+token
+pos    : <33, 37>
+kind   : identifier
+kind id: 2
+content: 
+cin
+--- end of token ---
+token
+pos    : <33, 40>
+kind   : period
+kind id: 14
+content: 
+.
+--- end of token ---
+token
+pos    : <33, 41>
+kind   : identifier
+kind id: 2
+content: 
+good
+--- end of token ---
+token
+pos    : <33, 45>
+kind   : l_paren
+kind id: 10
+content: 
+(
+--- end of token ---
+token
+pos    : <33, 46>
+kind   : r_paren
+kind id: 11
+content: 
+)
+--- end of token ---
+token
+pos    : <33, 48>
+kind   : lessless
+kind id: 36
+content: 
+<<
+--- end of token ---
+token
+pos    : <33, 51>
+kind   : identifier
+kind id: 2
+content: 
+endl
+--- end of token ---
+token
+pos    : <33, 55>
+kind   : semi
+kind id: 51
+content: 
+;
+--- end of token ---
+token
+pos    : <34, 13>
+kind   : identifier
+kind id: 2
+content: 
+cout
+--- end of token ---
+token
+pos    : <34, 18>
+kind   : lessless
+kind id: 36
+content: 
+<<
+--- end of token ---
+token
+pos    : <34, 21>
+kind   : string_literal
+kind id: 5
+content: 
+"cin fail: "
+--- end of token ---
+token
+pos    : <34, 34>
+kind   : lessless
+kind id: 36
+content: 
+<<
+--- end of token ---
+token
+pos    : <34, 37>
+kind   : identifier
+kind id: 2
+content: 
+cin
+--- end of token ---
+token
+pos    : <34, 40>
+kind   : period
+kind id: 14
+content: 
+.
+--- end of token ---
+token
+pos    : <34, 41>
+kind   : identifier
+kind id: 2
+content: 
+fail
+--- end of token ---
+token
+pos    : <34, 45>
+kind   : l_paren
+kind id: 10
+content: 
+(
+--- end of token ---
+token
+pos    : <34, 46>
+kind   : r_paren
+kind id: 11
+content: 
+)
+--- end of token ---
+token
+pos    : <34, 48>
+kind   : lessless
+kind id: 36
+content: 
+<<
+--- end of token ---
+token
+pos    : <34, 51>
+kind   : identifier
+kind id: 2
+content: 
+endl
+--- end of token ---
+token
+pos    : <34, 55>
+kind   : semi
+kind id: 51
+content: 
+;
+--- end of token ---
+token
+pos    : <36, 9>
+kind   : kw_if
+kind id: 80
+content: 
+if
+--- end of token ---
+token
+pos    : <36, 12>
+kind   : l_paren
+kind id: 10
+content: 
+(
+--- end of token ---
+token
+pos    : <36, 13>
+kind   : identifier
+kind id: 2
+content: 
+node
+--- end of token ---
+token
+pos    : <36, 17>
+kind   : r_paren
+kind id: 11
+content: 
+)
+--- end of token ---
+token
+pos    : <36, 19>
+kind   : l_brace
+kind id: 12
+content: 
+{
+--- end of token ---
+token
+pos    : <38, 13>
+kind   : identifier
+kind id: 2
+content: 
+cin
+--- end of token ---
+token
+pos    : <38, 16>
+kind   : period
+kind id: 14
+content: 
+.
+--- end of token ---
+token
+pos    : <38, 17>
+kind   : identifier
+kind id: 2
+content: 
+seekg
+--- end of token ---
+token
+pos    : <38, 22>
+kind   : l_paren
+kind id: 10
+content: 
+(
+--- end of token ---
+token
+pos    : <38, 23>
+kind   : identifier
+kind id: 2
+content: 
+cinPos1
+--- end of token ---
+token
+pos    : <38, 30>
+kind   : r_paren
+kind id: 11
+content: 
+)
+--- end of token ---
+token
+pos    : <38, 31>
+kind   : semi
+kind id: 51
+content: 
+;
+--- end of token ---
+token
+pos    : <39, 13>
+kind   : identifier
+kind id: 2
+content: 
+cout
+--- end of token ---
+token
+pos    : <39, 18>
+kind   : lessless
+kind id: 36
+content: 
+<<
+--- end of token ---
+token
+pos    : <39, 21>
+kind   : string_literal
+kind id: 5
+content: 
+"|"
+--- end of token ---
+token
+pos    : <39, 24>
+kind   : semi
+kind id: 51
+content: 
+;
+--- end of token ---
+token
+pos    : <40, 13>
+kind   : kw_for
+kind id: 78
+content: 
+for
+--- end of token ---
+token
+pos    : <40, 17>
+kind   : l_paren
+kind id: 10
+content: 
+(
+--- end of token ---
+token
+pos    : <40, 18>
+kind   : kw_int
+kind id: 82
+content: 
+int
+--- end of token ---
+token
+pos    : <40, 22>
+kind   : identifier
+kind id: 2
+content: 
+i
+--- end of token ---
+token
+pos    : <40, 24>
+kind   : equal
+kind id: 52
+content: 
+=
+--- end of token ---
+token
+pos    : <40, 26>
+kind   : numeric_constant
+kind id: 3
+content: 
+0x0
+--- end of token ---
+token
+pos    : <40, 29>
+kind   : semi
+kind id: 51
+content: 
+;
+--- end of token ---
+token
+pos    : <40, 31>
+kind   : identifier
+kind id: 2
+content: 
+i
+--- end of token ---
+token
+pos    : <40, 33>
+kind   : less
+kind id: 35
+content: 
+<
+--- end of token ---
+token
+pos    : <40, 35>
+kind   : identifier
+kind id: 2
+content: 
+cinPos2
+--- end of token ---
+token
+pos    : <40, 43>
+kind   : minus
+kind id: 24
+content: 
+-
+--- end of token ---
+token
+pos    : <40, 45>
+kind   : identifier
+kind id: 2
+content: 
+cinPos1
+--- end of token ---
+token
+pos    : <40, 52>
+kind   : semi
+kind id: 51
+content: 
+;
+--- end of token ---
+token
+pos    : <40, 54>
+kind   : identifier
+kind id: 2
+content: 
+i
+--- end of token ---
+token
+pos    : <40, 55>
+kind   : plusplus
+kind id: 22
+content: 
+++
+--- end of token ---
+token
+pos    : <40, 57>
+kind   : r_paren
+kind id: 11
+content: 
+)
+--- end of token ---
+token
+pos    : <40, 59>
+kind   : l_brace
+kind id: 12
+content: 
+{
+--- end of token ---
+token
+pos    : <41, 17>
+kind   : identifier
+kind id: 2
+content: 
+cout
+--- end of token ---
+token
+pos    : <41, 22>
+kind   : lessless
+kind id: 36
+content: 
+<<
+--- end of token ---
+token
+pos    : <41, 25>
+kind   : kw_char
+kind id: 68
+content: 
+char
+--- end of token ---
+token
+pos    : <41, 29>
+kind   : l_paren
+kind id: 10
+content: 
+(
+--- end of token ---
+token
+pos    : <41, 30>
+kind   : identifier
+kind id: 2
+content: 
+cin
+--- end of token ---
+token
+pos    : <41, 33>
+kind   : period
+kind id: 14
+content: 
+.
+--- end of token ---
+token
+pos    : <41, 34>
+kind   : identifier
+kind id: 2
+content: 
+get
+--- end of token ---
+token
+pos    : <41, 37>
+kind   : l_paren
+kind id: 10
+content: 
+(
+--- end of token ---
+token
+pos    : <41, 38>
+kind   : r_paren
+kind id: 11
+content: 
+)
+--- end of token ---
+token
+pos    : <41, 39>
+kind   : r_paren
+kind id: 11
+content: 
+)
+--- end of token ---
+token
+pos    : <41, 40>
+kind   : semi
+kind id: 51
+content: 
+;
+--- end of token ---
+token
+pos    : <42, 13>
+kind   : r_brace
+kind id: 13
+content: 
+}
+--- end of token ---
+token
+pos    : <43, 13>
+kind   : identifier
+kind id: 2
+content: 
+cout
+--- end of token ---
+token
+pos    : <43, 18>
+kind   : lessless
+kind id: 36
+content: 
+<<
+--- end of token ---
+token
+pos    : <43, 21>
+kind   : string_literal
+kind id: 5
+content: 
+"|\n"
+--- end of token ---
+token
+pos    : <43, 26>
+kind   : semi
+kind id: 51
+content: 
+;
+--- end of token ---
+token
+pos    : <44, 9>
+kind   : r_brace
+kind id: 13
+content: 
+}
+--- end of token ---
+token
+pos    : <44, 11>
+kind   : kw_else
+kind id: 74
+content: 
+else
+--- end of token ---
+token
+pos    : <44, 16>
+kind   : l_brace
+kind id: 12
+content: 
+{
+--- end of token ---
+token
+pos    : <45, 13>
+kind   : identifier
+kind id: 2
+content: 
+cout
+--- end of token ---
+token
+pos    : <45, 18>
+kind   : lessless
+kind id: 36
+content: 
+<<
+--- end of token ---
+token
+pos    : <45, 21>
+kind   : string_literal
+kind id: 5
+content: 
+"nullptr."
+--- end of token ---
+token
+pos    : <45, 32>
+kind   : lessless
+kind id: 36
+content: 
+<<
+--- end of token ---
+token
+pos    : <45, 35>
+kind   : identifier
+kind id: 2
+content: 
+endl
+--- end of token ---
+token
+pos    : <45, 39>
+kind   : semi
+kind id: 51
+content: 
+;
+--- end of token ---
+token
+pos    : <46, 13>
+kind   : kw_break
+kind id: 66
+content: 
+break
+--- end of token ---
+token
+pos    : <46, 18>
+kind   : semi
+kind id: 51
+content: 
+;
+--- end of token ---
+token
+pos    : <47, 9>
+kind   : r_brace
+kind id: 13
+content: 
+}
+--- end of token ---
+token
+pos    : <49, 9>
+kind   : kw_int
+kind id: 82
+content: 
+int
+--- end of token ---
+token
+pos    : <49, 13>
+kind   : identifier
+kind id: 2
+content: 
+ch
+--- end of token ---
+token
+pos    : <49, 15>
+kind   : semi
+kind id: 51
+content: 
+;
+--- end of token ---
+token
+pos    : <50, 9>
+kind   : kw_while
+kind id: 99
+content: 
+while
+--- end of token ---
+token
+pos    : <50, 15>
+kind   : l_paren
+kind id: 10
+content: 
+(
+--- end of token ---
+token
+pos    : <50, 16>
+kind   : l_paren
+kind id: 10
+content: 
+(
+--- end of token ---
+token
+pos    : <50, 17>
+kind   : identifier
+kind id: 2
+content: 
+ch
+--- end of token ---
+token
+pos    : <50, 20>
+kind   : equal
+kind id: 52
+content: 
+=
+--- end of token ---
+token
+pos    : <50, 22>
+kind   : identifier
+kind id: 2
+content: 
+cin
+--- end of token ---
+token
+pos    : <50, 25>
+kind   : period
+kind id: 14
+content: 
+.
+--- end of token ---
+token
+pos    : <50, 26>
+kind   : identifier
+kind id: 2
+content: 
+peek
+--- end of token ---
+token
+pos    : <50, 30>
+kind   : l_paren
+kind id: 10
+content: 
+(
+--- end of token ---
+token
+pos    : <50, 31>
+kind   : r_paren
+kind id: 11
+content: 
+)
+--- end of token ---
+token
+pos    : <50, 32>
+kind   : r_paren
+kind id: 11
+content: 
+)
+--- end of token ---
+token
+pos    : <50, 34>
+kind   : equalequal
+kind id: 53
+content: 
+==
+--- end of token ---
+token
+pos    : <50, 37>
+kind   : char_constant
+kind id: 4
+content: 
+'\n'
+--- end of token ---
+token
+pos    : <50, 42>
+kind   : pipepipe
+kind id: 47
+content: 
+||
+--- end of token ---
+token
+pos    : <50, 45>
+kind   : identifier
+kind id: 2
+content: 
+ch
+--- end of token ---
+token
+pos    : <50, 48>
+kind   : equalequal
+kind id: 53
+content: 
+==
+--- end of token ---
+token
+pos    : <50, 51>
+kind   : char_constant
+kind id: 4
+content: 
+' '
+--- end of token ---
+token
+pos    : <50, 54>
+kind   : r_paren
+kind id: 11
+content: 
+)
+--- end of token ---
+token
+pos    : <50, 56>
+kind   : l_brace
+kind id: 12
+content: 
+{
+--- end of token ---
+token
+pos    : <51, 13>
+kind   : identifier
+kind id: 2
+content: 
+cin
+--- end of token ---
+token
+pos    : <51, 16>
+kind   : period
+kind id: 14
+content: 
+.
+--- end of token ---
+token
+pos    : <51, 17>
+kind   : identifier
+kind id: 2
+content: 
+get
+--- end of token ---
+token
+pos    : <51, 20>
+kind   : l_paren
+kind id: 10
+content: 
+(
+--- end of token ---
+token
+pos    : <51, 21>
+kind   : r_paren
+kind id: 11
+content: 
+)
+--- end of token ---
+token
+pos    : <51, 22>
+kind   : semi
+kind id: 51
+content: 
+;
+--- end of token ---
+token
+pos    : <52, 9>
+kind   : r_brace
+kind id: 13
+content: 
+}
+--- end of token ---
+token
+pos    : <54, 9>
+kind   : identifier
+kind id: 2
+content: 
+cout
+--- end of token ---
+token
+pos    : <54, 14>
+kind   : lessless
+kind id: 36
+content: 
+<<
+--- end of token ---
+token
+pos    : <54, 17>
+kind   : identifier
+kind id: 2
+content: 
+endl
+--- end of token ---
+token
+pos    : <54, 21>
+kind   : semi
+kind id: 51
+content: 
+;
+--- end of token ---
+token
+pos    : <55, 5>
+kind   : r_brace
+kind id: 13
+content: 
+}
+--- end of token ---
+token
+pos    : <57, 5>
+kind   : kw_return
+kind id: 88
+content: 
+return
+--- end of token ---
+token
+pos    : <57, 12>
+kind   : numeric_constant
+kind id: 3
+content: 
+0
+--- end of token ---
+token
+pos    : <57, 13>
+kind   : semi
+kind id: 51
+content: 
+;
+--- end of token ---
+token
+pos    : <58, 1>
+kind   : r_brace
+kind id: 13
+content: 
+}
+--- end of token ---

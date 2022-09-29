@@ -53,6 +53,10 @@ TOK(char_constant)       // 'a'
 // C99 6.4.5: String Literals.
 TOK(string_literal)      // "foo"
 
+// 注释
+TOK(single_line_comment) // 单行注释
+TOK(multi_line_comment) // 多行注释
+
 // C99 6.4.6: Punctuators.
 PUNCTUATOR(l_square,            "[")
 PUNCTUATOR(r_square,            "]")
