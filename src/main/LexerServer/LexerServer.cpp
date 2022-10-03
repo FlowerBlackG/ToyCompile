@@ -101,10 +101,10 @@ int LexerServer::run(std::map<std::string, std::string> &paramMap, std::set<std:
                 out << "websocket connection closed: " << reason << endl;
             })
             .onmessage([&](crow::websocket::connection &conn, const std::string &data, bool is_binary) {
-                out << "Received message: " << data << endl;
                 tkList.clear();
                 tkErrList.clear();
-                lexer.analyze((istream &) (data), tkList, tkErrList);
+                stringstream fin(data);
+                lexer.analyze(fin, tkList, tkErrList);
                 stringstream fout;
                 printResult(fout, tkList, tkErrList);
                 if (is_binary)

@@ -66,5 +66,6 @@
         "xlocmes": "cpp",
         "xlocmon": "cpp",
         "xloctime": "cpp"
-    }
+    },
+    "cmake.sourceDirectory": "${workspaceFolder}/src"
 }

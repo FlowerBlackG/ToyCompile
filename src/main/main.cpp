@@ -43,7 +43,7 @@ using namespace std;
  * 
  * @return 是否遇到错误。如果返回为 false，表示命令行解析遇到致命问题。
  */
-bool parseCli(
+bool parseParams(
     int argc, const char** argv,
     map<string, string>& paramMap,
     set<string>& paramSet,
@@ -118,7 +118,7 @@ int main(int argc, const char* argv[]) {
     string subProgramName;
     vector<string> additionalValues;
 
-    if (!parseCli(argc, argv, paramMap, paramSet, subProgramName, additionalValues)) {
+    if (!parseParams(argc, argv, paramMap, paramSet, subProgramName, additionalValues)) {
         cout << "[Error] main: failed to parse commandline arguments." << endl;
         return -1;
     }
