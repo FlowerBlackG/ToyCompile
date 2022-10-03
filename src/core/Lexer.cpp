@@ -35,9 +35,7 @@ Lexer::Lexer(istream& tcdfIn, ostream& msgOut) {
     this->prepareTokenKindMap();
 }
 
-Lexer::~Lexer() {
-
-}
+Lexer::~Lexer() = default;
 
 bool Lexer::prepareDfa(ostream& msgOut) {
     ifstream fin(TC_CORE_CFG_LEXER_DFA_TCDF_PATH, ios::binary);
@@ -175,10 +173,10 @@ void Lexer::analyze(
 
             while (in.tellg() < inPos2) {
 
-                int ch = readCh(inPos2);
+                int chRead = readCh(inPos2);
                 
-                if (ch != READCH_FAILED) {
-                    tokenStream << char(ch);
+                if (chRead != READCH_FAILED) {
+                    tokenStream << char(chRead);
                 }
 
             }

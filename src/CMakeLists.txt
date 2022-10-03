@@ -3,12 +3,25 @@
     创建于 2022年9月26日。
 ]]
 
-cmake_minimum_required(VERSION 3.24.1)
+cmake_minimum_required(VERSION 3.23.2)
 project(ToyCompile)
 
 # 指定使用 C++17。
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
+
+IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
+    MESSAGE(STATUS "current platform: Linux ")
+ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Windows")
+    MESSAGE(STATUS "current platform: Windows")
+ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Darwin")
+    MESSAGE(STATUS "current platform: Darwin")
+    set(BOOST_ROOT "/usr/local/include/boost") # 设置 boost 库路径。
+    include_directories(/usr/local/include) # 添加头文件搜索路径。
+    link_directories(/usr/local/lib) # 添加库文件搜索路径。
+ELSE ()
+    MESSAGE(STATUS "other platform: ${CMAKE_SYSTEM_NAME}")
+ENDIF (CMAKE_SYSTEM_NAME MATCHES "Linux")
 
 # 子目录。
 add_subdirectory(main)
