@@ -12,7 +12,6 @@ _deps
 
 cmake-build-debug
 .idea
-.vscode
 .DS_Store
 
 *.a
