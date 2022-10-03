@@ -30,6 +30,8 @@ public:
         std::ostream& out
     ) = 0;
 
+    virtual ~TcSubProgram() = default;
+
 protected:
 
 

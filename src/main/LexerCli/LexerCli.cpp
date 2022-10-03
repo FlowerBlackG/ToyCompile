@@ -9,8 +9,6 @@
 #include <tc/core/Token.h>
 
 #include <tc/core/Lexer.h>
-#include <tc/core/TokenKinds.h>
-#include <magic_enum/magic_enum.hpp>
 
 #include "tc/main/LexerCli/LexerCli.h"
 

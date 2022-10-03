@@ -20,6 +20,7 @@
 #include <fstream>
 
 #include <map>
+#include <memory>
 #include <set>
 #include <string>
 #include <vector>
@@ -67,7 +68,7 @@ bool parseCli(
         const char* & argCStr = argv[idx];
         
         if (argCStr[0] != '-') {
-            additionalValues.push_back(argCStr);
+            additionalValues.emplace_back(argCStr);
             continue;
         }
         
@@ -94,23 +95,20 @@ bool parseCli(
     return true;
 }
 
-void printUsage(const char* procName = nullptr) {
-    const char* outProcName = procName ? procName : "ToyCompile.exe";
-
-}
-
 /**
  * 创建一个子程序。调用者需要负责对该程序执行释放操作（delete）。
  * 
  * @param programName 程序名称。错误或空则返回默认程序。
  * @return 返回子程序指针。调用者负责释放其内存。
  */
-TcSubProgram* createSubProgram(const std::string programName) {
+unique_ptr<TcSubProgram> createSubProgram(const std::string& programName) {
     if (programName == "LexerCli") {
-        return new LexerCli;
+        return make_unique<LexerCli>();
+    }  else if (programName == "LexerServer") {
+        return make_unique<LexerServer>();
     } else {
         cout << "[Info] not subprogram specified. use LexerCli as default." << endl;
-        return new LexerCli;
+        return make_unique<LexerCli>();
     }
 }
 
@@ -125,12 +123,11 @@ int main(int argc, const char* argv[]) {
         return -1;
     }
 
-    TcSubProgram* subProgram = createSubProgram(subProgramName);
+    unique_ptr<TcSubProgram> subProgram = std::move(createSubProgram(subProgramName));
 
     int resCode = subProgram->run(
         paramMap, paramSet, additionalValues, cin, cout
     );
 
-    delete subProgram;
     return resCode;
 }
