@@ -3,11 +3,11 @@
     创建于 2022年9月26日。
 ]]
 
+file(GLOB core_lib_source_files *.cpp)
+
 add_library(
     core 
-    Lexer.cpp
-    Dfa.cpp
-    Token.cpp
+    ${core_lib_source_files}
 )
 
 target_include_directories(

@@ -11,28 +11,32 @@
 #include "tc/core/TokenKinds.h"
 #include "tc/utils/CppReflect.h"
 
-struct Token {
+namespace tc {
 
-    /**
-     * 符号内容。
-     */
-    std::string content;
-    
-    /**
-     * 所在列。从1开始索引。
-     */
-    int col;
+    struct Token {
 
-    /**
-     * 所在行号。从1开始索引。
-     */
-    int row;
+        /**
+         * 符号内容。
+         */
+        std::string content;
+        
+        /**
+         * 所在列。从1开始索引。
+         */
+        int col;
 
-    /**
-     * 符号类型。
-     */
-    TokenKind kind;
+        /**
+         * 所在行号。从1开始索引。
+         */
+        int row;
 
-    std::string_view getKindName();
+        /**
+         * 符号类型。
+         */
+        TokenKind kind;
 
-};
+        std::string_view getKindName();
+
+    };
+
+}

@@ -6,81 +6,83 @@
 #pragma once
 
 #include <iostream>
-#include <map>
 #include <vector>
 
 #include <tc/core/Dfa.h>
 #include <tc/core/Token.h>
 
-struct LexerAnalyzeError {
+namespace tc {
 
-    /** 报错位置：行号。 */
-    int row;
+    struct LexerAnalyzeError {
 
-    /** 报错位置：列号。 */
-    int col;
+        /** 报错位置：行号。 */
+        int row;
 
-    /** 报错的符号。 */
-    Token token;
+        /** 报错位置：列号。 */
+        int col;
 
-    /** 最后的 dfa 节点位置。可以用于在自动机内定位。 */
-    DfaStateInfo dfaNodeInfo;
+        /** 报错的符号。 */
+        Token token;
 
-    /** 报错信息。可以用于输出。 */
-    std::string msg;
-};
+        /** 最后的 dfa 节点位置。可以用于在自动机内定位。 */
+        DfaStateInfo dfaNodeInfo;
 
-/**
- * 词法分析器核心。
- * 
- */
-class Lexer {
-
-public:
-    
-    /* ------------ 公开方法。 ------------ */
-
-    Lexer();
-    Lexer(std::ostream& msgOut);
-    Lexer(std::istream& tcdfIn);
-    Lexer(std::istream& tcdfIn, std::ostream& msgOut);
-    ~Lexer();
-
-    bool prepareDfa(std::ostream& msgOut);
-    bool prepareDfa();
-    bool prepareDfa(std::istream& tcdfIn, std::ostream& msgOut);
-    bool prepareDfa(std::istream& tcdfIn);
-
-    inline bool dfaIsReady() { return dfaReady; }
+        /** 报错信息。可以用于输出。 */
+        std::string msg;
+    };
 
     /**
-     * 词法分析。
+     * 词法分析器核心。
      * 
-     * @param in 字符输入流。应该指向文件内容的开头。
-     * @param tokenList 存储分析结果的列表容器。
      */
-    void analyze(
-        std::istream& in,
-        std::vector<Token>& tokenList,
-        std::vector<LexerAnalyzeError>& errorList
-    );
+    class Lexer {
 
-protected:
+    public:
+        
+        /* ------------ 公开方法。 ------------ */
 
-    /* ------------ 私有方法。 ------------ */
+        Lexer();
+        Lexer(std::ostream& msgOut);
+        Lexer(std::istream& tcdfIn);
+        Lexer(std::istream& tcdfIn, std::ostream& msgOut);
+        ~Lexer();
 
-    void prepareTokenKindMap();
-    void fillTokenKind(Token& token);
+        bool prepareDfa(std::ostream& msgOut);
+        bool prepareDfa();
+        bool prepareDfa(std::istream& tcdfIn, std::ostream& msgOut);
+        bool prepareDfa(std::istream& tcdfIn);
 
-protected:
+        inline bool dfaIsReady() { return dfaReady; }
 
-    /* ------------ 私有成员。 ------------ */
-    
-    Dfa lexDfa;
-    bool dfaReady = false;
-    std::map<std::string, TokenKind> tokenKindMap;
+        /**
+         * 词法分析。
+         * 
+         * @param in 字符输入流。应该指向文件内容的开头。
+         * @param tokenList 存储分析结果的列表容器。
+         */
+        void analyze(
+            std::istream& in,
+            std::vector<Token>& tokenList,
+            std::vector<LexerAnalyzeError>& errorList,
+            bool seeCharConstantsAsNumerics = false
+        );
 
-private:
-    Lexer(const Lexer& lexer) {}
+    protected:
 
-};
+        /* ------------ 私有方法。 ------------ */
+
+        void fillTokenKind(Token& token);
+
+    protected:
+
+        /* ------------ 私有成员。 ------------ */
+        
+        Dfa lexDfa;
+        bool dfaReady = false;
+
+    private:
+        Lexer(const Lexer&) {}
+
+    };
+
+}

@@ -13,6 +13,7 @@
 #include "tc/main/LexerCli/LexerCli.h"
 
 using namespace std;
+using namespace tc;
 
 void LexerCli::printUsage(ostream& out) {
     out << "Lexer Cli - local lexical tool." << endl;

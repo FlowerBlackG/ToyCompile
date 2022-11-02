@@ -34,6 +34,10 @@
     #define KEYWORD(X, Y) TOK(kw_ ## X)
 #endif
 
+#ifndef UNARY_EXPR_OR_TYPE_TRAIT
+    #define UNARY_EXPR_OR_TYPE_TRAIT(I, E, K) KEYWORD(I, K)
+#endif
+
 /** not a token. */
 TOK(unknown)
 
@@ -184,7 +188,7 @@ KEYWORD(restrict                    , KEYC99)
 KEYWORD(return                      , KEYALL)
 KEYWORD(short                       , KEYALL)
 KEYWORD(signed                      , KEYALL)
-
+UNARY_EXPR_OR_TYPE_TRAIT(sizeof, SizeOf, KEYALL)
 KEYWORD(static                      , KEYALL)
 KEYWORD(struct                      , KEYALL)
 KEYWORD(switch                      , KEYALL)

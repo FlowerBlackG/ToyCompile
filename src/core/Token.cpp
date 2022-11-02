@@ -9,6 +9,7 @@
 
 
 using namespace std;
+using namespace tc;
 
 string_view Token::getKindName() {
     return magic_enum::enum_name(this->kind);

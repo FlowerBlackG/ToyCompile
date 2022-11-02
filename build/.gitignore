@@ -1,0 +1,9 @@
+
+core
+main
+resources
+*.tcdf
+*.cpp
+*.txt
+Makefile
+CMakeFiles

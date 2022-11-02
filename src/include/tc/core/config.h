@@ -6,4 +6,5 @@
 
 #pragma once
 
-const char* TC_CORE_CFG_LEXER_DFA_TCDF_PATH = "resources/c-dfa.tcdf";
+extern const char* TC_CORE_CFG_LEXER_DFA_TCDF_PATH;
+extern const char* TC_CORE_CFG_PARSER_C_TCEY_PATH;

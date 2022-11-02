@@ -13,6 +13,8 @@ add_library(
 
     # LexerCli
     LexerCli/LexerCli.cpp
+
+    ParserCli/ParserCli.cpp
 )
 
 target_include_directories(

@@ -18,6 +18,7 @@
 #include "tc/main/LexerServer/LexerServer.h"
 
 using namespace std;
+using namespace tc;
 
 void LexerServer::printUsage(std::ostream &out) {
     out << "Lexer Server - remote lexical tool." << endl;
@@ -30,7 +31,7 @@ void LexerServer::printUsage(std::ostream &out) {
     out << "  LexerServer -port:40800" << endl;
 }
 
-void printResult(ostream &out, vector<Token> &tkList, vector<LexerAnalyzeError> &tkErrList) {
+static void printResult(ostream &out, vector<Token> &tkList, vector<LexerAnalyzeError> &tkErrList) {
     out << "symbol count: " << tkList.size() << endl;
     out << "error count : " << tkErrList.size() << endl;
 

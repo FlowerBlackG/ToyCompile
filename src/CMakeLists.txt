@@ -22,7 +22,7 @@ ELSEIF (CMAKE_SYSTEM_NAME MATCHES "Windows")
 
     # 关联 boost 库。
     set(BOOST_ROOT "${PROJECT_SOURCE_DIR}/lib/lib/boost-win-x86_64-mingw")
-    message(STATUS boost root is: ${BOOST_ROOT})
+    message(STATUS "boost root is: ${BOOST_ROOT}")
     link_directories(${BOOST_ROOT})
     
     # 关联 winsock。
@@ -64,3 +64,5 @@ target_link_libraries(
     core
     main
 )
+
+file(COPY ${PROJECT_SOURCE_DIR}/../resources DESTINATION ${PROJECT_BINARY_DIR}/)
