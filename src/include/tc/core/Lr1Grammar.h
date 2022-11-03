@@ -10,6 +10,7 @@
 #pragma once
 
 #include <tc/core/Grammar.h>
+#include <tc/core/LrParserTable.h>
 #include <vector>
 
 namespace tc::lr1grammar {
@@ -24,8 +25,9 @@ namespace tc::lr1grammar {
      */
     struct Lr1Expression {
         /**
-         * 
+         * 原始表达式 id。
          * 对应一条 flat expression。
+         * 例：A -> aACd
          */
         int expressionId; 
 
@@ -34,17 +36,16 @@ namespace tc::lr1grammar {
          * 如：
          *   A -> aA·Cd, e 中，dotPos = 2。
          */
-        int dotPos;
+        int dotPos = -1;
 
         /**
-         * 展望字符。
+         * 展望字符的符号 id。
          * 如：
          *   A -> aA·Cd, e 中，paimon = e
          * 
          * 显然，paimon 必须是终结符。也可以是结束符号 (#)。
          * 
-         * paimon 原意为派蒙。在《原神》中，它永远跟随在主角身后。
-         * 
+         * paimon 名字来自《原神》，它永远跟随在主角身后。
          */
         int paimonId;
 
@@ -57,26 +58,21 @@ namespace tc::lr1grammar {
      * 由多个 LR1 项目共同组成。
      */
     struct State {
+
+        /**
+         * 状态编号。需要是不小于 0 的整数。
+         */
         int id = -1;
+
+        /**
+         * 状态内的表达式集合。
+         */
         std::vector< Lr1Expression > expressions;
         
         bool operator == (const State& other) const;
         bool operator != (const State& other) const;
     };
 
-    /**
-     * 状态转换描述信息。
-     * 
-     * 例：
-     *   I1     --B->     I2
-     *    ^       ^        ^
-     *  source  symbol  target
-     */
-    struct StateTransition {
-        int sourceId;
-        int targetId;
-        int symbolId;
-    };
 
     /**
      * LR1 文法。
@@ -92,6 +88,25 @@ namespace tc::lr1grammar {
          */
         void load(const grammar::Grammar& grammar);
 
+        /**
+         * 根据本 LR1 文法，构建 Action Goto 表。
+         * 
+         * @param table 构建结果。
+         */
+        void buildParserTable(LrParserTable& table);
+
+    public: // getters
+        const std::vector< grammar::Symbol >& getSymbolList() {
+            return this->symbolList;
+        }
+        
+        const std::vector< grammar::FlatExpression >& getFlatExpressions () {
+            return this->flatExpressions;
+        }
+
+        int getEntrySymbolId() { return this->entrySymbolId; }
+        int getEofSymbolId() { return this->eofSymbolId; }
+
     protected: // 私有成员。
         /**
          * 状态集。即，项目集的集合。
@@ -102,15 +117,30 @@ namespace tc::lr1grammar {
         /**
          * GO 函数列表。
          */
-        std::vector< StateTransition > transitions;
+        std::unordered_map<int, std::unordered_map<int, int> > transitionMap;
 
+        /**
+         * 文法符号表。符号 id 和其在表内下标保持一致。
+         */
         std::vector< grammar::Symbol > symbolList;
+
+        /**
+         * 文法产生式列表。产生式 id 和其在表内下标保持一致。
+         */
         std::vector< grammar::FlatExpression > flatExpressions;
+
+        /**
+         * 文法进入符号的 id。该符号应该是拓广后产生的。
+         */
         int entrySymbolId = -1;
+
+        /**
+         * 文件结尾符号（eof）的 id。
+         */
         int eofSymbolId = -1;
 
     protected: // 私有方法。
-        
+        // 暂无。
 
     private:
         Lr1Grammar() {}

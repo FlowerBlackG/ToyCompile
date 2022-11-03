@@ -95,7 +95,8 @@
         "typeindex": "cpp",
         "cfenv": "cpp",
         "unordered_set": "cpp",
-        "cinttypes": "cpp"
+        "cinttypes": "cpp",
+        "*.txt": "c"
     },
     "cmake.sourceDirectory": "${workspaceFolder}/src"
 }

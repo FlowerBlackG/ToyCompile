@@ -26,8 +26,19 @@ namespace tc::grammar {
 
     };
 
+    /**
+     * 文法符号。
+     */
     struct Symbol {
+
+        /**
+         * 符号名称。 
+         */
         std::string name;
+
+        /**
+         * 符号 id。应该设置为不小于 0 的数字。
+         */
         int id = -1;
 
         /** 标记符号是终结符或非终结符。 */
@@ -61,8 +72,12 @@ namespace tc::grammar {
      * 
      */
     struct Expression {
-        /** 表达式唯一识别编号。在 YaccTcey 内，id 即为表达式在列表内的下标。 */
-        int id;
+
+        /** 
+         * 表达式唯一识别编号。
+         * 表达式 id 必须设置，否则在比较相等时会出错。
+         */
+        int id = -1;
 
         /** 左值。对于 A -> BC，target 是 A。 */
         int targetSymbolId;
@@ -94,6 +109,10 @@ namespace tc::grammar {
      * symbol      rule
      */
     struct FlatExpression {
+
+        /**
+         * 应该设置为不小于 0 的值。可以不设置。
+         */
         int id = -1;
         int targetSymbolId;
 
@@ -118,8 +137,19 @@ namespace tc::grammar {
      */
     struct Grammar {
 
+        /**
+         * 文法符号表。符号 id 即为其在表内的下标。从 0 开始。
+         */
         std::vector< Symbol > symbols;
+
+        /**
+         * 文法进入符号的 id。
+         */
         int entryId;
+
+        /**
+         * 文法表达式。表达式内部包含“或”关系，分析时考虑先提取成 flat 表达式。
+         */
         std::vector< Expression > expressions;
 
     };

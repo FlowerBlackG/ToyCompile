@@ -103,13 +103,17 @@ namespace tc {
         grammar::Symbol getSymbolById(int id);
 
         /**
-         * 
+         * 加载表达式区域。该区域被两组 %% 符号包裹。
          * 
          * @return 是否读取成功。
-         *         若遇到结尾，或遇到严重错误，会返回 false。
+         *         若遇到异常结尾，或遇到严重错误，会返回 false。
          *         若成功读取一个表达式， 会返回 true。
          */
         bool loadExpression(std::istream& in);
+
+        /**
+         * 加载 tcey 拓展定义区域。
+         */
         YaccTceyError loadTceyBlock(std::istream& in);
 
     protected:

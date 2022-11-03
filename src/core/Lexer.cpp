@@ -213,6 +213,20 @@ void Lexer::analyze(
 
         }
     }
+
+    // 补充 eof。
+    Token eof;
+    eof.kind = TokenKind::eof;
+    eof.content = "<eof>";
+    eof.col = 1;
+    if (tokenList.empty()) {
+        eof.row = 1;
+    } else {
+        eof.row = tokenList.back().row + 1;
+    }
+
+    tokenList.push_back(eof);
+
 }
 
 /* ------------ 私有方法。 ------------ */

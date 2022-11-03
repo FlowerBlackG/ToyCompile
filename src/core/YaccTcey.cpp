@@ -211,7 +211,7 @@ grammar::Symbol YaccTcey::getSymbolById(int id) {
         res.id = -1;
         return res;
     } else {
-        return symbolList[id - 1];
+        return symbolList[id];
     }
 }
 
