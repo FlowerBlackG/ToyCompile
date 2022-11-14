@@ -120,7 +120,6 @@ unique_ptr<TcSubProgram> createSubProgram(const std::string& programName) {
 
         cout << "[Info] not subprogram specified. use LexerCli as default." << endl;
         return make_unique<LexerCli>();
-
     }
 }
 
