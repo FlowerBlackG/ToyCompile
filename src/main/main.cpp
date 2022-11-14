@@ -11,7 +11,7 @@
         ToyCompile (optional: s[sub program]) (0 or more: -[param name]:[param value])
 
     例：
-        ToyCompile sLexerCli -file:in.cpp
+        ToyCompile sLexerCli -fname:in.cpp
             使用 LexerCli 子程序，将参数 file 传递给该子程序。
 
 */
@@ -25,7 +25,7 @@
 #include <string>
 #include <vector>
 
-#include <tc/main/LexerServer/LexerServer.h>
+#include <tc/main/UniServer/UniServer.h>
 #include <tc/main/TcSubProgram.h>
 #include <tc/main/LexerCli/LexerCli.h>
 #include <tc/main/ParserCli/ParserCli.h>
@@ -104,13 +104,13 @@ bool parseParams(
  */
 unique_ptr<TcSubProgram> createSubProgram(const std::string& programName) {
     
-    if (programName == "LexerCli") {
+    if (programName == "UniServer") {
+
+        return make_unique<UniServer>();
+
+    } else if (programName == "LexerCli") {
 
         return make_unique<LexerCli>();
-
-    } else if (programName == "LexerServer") {
-
-        return make_unique<LexerServer>();
 
     } else if (programName == "ParserCli") {
 
@@ -120,7 +120,6 @@ unique_ptr<TcSubProgram> createSubProgram(const std::string& programName) {
 
         cout << "[Info] not subprogram specified. use LexerCli as default." << endl;
         return make_unique<LexerCli>();
-
     }
 }
 
