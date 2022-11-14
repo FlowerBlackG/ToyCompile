@@ -8,7 +8,7 @@
 #include <tc/core/config.h>
 #include <tc/main/TcSubProgram.h>
 
-class LexerServer : public TcSubProgram {
+class UniServer : public TcSubProgram {
 
 public:
 

@@ -8,8 +8,8 @@
 add_library(
     main 
 
-    # LexerServer
-    LexerServer/LexerServer.cpp
+    # UniServer
+        UniServer/UniServer.cpp
 
     # LexerCli
     LexerCli/LexerCli.cpp

@@ -8,7 +8,7 @@
 #include <memory>
 #include <fstream>
 
-#include <tc/main/LexerServer/LexerServer.h>
+#include "tc/main/UniServer/UniServer.h"
 #include <tc/core/LrParserTable.h>
 #include <tc/core/YaccTcey.h>
 #include <tc/core/Lr1Grammar.h>
@@ -23,15 +23,15 @@
 using namespace std;
 using namespace tc;
 
-void LexerServer::printUsage(std::ostream &out) {
-    out << "Lexer Server - remote lexical tool." << endl;
+void UniServer::printUsage(std::ostream &out) {
+    out << "Uni Server - remote lexical tool." << endl;
     out << endl;
     out << "params:" << endl;
     out << "  port:[x] run the server on port x." << endl;
     out << "  help: get usage." << endl;
     out << endl;
     out << "examples:" << endl;
-    out << "  LexerServer -port:40800" << endl;
+    out << "  sUniServer -port:40800" << endl;
 }
 
 static void printResult(ostream &out, vector<Token> &tkList, vector<LexerAnalyzeError> &tkErrList) {
@@ -110,7 +110,7 @@ string lexerAnalysis(vector<Token> &tokens, vector<LexerAnalyzeError> &lexerErro
     stringstream output;
 
     if (!lexer.dfaIsReady()) {
-        output << "[Error] LexerServer: failed to init lexer." << endl;
+        output << "[Error] UniServer: failed to init lexer." << endl;
         return output.str();
     }
 
@@ -164,8 +164,8 @@ string parserAnalysis(vector<Token> &tokens, vector<LexerAnalyzeError> &lexerErr
     return output.str();
 }
 
-int LexerServer::run(std::map<std::string, std::string> &paramMap, std::set<std::string> &paramSet,
-                     std::vector<std::string> &additionalValues, std::istream &in, std::ostream &out) {
+int UniServer::run(std::map<std::string, std::string> &paramMap, std::set<std::string> &paramSet,
+                   std::vector<std::string> &additionalValues, std::istream &in, std::ostream &out) {
 
     // 准备。
 
@@ -177,12 +177,12 @@ int LexerServer::run(std::map<std::string, std::string> &paramMap, std::set<std:
     int port = 40800;
 
     if (!paramMap.count("port")) {
-        out << "[INFO] LexerServer: port not found, use 40800." << endl;
+        out << "[INFO] UniServer: port not found, use 40800." << endl;
     } else {
         try {
             port = stoi(paramMap["port"]);
         } catch (const exception &e) {
-            out << "[ERROR] LexerServer: " << e.what() << endl;
+            out << "[ERROR] UniServer: " << e.what() << endl;
         }
     }
 

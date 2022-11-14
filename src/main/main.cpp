@@ -25,7 +25,7 @@
 #include <string>
 #include <vector>
 
-#include <tc/main/LexerServer/LexerServer.h>
+#include <tc/main/UniServer/UniServer.h>
 #include <tc/main/TcSubProgram.h>
 #include <tc/main/LexerCli/LexerCli.h>
 #include <tc/main/ParserCli/ParserCli.h>
@@ -104,13 +104,13 @@ bool parseParams(
  */
 unique_ptr<TcSubProgram> createSubProgram(const std::string& programName) {
     
-    if (programName == "LexerCli") {
+    if (programName == "UniServer") {
+
+        return make_unique<UniServer>();
+
+    } else if (programName == "LexerCli") {
 
         return make_unique<LexerCli>();
-
-    } else if (programName == "LexerServer") {
-
-        return make_unique<LexerServer>();
 
     } else if (programName == "ParserCli") {
 
