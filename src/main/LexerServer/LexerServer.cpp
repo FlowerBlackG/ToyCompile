@@ -35,32 +35,32 @@ void LexerServer::printUsage(std::ostream &out) {
 }
 
 static void printResult(ostream &out, vector<Token> &tkList, vector<LexerAnalyzeError> &tkErrList) {
-    out << "symbol count: " << tkList.size() << endl;
-    out << "error count : " << tkErrList.size() << endl;
+    out << "symbol count: " << tkList.size() << "\\n";
+    out << "error count : " << tkErrList.size() << "\\n";
 
-    out << endl;
+    out << "\\n";
 
     for (auto &tk: tkList) {
-        out << "token" << endl;
-        out << "pos    : <" << tk.row << ", " << tk.col << ">" << endl;
-        out << "kind   : " << tk.getKindName() << endl;
-        out << "kind id: " << (unsigned) tk.kind << endl;
-        out << "content: " << endl;
-        out << tk.content << endl;
-        out << "--- end of token ---" << endl;
+        out << "token" << "\\n";
+        out << "pos    : <" << tk.row << ", " << tk.col << ">" << "\\n";
+        out << "kind   : " << tk.getKindName() << "\\n";
+        out << "kind id: " << (unsigned) tk.kind << "\\n";
+        out << "content: " << "\\n";
+        out << tk.content << "\\n";
+        out << "--- end of token ---" << "\\n";
     }
 
     for (auto &err: tkErrList) {
-        out << "error" << endl;
-        out << "pos    : <" << err.row << ", " << err.col << ">" << endl;
-        out << "dfa sid: " << err.dfaNodeInfo.id << endl;
-        out << "content: " << endl;
-        out << err.token.content << endl;
-        out << "--- end of error ---" << endl;
+        out << "error" << "\\n";
+        out << "pos    : <" << err.row << ", " << err.col << ">" << "\\n";
+        out << "dfa sid: " << err.dfaNodeInfo.id << "\\n";
+        out << "content: " << "\\n";
+        out << err.token.content << "\\n";
+        out << "--- end of error ---" << "\\n";
     }
 }
 
-static void dumpNodeName(const AstNode* node, ostream& out) {
+static void dumpNodeName(const AstNode *node, ostream &out) {
 
     out << "\"";
 
@@ -75,9 +75,25 @@ static void dumpNodeName(const AstNode* node, ostream& out) {
     out << "\"";
 }
 
-static void dumpNode(const AstNode* curr, ostream& out) {
-    for (auto it : curr->children) {
-        dumpNode(it, out);
+static void dumpNode(const AstNode *curr, ostream &out) {
+    out << "{\"name\": ";
+    dumpNodeName(curr, out);
+    if (!curr->children.empty()) {
+        out << ", \"children\": [";
+        for (auto it: curr->children) {
+            dumpNode(it, out);
+            if (it != curr->children.back()) {
+                out << ",";
+            }
+        }
+        out << "]";
+    }
+    out << "}";
+}
+
+static void dumpNodeGraph(const AstNode *curr, ostream &out) {
+    for (auto it: curr->children) {
+        dumpNodeGraph(it, out);
     }
 
     if (curr->mother != nullptr) {
@@ -89,13 +105,13 @@ static void dumpNode(const AstNode* curr, ostream& out) {
     }
 }
 
-stringstream lexerAnalysis(vector<Token> &tokens, vector<LexerAnalyzeError> &lexerErrors, const std::string &data) {
+string lexerAnalysis(vector<Token> &tokens, vector<LexerAnalyzeError> &lexerErrors, const std::string &data) {
     Lexer lexer;
     stringstream output;
 
     if (!lexer.dfaIsReady()) {
         output << "[Error] LexerServer: failed to init lexer." << endl;
-        return output;
+        return output.str();
     }
 
     tokens.clear();
@@ -104,10 +120,10 @@ stringstream lexerAnalysis(vector<Token> &tokens, vector<LexerAnalyzeError> &lex
     stringstream input(data);
     lexer.analyze(input, tokens, lexerErrors);
     printResult(output, tokens, lexerErrors);
-    return output;
+    return output.str();
 }
 
-stringstream parserAnalysis(vector<Token> &tokens, vector<LexerAnalyzeError> &lexerErrors) {
+string parserAnalysis(vector<Token> &tokens, vector<LexerAnalyzeError> &lexerErrors) {
     LrParserTable table;
     stringstream output;
 
@@ -116,7 +132,7 @@ stringstream parserAnalysis(vector<Token> &tokens, vector<LexerAnalyzeError> &le
     if (yacc.errcode != YaccTceyError::TCEY_OK) {
         output << "[error] ";
         output << yacc.errmsg << endl;
-        return output;
+        return output.str();
     }
 
     auto &grammar = yacc.grammar;
@@ -140,14 +156,12 @@ stringstream parserAnalysis(vector<Token> &tokens, vector<LexerAnalyzeError> &le
             }
             output << endl;
         }
-        return output;
+        return output.str();
     }
 
     AstNode *astRoot = parser.getAstRoot(); // 语法树根节点。
-    output << "[";
     dumpNode(astRoot, output);
-    output << "]";
-    return output;
+    return output.str();
 }
 
 int LexerServer::run(std::map<std::string, std::string> &paramMap, std::set<std::string> &paramSet,
@@ -190,9 +204,9 @@ int LexerServer::run(std::map<std::string, std::string> &paramMap, std::set<std:
             .onmessage([&](crow::websocket::connection &conn, const std::string &data, bool is_binary) {
                 stringstream output;
                 output << R"({"lexer": ")";
-                lexerAnalysis(tokens, lexerErrors, data);
+                output << lexerAnalysis(tokens, lexerErrors, data);
                 output << R"(", "parser": )";
-                parserAnalysis(tokens, lexerErrors);
+                output << parserAnalysis(tokens, lexerErrors);
                 output << R"(})";
                 if (is_binary)
                     conn.send_binary(output.str());
