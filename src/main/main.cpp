@@ -11,7 +11,7 @@
         ToyCompile (optional: s[sub program]) (0 or more: -[param name]:[param value])
 
     例：
-        ToyCompile sLexerCli -file:in.cpp
+        ToyCompile sLexerCli -fname:in.cpp
             使用 LexerCli 子程序，将参数 file 传递给该子程序。
 
 */

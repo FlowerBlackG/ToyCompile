@@ -8,14 +8,17 @@
 #include <memory>
 #include <fstream>
 
+#include <tc/main/LexerServer/LexerServer.h>
+#include <tc/core/LrParserTable.h>
+#include <tc/core/YaccTcey.h>
+#include <tc/core/Lr1Grammar.h>
+#include <tc/core/Parser.h>
+
 #include <tc/core/Dfa.h>
 #include <tc/core/Token.h>
 
 #include <tc/core/Lexer.h>
-#include <magic_enum/magic_enum.hpp>
 #include <crow/crow_all.h>
-
-#include "tc/main/LexerServer/LexerServer.h"
 
 using namespace std;
 using namespace tc;
@@ -57,6 +60,96 @@ static void printResult(ostream &out, vector<Token> &tkList, vector<LexerAnalyze
     }
 }
 
+static void dumpNodeName(const AstNode* node, ostream& out) {
+
+    out << "\"";
+
+    out << node << "\\n";
+    out << node->symbol.name;
+
+    if (node->symbolType == grammar::SymbolType::TERMINAL) {
+        out << "\\n" << node->token.content;
+        out << "\\n(" << node->token.row << ", " << node->token.col << ")";
+    }
+
+    out << "\"";
+}
+
+static void dumpNode(const AstNode* curr, ostream& out) {
+    for (auto it : curr->children) {
+        dumpNode(it, out);
+    }
+
+    if (curr->mother != nullptr) {
+        out << "{\"source\": ";
+        dumpNodeName(curr->mother, out);
+        out << ", \"target\":";
+        dumpNodeName(curr, out);
+        out << "},";
+    }
+}
+
+stringstream lexerAnalysis(vector<Token> &tokens, vector<LexerAnalyzeError> &lexerErrors, const std::string &data) {
+    Lexer lexer;
+    stringstream output;
+
+    if (!lexer.dfaIsReady()) {
+        output << "[Error] LexerServer: failed to init lexer." << endl;
+        return output;
+    }
+
+    tokens.clear();
+    lexerErrors.clear();
+
+    stringstream input(data);
+    lexer.analyze(input, tokens, lexerErrors);
+    printResult(output, tokens, lexerErrors);
+    return output;
+}
+
+stringstream parserAnalysis(vector<Token> &tokens, vector<LexerAnalyzeError> &lexerErrors) {
+    LrParserTable table;
+    stringstream output;
+
+    // 从语法定义文件加载 action goto 表。
+    YaccTcey yacc(TC_CORE_CFG_PARSER_C_TCEY_PATH);
+    if (yacc.errcode != YaccTceyError::TCEY_OK) {
+        output << "[error] ";
+        output << yacc.errmsg << endl;
+        return output;
+    }
+
+    auto &grammar = yacc.grammar;
+    lr1grammar::Lr1Grammar lr1(grammar);
+    lr1.buildParserTable(table); // 构建 action goto 表。
+
+    /* -------- 语法识别。 -------- */
+
+    Parser parser(table);
+
+    vector<ParserParseError> parserErrors;
+    parser.parse(tokens, parserErrors);
+
+    if (!parserErrors.empty()) {
+        for (auto &err: parserErrors) {
+            output << "parser error: " << err.msg << ". ";
+            if (err.tokenRelated) {
+                output << "at: (" << err.token.row
+                       << ", " << err.token.col << "), " << err.token.content
+                       << ". ";
+            }
+            output << endl;
+        }
+        return output;
+    }
+
+    AstNode *astRoot = parser.getAstRoot(); // 语法树根节点。
+    output << "[";
+    dumpNode(astRoot, output);
+    output << "]";
+    return output;
+}
+
 int LexerServer::run(std::map<std::string, std::string> &paramMap, std::set<std::string> &paramSet,
                      std::vector<std::string> &additionalValues, std::istream &in, std::ostream &out) {
 
@@ -74,22 +167,15 @@ int LexerServer::run(std::map<std::string, std::string> &paramMap, std::set<std:
     } else {
         try {
             port = stoi(paramMap["port"]);
-        } catch (const exception& e) {
+        } catch (const exception &e) {
             out << "[ERROR] LexerServer: " << e.what() << endl;
         }
     }
 
-
     // 处理。
 
-    Lexer lexer;
-    if (!lexer.dfaIsReady()) {
-        out << "[Error] LexerServer: failed to init lexer." << endl;
-        return -3;
-    }
-
-    vector<Token> tkList;
-    vector<LexerAnalyzeError> tkErrList;
+    vector<Token> tokens;
+    vector<LexerAnalyzeError> lexerErrors;
 
     crow::SimpleApp app;
 
@@ -102,16 +188,16 @@ int LexerServer::run(std::map<std::string, std::string> &paramMap, std::set<std:
                 out << "websocket connection closed: " << reason << endl;
             })
             .onmessage([&](crow::websocket::connection &conn, const std::string &data, bool is_binary) {
-                tkList.clear();
-                tkErrList.clear();
-                stringstream fin(data);
-                lexer.analyze(fin, tkList, tkErrList);
-                stringstream fout;
-                printResult(fout, tkList, tkErrList);
+                stringstream output;
+                output << R"({"lexer": ")";
+                lexerAnalysis(tokens, lexerErrors, data);
+                output << R"(", "parser": )";
+                parserAnalysis(tokens, lexerErrors);
+                output << R"(})";
                 if (is_binary)
-                    conn.send_binary(fout.str());
+                    conn.send_binary(output.str());
                 else
-                    conn.send_text(fout.str());
+                    conn.send_text(output.str());
             });
 
     app.port(port)
