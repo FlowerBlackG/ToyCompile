@@ -105,6 +105,42 @@ static void dumpNodeGraph(const AstNode *curr, ostream &out) {
     }
 }
 
+static void __tcDumpNodeName(const AstNode* node, ostream& out) {
+
+    out << "\"";
+
+    out << node << "\\n";
+    out << node->symbol.name;
+
+    if (node->symbolType == grammar::SymbolType::TERMINAL) {
+        out << "\\n" << node->token.content;
+        out << "\\n(" << node->token.row << ", " << node->token.col << ")";
+    }
+
+    out << "\"";
+}
+
+static void __tcDumpNode(const AstNode* curr, ostream& out) {
+    for (auto it : curr->children) {
+        __tcDumpNode(it, out);
+    }
+
+    if (curr->mother != nullptr) {
+        __tcDumpNodeName(curr->mother, out);
+        out << " -> ";
+        __tcDumpNodeName(curr, out);
+        out << ";\n";
+    }
+}
+
+static void __tcDumpToDot(const AstNode* root, ostream& out) {
+    out << "digraph G1 {" << endl;
+
+    __tcDumpNode(root, out);
+
+    out << "}" << endl;
+}
+
 string lexerAnalysis(vector<Token> &tokens, vector<LexerAnalyzeError> &lexerErrors, const std::string &data) {
     Lexer lexer;
     stringstream output;
@@ -127,17 +163,25 @@ string parserAnalysis(vector<Token> &tokens, vector<LexerAnalyzeError> &lexerErr
     LrParserTable table;
     stringstream output;
 
-    // 从语法定义文件加载 action goto 表。
-    YaccTcey yacc(TC_CORE_CFG_PARSER_C_TCEY_PATH);
-    if (yacc.errcode != YaccTceyError::TCEY_OK) {
-        output << "[error] ";
-        output << yacc.errmsg << endl;
-        return output.str();
+    bool tableLoadedFromCache = false; // 是否成功从缓存加载。
+    string cacheTableFilePath = TC_CORE_CFG_PARSER_C_TCEY_PATH;
+    ifstream fin(cacheTableFilePath + ".tcpt", ios::binary);
+    if (fin.is_open()) {
+        tableLoadedFromCache = table.load(fin, output) == 0;
     }
 
-    auto &grammar = yacc.grammar;
-    lr1grammar::Lr1Grammar lr1(grammar);
-    lr1.buildParserTable(table); // 构建 action goto 表。
+    if (!tableLoadedFromCache) {
+        // 从语法定义文件加载 action goto 表。
+        YaccTcey yacc(TC_CORE_CFG_PARSER_C_TCEY_PATH);
+        if (yacc.errcode != YaccTceyError::TCEY_OK) {
+            output << "[error] ";
+            output << yacc.errmsg << endl;
+            return output.str();
+        }
+        auto &grammar = yacc.grammar;
+        lr1grammar::Lr1Grammar lr1(grammar);
+        lr1.buildParserTable(table); // 构建 action goto 表。
+    }
 
     /* -------- 语法识别。 -------- */
 
@@ -161,6 +205,12 @@ string parserAnalysis(vector<Token> &tokens, vector<LexerAnalyzeError> &lexerErr
 
     AstNode *astRoot = parser.getAstRoot(); // 语法树根节点。
     dumpNode(astRoot, output);
+    ofstream fout;
+    fout.open("parser.dot", ios::out | ios::trunc);
+    if (fout.is_open()) {
+        __tcDumpToDot(astRoot, fout);
+        fout.close();
+    }
     return output.str();
 }
 
@@ -208,15 +258,24 @@ int UniServer::run(std::map<std::string, std::string> &paramMap, std::set<std::s
                 output << R"(", "parser": )";
                 output << parserAnalysis(tokens, lexerErrors);
                 output << R"(})";
+                system("dot parser.dot -T pdf -o parser.pdf");
                 if (is_binary)
                     conn.send_binary(output.str());
                 else
                     conn.send_text(output.str());
             });
 
+    CROW_ROUTE(app, "/file")
+            ([](crow::response &res) {
+                res.set_header("Content-Type", "application/octet-stream");
+                res.set_static_file_info("parser.pdf");
+                res.end();
+            });
+
     app.port(port)
             .multithreaded()
             .run();
+
     return 0;
 }
 
