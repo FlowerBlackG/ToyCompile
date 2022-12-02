@@ -13,6 +13,7 @@
 #include <map>
 #include <string>
 #include <tc/core/TokenKinds.h>
+#include <tc/core/SymbolKinds.h>
 
 namespace tc::grammar {
 
@@ -44,8 +45,11 @@ namespace tc::grammar {
         /** 标记符号是终结符或非终结符。 */
         SymbolType type;
 
-        /** 符号类型。仅对终结符有效。 */
+        /** 符号类型。仅对 终结符 有效。 */
         TokenKind tokenKind;
+
+        /** 符号类型。仅对 非终结符 有效。 */
+        SymbolKind symbolKind;
 
         bool operator == (const Symbol& symbol) const {
             if (id >= 0 && id == symbol.id) {

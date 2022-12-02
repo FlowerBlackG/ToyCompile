@@ -185,6 +185,8 @@ grammar::Symbol YaccTcey::nameToGrammarSymbol(const string& symbolName) {
     if (symbolName[0] >= 'a' && symbolName[0] <= 'z') {
         // 非终结符。
         symbol.type = grammar::SymbolType::NON_TERMINAL;
+        symbol.symbolKind = SymbolKindUtils::getInstance().symbolKindMap[symbolName];
+        
     } else {
         // 终结符。
         symbol.type = grammar::SymbolType::TERMINAL;

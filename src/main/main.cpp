@@ -32,6 +32,29 @@
 
 using namespace std;
 
+static void printUsage(const char* appPath = "ToyCompile") {
+    cout << endl;
+    cout << "ToyCompile" << endl;
+    cout << endl;
+    cout << "usage: " << appPath << " s[subprogram name] [options]" << endl;
+    cout << endl;
+    cout << "available programs:" << endl;
+    cout << "  LexerCli - Lexical Analyzer." << endl;
+    cout << "  ParserCli - Syntex Analyzer to generate syntex tree." << endl;
+    cout << "  UniServer - a bridge between ToyCompile core and frontend." << endl;
+    cout << endl;
+    cout << "options are passed to subprogram." << endl;
+    cout << "  with format: -[key]:[value]" << endl;
+    cout << "  or flag: -[flag]" << endl;
+    cout << endl;
+    cout << "to get help for subprograms, try:" << endl;
+    cout << "  ToyCompile s[subprogram name] -help" << endl;
+    cout << endl;
+    cout << "example:" << endl;
+    cout << "  ToyCompile sParserCli -fname:./test.c -dot-file:out.dot -rebuild-table" << endl;
+    cout << endl;
+}
+
 /**
  * 解析命令行参数。
  * 
@@ -44,7 +67,7 @@ using namespace std;
  * 
  * @return 是否遇到错误。如果返回为 false，表示命令行解析遇到致命问题。
  */
-bool parseParams(
+static bool parseParams(
     int argc, const char** argv,
     map<string, string>& paramMap,
     set<string>& paramSet,
@@ -102,7 +125,7 @@ bool parseParams(
  * @param programName 程序名称。错误或空则返回默认程序。
  * @return 返回子程序指针。
  */
-unique_ptr<TcSubProgram> createSubProgram(const std::string& programName) {
+static unique_ptr<TcSubProgram> createSubProgram(const std::string& programName) {
     
     if (programName == "UniServer") {
 
@@ -119,9 +142,12 @@ unique_ptr<TcSubProgram> createSubProgram(const std::string& programName) {
     } else {
 
         cout << "[Info] not subprogram specified. use LexerCli as default." << endl;
+        printUsage();
         return make_unique<LexerCli>();
     }
 }
+
+
 
 int main(int argc, const char* argv[]) {
     map<string, string> paramMap;
@@ -131,10 +157,11 @@ int main(int argc, const char* argv[]) {
 
     if (!parseParams(argc, argv, paramMap, paramSet, subProgramName, additionalValues)) {
         cout << "[Error] main: failed to parse commandline arguments." << endl;
+        printUsage();
         return -1;
     }
 
-    auto subProgram = std::move(createSubProgram(subProgramName));
+    auto subProgram = createSubProgram(subProgramName);
 
     int resCode = subProgram->run(
         paramMap, paramSet, additionalValues, cin, cout

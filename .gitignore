@@ -16,3 +16,7 @@ cmake-build-debug
 
 build/*/*.a
 *.exe
+
+.llvm-lab/
+
+build/
