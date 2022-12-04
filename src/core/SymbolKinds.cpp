@@ -79,11 +79,14 @@ void SymbolKindUtils::makeSymbolKindMap() {
     symbolKindMap["declaration_list"] = SymbolKind::declaration_list;
     symbolKindMap["identifier_list"] = SymbolKind::identifier_list;
     symbolKindMap["enumerator_list"] = SymbolKind::enumerator_list;
+    symbolKindMap["designator_list"] = SymbolKind::designator_list;
     symbolKindMap["struct_or_union_specifier"] = SymbolKind::struct_or_union_specifier;
+    symbolKindMap["block_item"] = SymbolKind::block_item;
     symbolKindMap["exclusive_or_expression"] = SymbolKind::exclusive_or_expression;
     symbolKindMap["declaration_specifiers"] = SymbolKind::declaration_specifiers;
     symbolKindMap["type_qualifier_list"] = SymbolKind::type_qualifier_list;
     symbolKindMap["struct_declarator"] = SymbolKind::struct_declarator;
+    symbolKindMap["designation"] = SymbolKind::designation;
     symbolKindMap["struct_or_union"] = SymbolKind::struct_or_union;
     symbolKindMap["equality_expression"] = SymbolKind::equality_expression;
     symbolKindMap["initializer_list"] = SymbolKind::initializer_list;
@@ -92,6 +95,7 @@ void SymbolKindUtils::makeSymbolKindMap() {
     symbolKindMap["translation_unit"] = SymbolKind::translation_unit;
     symbolKindMap["init_declarator_list"] = SymbolKind::init_declarator_list;
     symbolKindMap["inclusive_or_expression"] = SymbolKind::inclusive_or_expression;
+    symbolKindMap["designator"] = SymbolKind::designator;
     symbolKindMap["conditional_expression"] = SymbolKind::conditional_expression;
     symbolKindMap["selection_statement"] = SymbolKind::selection_statement;
     symbolKindMap["constant_expression"] = SymbolKind::constant_expression;
@@ -101,7 +105,7 @@ void SymbolKindUtils::makeSymbolKindMap() {
     symbolKindMap["shift_expression"] = SymbolKind::shift_expression;
     symbolKindMap["enumerator"] = SymbolKind::enumerator;
     symbolKindMap["labeled_statement"] = SymbolKind::labeled_statement;
-    symbolKindMap["statement_list"] = SymbolKind::statement_list;
+    symbolKindMap["block_item_list"] = SymbolKind::block_item_list;
     symbolKindMap["external_declaration"] = SymbolKind::external_declaration;
     symbolKindMap["expression"] = SymbolKind::expression;
     symbolKindMap["type_specifier"] = SymbolKind::type_specifier;

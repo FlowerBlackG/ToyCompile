@@ -51,6 +51,9 @@ namespace tc::tcir {
         
         std::vector< FunctionParamSymbol > params;
 
+
+
+
     };
 
     struct VariableSymbol : SymbolBase {
@@ -61,6 +64,10 @@ namespace tc::tcir {
     };
     
 
+    /**
+     * 
+     * 其接管内部函数表和变量表的内存。
+     */
     struct GlobalSymbolTable {
 
         std::map< std::string, FunctionSymbol* > functions;

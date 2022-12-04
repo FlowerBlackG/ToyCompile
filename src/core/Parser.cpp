@@ -8,6 +8,10 @@
 
 #include <tc/core/Parser.h>
 
+//////
+#include <tc/core/tcir/IrGenerator.h>
+//////
+
 using namespace std;
 using namespace tc;
 
@@ -230,6 +234,15 @@ int Parser::parse(
         }
 
     }
+
+    ////////
+    tcir::IrGenerator irGen;
+    irGen.process(astRoot);
+    auto& errs = irGen.errorList;
+    for (auto it : errs) {
+        cout << "error: " << it.msg << endl;
+    }
+    ////////
 
     return errorCount;
 }

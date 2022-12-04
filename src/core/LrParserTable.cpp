@@ -34,7 +34,8 @@ void LrParserTable::dump(ostream& out) {
     // 符号表
     for (auto& sym : symbolList) {
         out << "sym " << sym.name << " " << sym.id << " "
-            << int(sym.type) << " " << int(sym.tokenKind) << endl;
+            << int(sym.type) << " " << int(sym.tokenKind)
+            << " " << int(sym.symbolKind) << endl;
     }
 
     // 表达式表
@@ -89,13 +90,14 @@ int LrParserTable::load(istream& in, ostream& msgOut) {
             } else if (cmd == "sym") {
                 symbolList.emplace_back();
                 auto& sym = symbolList.back();
-                string n, i, t, tk;
-                in >> n >> i >> t >> tk;
+                string n, i, t, tk, sk;
+                in >> n >> i >> t >> tk >> sk;
                 
                 sym.id = stoi(i);
                 sym.name = n;
                 sym.type = static_cast<grammar::SymbolType>(stoi(t));
                 sym.tokenKind = static_cast<TokenKind>(stoi(tk));
+                sym.symbolKind = static_cast<SymbolKind>(stoi(sk));
             } else if (cmd == "fe") {
                 
                 flatExpressions.emplace_back();

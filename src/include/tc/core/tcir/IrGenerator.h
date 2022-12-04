@@ -26,11 +26,14 @@ namespace tc::tcir {
 
     class IrGenerator {
     public:
+        IrGenerator() {}
+
+    public:
         int process(AstNode* root);
 
         void clear();
 
-    protected:
+    // protected:
         VariableDescriptionTable varDescTable;
         GlobalSymbolTable globalSymbolTable;
 
@@ -59,7 +62,15 @@ namespace tc::tcir {
         void processExternalDeclaration(AstNode* node);
         void processFunctionDeclaration(AstNode* node);
 
-        
+        /**
+         * 处理 declaration_specifiers 节点。
+         * 暂时只支持 int 和 void。
+         * 
+         * @return int 处理过程产生的错误数量。
+         */
+        int processDeclarationSpecifiers(
+            AstNode* node, std::vector< TokenKind >& tokenListContainer
+        );
 
 
     private:
