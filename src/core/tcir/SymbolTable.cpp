@@ -9,6 +9,30 @@
 using namespace std;
 using namespace tc;
 
+
+tcir::FunctionParamSymbol* tcir::FunctionSymbol::findParamSymbol(
+    const std::string& paramName
+) {
+
+    for (auto it : this->params) {
+        if (it.name == paramName) {
+            return &it;
+        }
+    }
+
+    return nullptr;
+
+}
+
+tcir::VariableSymbol* tcir::GlobalSymbolTable::getVariable(const string& name) {
+    if (this->variables.count(name)) {
+
+        return this->variables[name];
+    } else {
+        return nullptr;
+    }
+}
+
 void tcir::GlobalSymbolTable::clear() {
     for (auto it : functions) {
         if (it.second) {
@@ -57,43 +81,65 @@ tcir::VariableDescriptionTable::~VariableDescriptionTable() {
     this->clear();
 }
 
-tcir::VariableSymbol* tcir::BlockSymbolTable::get(const string& name) {
+tcir::VariableSymbol* tcir::BlockSymbolTable::get(
+    const string& name, 
+    bool allowFromParents
+) {
 
     if (symbolNameMap.count(name)) {
         return symbolNameMap[name];
-    } else {
+    } else if (this->parent == this || !allowFromParents) {
         return nullptr;
+    } else {
+        return this->parent->get(name, true);
     }
 
 }
 
-tcir::VariableSymbol* tcir::BlockSymbolTable::get(int id) {
+tcir::VariableSymbol* tcir::BlockSymbolTable::get(int id, bool allowFromParents) {
+
+    VariableSymbol* res;
 
     if (symbols.empty()) {
-        return nullptr;
-    }
 
-    int left = 0;
-    int right = symbols.size() - 1;
+        res = nullptr;
 
-    while (left < right) {
+    } else {
 
-        int mid = (left + right) / 2;
-        
-        if (id <= symbols[mid]->id) {
+        int left = 0;
+        int right = symbols.size() - 1;
 
-            right = mid;
-        
-        } else {
-        
-            left = mid + 1;
-        
+        while (left < right) {
+
+            int mid = (left + right) / 2;
+            
+            if (id <= symbols[mid]->id) {
+
+                right = mid;
+            
+            } else {
+            
+                left = mid + 1;
+            
+            }
         }
+
+        res = symbols[left];
     }
 
-    auto symbolFound = symbols[left];
+    if (res->id == id) {
 
-    return symbolFound->id == id ? symbolFound : nullptr;
+        return res;
+
+    } else if (this->parent == this || !allowFromParents) {
+
+        return nullptr;
+
+    } else {
+
+        return this->parent->get(id, true);
+
+    }
 
 }
 
@@ -103,7 +149,7 @@ tcir::BlockSymbolTable::~BlockSymbolTable() {
     
 }
 
-void tcir::BlockSymbolTable::create(tcir::VariableSymbol* symbol) {
+void tcir::BlockSymbolTable::put(tcir::VariableSymbol* symbol) {
     symbols.push_back(symbol);
     symbolNameMap[symbol->name] = symbol;
     descTable->put(symbol);

@@ -51,7 +51,13 @@ namespace tc::tcir {
         
         std::vector< FunctionParamSymbol > params;
 
-
+        /**
+         *
+         * 
+         * @param paramName 参数名。
+         * @return 指向参数表内某符号的指针。注意，参数表发生变化时，可能导致该指针失效。 
+         */
+        FunctionParamSymbol* findParamSymbol(const std::string& paramName);
 
 
     };
@@ -60,7 +66,7 @@ namespace tc::tcir {
         int id;
         int bytes;
         ValueType valueType;
-
+        long long initValue = 0;
     };
     
 
@@ -72,6 +78,8 @@ namespace tc::tcir {
 
         std::map< std::string, FunctionSymbol* > functions;
         std::map< std::string, VariableSymbol* > variables;
+
+        VariableSymbol* getVariable(const std::string& name);
 
         void clear();
 
@@ -102,14 +110,14 @@ namespace tc::tcir {
 
         BlockSymbolTable* parent = this;
 
-        VariableSymbol* get(const std::string& name);
-        VariableSymbol* get(int id);
+        VariableSymbol* get(const std::string& name, bool allowFromParents);
+        VariableSymbol* get(int id, bool allowFromParents);
 
         /**
          * 将一个变量符号加入到符号表内。
          * 加入后，该符号的内存将由符号描述表管理。
          */
-        void create(VariableSymbol* symbol);
+        void put(VariableSymbol* symbol);
 
         ~BlockSymbolTable();
     };

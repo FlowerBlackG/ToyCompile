@@ -236,11 +236,13 @@ int Parser::parse(
     }
 
     ////////
-    tcir::IrGenerator irGen;
-    irGen.process(astRoot);
-    auto& errs = irGen.errorList;
-    for (auto it : errs) {
-        cout << "error: " << it.msg << endl;
+    if (!errorCount) {
+        tcir::IrGenerator irGen;
+        irGen.process(astRoot);
+        auto& errs = irGen.errorList;
+        for (auto it : errs) {
+            cout << "error: " << it.msg << endl;
+        }
     }
     ////////
 
