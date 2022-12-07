@@ -14,17 +14,32 @@
 
 namespace tc::tcir {
 
+    /**
+     * 符号可见性。
+     */
     enum class SymbolVisibility {
 
+        /**
+         * 内部。如：非全局变量，private 和 static 的函数。
+         */
         internal, // 就像 static
         global
 
     };
 
     enum class SymbolType {
+
+        /** 函数定义。 */
         functionDefine,
+
+        /** 结构体。 */
         structureDefine,
-        variableDefine
+
+        /** 变量。 */
+        variableDefine,
+
+        /** 函数参数。 */
+        functionParam
     };
 
     struct SymbolBase {
@@ -33,15 +48,14 @@ namespace tc::tcir {
         std::string name;
     };
 
-    struct FunctionParamSymbol {
-        ValueType type;
+    struct FunctionParamSymbol : SymbolBase {
+        ValueType valueType;
         bool isPointer = false;
 
         /**
          * 是否为变长参数标记。即：...
          */
         bool isVaList = false;
-        std::string name;
     };
 
     struct FunctionSymbol : SymbolBase {
@@ -52,7 +66,7 @@ namespace tc::tcir {
         std::vector< FunctionParamSymbol > params;
 
         /**
-         *
+         * 寻找函数参数。如果找不到，会返回 nullptr。
          * 
          * @param paramName 参数名。
          * @return 指向参数表内某符号的指针。注意，参数表发生变化时，可能导致该指针失效。 
@@ -66,6 +80,8 @@ namespace tc::tcir {
         int id;
         int bytes;
         ValueType valueType;
+
+        /** 默认值。对全局变量有效。 */
         long long initValue = 0;
     };
     
@@ -87,6 +103,10 @@ namespace tc::tcir {
             
     };
 
+    /**
+     * 临时符号描述表。
+     * 该结构会接管其内符号的内存。
+     */
     struct VariableDescriptionTable {
 
         std::map< int, VariableSymbol* > symbolMap;
@@ -100,7 +120,19 @@ namespace tc::tcir {
 
     };
 
-
+    /**
+     * 块符号表。
+     * 
+     *   int fun() {  <- 创建一张块符号表1.
+     * 
+     *       if (true) {  <- 创建一张块符号表2.
+     * 
+     *           ...
+     * 
+     *       }  <- 销毁块符号表2.
+     * 
+     *   }  <- 销毁块符号表1.
+     */
     struct BlockSymbolTable {
 
         VariableDescriptionTable* descTable = nullptr;

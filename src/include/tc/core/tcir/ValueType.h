@@ -1,5 +1,7 @@
 /*
 
+    数据类型。
+
     created on 2022.12.3
 */
 
@@ -7,6 +9,12 @@
 
 namespace tc::tcir {
 
+    /**
+     * 数据类型。
+     * u -> unsigned
+     * s -> signed
+     * uX -> unsigned X_bit 
+     */
     enum class ValueType {
         u8,
         u16,

@@ -6,6 +6,7 @@
 
 #include <tc/core/tcir/SymbolTable.h>
 
+
 using namespace std;
 using namespace tc;
 
@@ -14,7 +15,7 @@ tcir::FunctionParamSymbol* tcir::FunctionSymbol::findParamSymbol(
     const std::string& paramName
 ) {
 
-    for (auto it : this->params) {
+    for (auto& it : this->params) {
         if (it.name == paramName) {
             return &it;
         }
@@ -152,5 +153,6 @@ tcir::BlockSymbolTable::~BlockSymbolTable() {
 void tcir::BlockSymbolTable::put(tcir::VariableSymbol* symbol) {
     symbols.push_back(symbol);
     symbolNameMap[symbol->name] = symbol;
+
     descTable->put(symbol);
 }

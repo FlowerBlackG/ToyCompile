@@ -10,6 +10,7 @@
 
 //////
 #include <tc/core/tcir/IrGenerator.h>
+#include <tc/utils/ConsoleColorPad.h>
 //////
 
 using namespace std;
@@ -239,9 +240,34 @@ int Parser::parse(
     if (!errorCount) {
         tcir::IrGenerator irGen;
         irGen.process(astRoot);
-        auto& errs = irGen.errorList;
+        auto& errs = irGen.getErrorList();
         for (auto it : errs) {
-            cout << "error: " << it.msg << endl;
+            ConsoleColorPad::setColor(0xde, 0x1c, 0x31);
+            cout << "error: ";
+            ConsoleColorPad::setColor();
+            cout << it.msg << endl;
+        }
+
+        auto& wns = irGen.getWarningList();
+        for (auto it : wns) {
+            ConsoleColorPad::setColor(0xfc, 0xa1, 0x06);
+            cout << "warning: ";
+            ConsoleColorPad::setColor();
+            cout << it.msg << endl;
+        }
+
+        if (errs.empty()) {
+            ConsoleColorPad::setColor(0x0e, 0xb0, 0xc9);
+            auto& insList = irGen.getInstructionCodeList();
+            for (auto& code : insList) {
+
+                for (auto& seg : code) {
+                    cout << seg << " ";
+                }
+                cout << endl;
+
+            }
+            ConsoleColorPad::setColor();
         }
     }
     ////////
