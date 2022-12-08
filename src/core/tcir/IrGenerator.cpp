@@ -5,13 +5,12 @@
 */
 
 #include <tc/core/tcir/IrGenerator.h>
-
+#include <tc/utils/ConsoleColorPad.h>
 
 using namespace std;
 using namespace tc;
 
 static tcir::IrInstructionCode __tcMakeIrInstruction(const string& tcirCode) {
-
 
     string code = tcirCode;
 
@@ -72,11 +71,119 @@ int tcir::IrGenerator::process(AstNode* root) {
     return this->errorList.size();
 }
 
+void tcir::IrGenerator::dump(ostream& out, bool withColor) {
+
+    auto setColor = [withColor] (int red = -1, int green = 0, int blue = 0) {
+        if (withColor) {
+            if (red != -1) {
+                ConsoleColorPad::setColor(red, green, blue);
+            } else {
+                ConsoleColorPad::setColor();
+            }
+        }
+    };
+
+    /* 符号关联。 */
+    
+    setColor(0xed, 0x5a, 0x65);
+    out << "@ begin of extlink" << endl;
+    // 函数导出。
+    for (auto& fun : this->globalSymbolTable.functions) {
+        if (fun.second->visibility != SymbolVisibility::global) {
+            continue;
+        }
+
+        out << "export " << fun.first << " fun" << endl;
+    }
+
+    // 变量导出。
+    for (auto& var : this->globalSymbolTable.variables) {
+        out << "export " << var.first << " var" << endl;
+    }
+
+    // 暂不支持导入。
+    out << "@ end of extlink" << endl;
+    out << endl;
+
+    /* 全局数据。 */
+    setColor(0x7e, 0x16, 0x71);
+    out << "@ begin of static-data" << endl;
+    for (auto& var : this->globalSymbolTable.variables) {
+        out << "int var " << var.first;
+        out << " " << ValueTypeUtils::getName(var.second->valueType);
+        out << " " << var.second->initValue << endl;
+    }
+    out << "@ end of static-data" << endl;
+    out << endl;
+
+    /* 全文符号表。 */
+    setColor(0x11, 0x77, 0xb0);
+    out << "@ begin of global-symtab" << endl;
+
+    // 函数
+    for (auto& fun : this->globalSymbolTable.functions) {
+        out << "fun ";
+        if (fun.second->visibility == SymbolVisibility::global) {
+            out << "visible ";
+        } else {
+            out << "internal ";
+        }
+
+        out << fun.first << " " << fun.second->params.size() << " ";
+        out << ValueTypeUtils::getName(fun.second->returnType) << endl;
+
+        for (auto& param : fun.second->params) {
+            out << "  ";
+            out << ValueTypeUtils::getName(param.valueType) << " ";
+            out << (param.isPointer ? "ptr" : "value") << " ";
+            out << param.name << endl;
+            // 暂不支持变长参数。
+        }
+    }
+
+    // 变量（临时）
+    for (auto& var : this->varDescTable.symbolMap) {
+        out << "var " << var.first << " ";
+        out << var.second->name << " ";
+        out << ValueTypeUtils::getName(var.second->valueType);
+        out << " " << ValueTypeUtils::getBytes(var.second->valueType);
+        out << endl;
+    }
+
+    out << "@ end of global-symtab" << endl;
+    out << endl;
+
+    // 块符号表。
+    
+    setColor(0x43, 0xb2, 0x44);
+    out << "@ begin of block-symtab" << endl;
+    out << blockSymbolTableIrDumps.str() << endl;
+    out << "@ end of block-symtab" << endl;
+    out << endl;
+
+    /* 指令。 */
+    setColor(0xfc, 0xa1, 0x06);
+    out << "@ begin of instructions" << endl;
+    for (auto& insCode : this->instructionList) {
+        for (auto& codeSegment : insCode) {
+            out << codeSegment << " ";
+        }
+        out << endl;
+    }
+    out << "@ end of instructions" << endl;
+
+    setColor();
+    
+    out << endl;
+
+}
+
 void tcir::IrGenerator::clear() {
     this->varDescTable.clear();
     this->errorList.clear();
     this->globalSymbolTable.clear();
     this->instructionList.clear();
+    this->blockSymbolTableIrDumps.str(string());
 
     if (this->currentBlockSymbolTable) {
         delete this->currentBlockSymbolTable;
@@ -85,6 +192,7 @@ void tcir::IrGenerator::clear() {
 
     this->nextLabelId = 1;
     this->nextVarId = 1;
+    this->nextBlockSymTabId = 1;
 }
 
 void tcir::IrGenerator::addUnsupportedGrammarError(AstNode* node) {
@@ -368,6 +476,7 @@ void tcir::IrGenerator::processCompoundStatement(AstNode* node) {
 
     // 构建并启用符号表
     BlockSymbolTable* symbolTab = new BlockSymbolTable;
+    symbolTab->id = nextBlockSymTabId++;
     symbolTab->parent = currentBlockSymbolTable ? currentBlockSymbolTable : symbolTab;
     currentBlockSymbolTable = symbolTab;
     symbolTab->descTable = &varDescTable;
@@ -382,6 +491,7 @@ void tcir::IrGenerator::processCompoundStatement(AstNode* node) {
         currentBlockSymbolTable = symbolTab->parent;
     }
 
+    symbolTab->dump(this->blockSymbolTableIrDumps);
     delete symbolTab;
 }
 

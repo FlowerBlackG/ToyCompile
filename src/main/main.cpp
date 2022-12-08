@@ -29,6 +29,7 @@
 #include <tc/main/TcSubProgram.h>
 #include <tc/main/LexerCli/LexerCli.h>
 #include <tc/main/ParserCli/ParserCli.h>
+#include <tc/main/UniCli/UniCli.h>
 
 using namespace std;
 
@@ -40,7 +41,7 @@ static void printUsage(const char* appPath = "ToyCompile") {
     cout << endl;
     cout << "available programs:" << endl;
     cout << "  LexerCli - Lexical Analyzer." << endl;
-    cout << "  ParserCli - Syntex Analyzer to generate syntex tree." << endl;
+    cout << "  ParserCli - Syntax Analyzer to generate syntax tree." << endl;
     cout << "  UniServer - a bridge between ToyCompile core and frontend." << endl;
     cout << endl;
     cout << "options are passed to subprogram." << endl;
@@ -139,11 +140,15 @@ static unique_ptr<TcSubProgram> createSubProgram(const std::string& programName)
 
         return make_unique<ParserCli>();
 
+    } else if (programName == "UniCli") {
+
+        return make_unique<UniCli>();
+
     } else {
 
-        cout << "[Info] not subprogram specified. use LexerCli as default." << endl;
+        cout << "[Info] not subprogram specified. use UniCli as default." << endl;
         printUsage();
-        return make_unique<LexerCli>();
+        return make_unique<UniCli>();
     }
 }
 

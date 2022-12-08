@@ -122,6 +122,8 @@ namespace tc::tcir {
 
     /**
      * 块符号表。
+     * 该表不负责管理其中登记的符号的内存，
+     * 但它会将符号交给全局变量描述表，后者会管理该符号的内存。
      * 
      *   int fun() {  <- 创建一张块符号表1.
      * 
@@ -135,11 +137,19 @@ namespace tc::tcir {
      */
     struct BlockSymbolTable {
 
+        int id = 0;
+
+        /**
+         * 指向代码模块的全局变量描述表。
+         */
         VariableDescriptionTable* descTable = nullptr;
 
         std::vector< VariableSymbol* > symbols;
         std::map< std::string, VariableSymbol* > symbolNameMap;
 
+        /**
+         * 上级代码块的符号表。如果自己是祖先，则将此值设为自己。
+         */
         BlockSymbolTable* parent = this;
 
         VariableSymbol* get(const std::string& name, bool allowFromParents);
@@ -150,6 +160,13 @@ namespace tc::tcir {
          * 加入后，该符号的内存将由符号描述表管理。
          */
         void put(VariableSymbol* symbol);
+
+        /**
+         * 导出。
+         * 
+         * @param out 输出流。
+         */
+        void dump(std::ostream& out);
 
         ~BlockSymbolTable();
     };

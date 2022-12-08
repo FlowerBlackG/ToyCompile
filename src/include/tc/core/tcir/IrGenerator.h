@@ -15,6 +15,7 @@
 #include <vector>
 #include <utility>
 #include <iostream>
+#include <sstream>
 
 namespace tc::tcir {
 
@@ -33,6 +34,10 @@ namespace tc::tcir {
         AstNode* astNode = nullptr;
     };
 
+    /**
+     * TCIR 中间代码生成器。
+     * TCIR 格式参考 doc 内的文档。
+     */
     class IrGenerator {
     public:
         IrGenerator() {}
@@ -42,18 +47,18 @@ namespace tc::tcir {
         /**
          * 处理 translationUnit 节点，生成 IR。
          * 
-         * @param root 
-         * @return int 
+         * @param root 语法树根节点。需要translationUnit，且遵循指定文法（C99）。
+         * @return 遇到的错误数量。 
          */
         int process(AstNode* root);
 
-        void enableOutputColor() {
-            this->outputColorEnabled = true;
-        }
-
-        void disableOutputColor() {
-            this->outputColorEnabled = false;
-        }
+        /**
+         * 导出 IR。
+         * 
+         * @param out 输出流。
+         * @param withColor 是否同时输出颜色控制码。
+         */
+        void dump(std::ostream& out, bool withColor = false);
 
         std::vector<IrGeneratorError>& getErrorList() {
             return this->errorList;
@@ -68,14 +73,27 @@ namespace tc::tcir {
         }
 
         /**
-         * 清空已经生成的 IR。
+         * 清空已经生成的 IR。同时清空内部记录结构。
          */
         void clear();
 
     protected:
+
+        /**
+         * 变量描述表。
+         * tcir 内，所有变量会被分配一个 id。
+         * 整个 ir 内的所有变量都可以在此表内找到。
+         */
         VariableDescriptionTable varDescTable;
+
+        /**
+         * 全局符号表。记录全局变量，全局函数信息。
+         */
         GlobalSymbolTable globalSymbolTable;
 
+        /**
+         * 当前正在处理的块的符号表。
+         */
         BlockSymbolTable* currentBlockSymbolTable = nullptr;
 
         // 上一个表达式计算结果类型。
@@ -98,6 +116,7 @@ namespace tc::tcir {
 
         int nextLabelId = 1;
         int nextVarId = 1;
+        int nextBlockSymTabId = 1;
 
         std::vector<IrGeneratorError> errorList;
         std::vector<IrGeneratorError> warningList;
@@ -115,7 +134,11 @@ namespace tc::tcir {
          */
         std::vector< std::string > continueStmtTargets;
 
-        bool outputColorEnabled = true;
+        /**
+         * 块符号表生成的 ir。每张表在离开其负责的代码块前，
+         * 将结果存到本流对象内，然后被释放。
+         */
+        std::stringstream blockSymbolTableIrDumps;
 
     protected:
 
@@ -181,12 +204,10 @@ namespace tc::tcir {
         std::string processCastExpression(AstNode* node, bool isInGlobalScope);
 
         void processExpressionStatement(AstNode* node);
+        
         std::string processExpression(AstNode* node, bool isInGlobalScope);
-
         std::string processUnaryExpression(AstNode* node, bool isInGlobalScope);
-
         std::string processPostfixExpression(AstNode* node, bool isInGlobalScope);
-
         std::string processPrimaryExpression(AstNode* node, bool isInGlobalScope);
         
 

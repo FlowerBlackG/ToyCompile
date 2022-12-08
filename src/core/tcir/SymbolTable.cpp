@@ -5,11 +5,10 @@
 
 
 #include <tc/core/tcir/SymbolTable.h>
-
+#include <iostream>
 
 using namespace std;
 using namespace tc;
-
 
 tcir::FunctionParamSymbol* tcir::FunctionSymbol::findParamSymbol(
     const std::string& paramName
@@ -155,4 +154,20 @@ void tcir::BlockSymbolTable::put(tcir::VariableSymbol* symbol) {
     symbolNameMap[symbol->name] = symbol;
 
     descTable->put(symbol);
+}
+
+void tcir::BlockSymbolTable::dump(ostream& out) {
+    out << "% begin" << endl;
+    out << "tab-id " << this->id << endl;
+    out << "parent-tab-id " << this->parent->id << endl;
+
+    for (auto& sym : symbols) {
+        out << "var ";
+        out << sym->id << " ";
+        out << sym->name << " ";
+        out << ValueTypeUtils::getName(sym->valueType) << " ";
+        out << ValueTypeUtils::getBytes(sym->valueType) << endl;
+    }
+
+    out << "% end" << endl;
 }
