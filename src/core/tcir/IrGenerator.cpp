@@ -1283,17 +1283,60 @@ string tcir::IrGenerator::processConditionalExpression(
     }
 
     // 三目表达式。
-    if (stoll(logiOrRes)) {
+    if (isInGlobalScope) {
+        if (stoll(logiOrRes)) {
 
-        // expression
+            // expression
 
-        return processExpression(node->children[2], isInGlobalScope);
+            return processExpression(node->children[2], isInGlobalScope);
+
+        } else {
+
+            // conditional expression
+
+            return processConditionalExpression(node->children[4], isInGlobalScope);
+        }
 
     } else {
 
-        // conditional expression
+        /*
+        
+                logocal_or_exp
+                je .false
+                expression
+                jmp .exit
+            .false:
+                conditional_exp
+            .exit:
+        
+        */
 
-        return processConditionalExpression(node->children[4], isInGlobalScope);
+        auto labelId = this->nextLabelId++;
+        auto&& exitLabel = ".con_exit_" + to_string(labelId);
+        auto&& falseLabel = ".con_false_" + to_string(labelId);
+
+        this->instructionList.push_back(__tcMakeIrInstruction(
+            "je " + falseLabel
+        ));
+
+        this->processExpression(node->children[2], isInGlobalScope);
+
+        this->instructionList.push_back(__tcMakeIrInstruction(
+            "jmp " + exitLabel
+        ));
+
+        this->instructionList.push_back(__tcMakeIrInstruction(
+            "label " + falseLabel
+        ));
+
+        this->processConditionalExpression(node->children[4], isInGlobalScope);
+
+        this->instructionList.push_back(__tcMakeIrInstruction(
+            "label " + exitLabel
+        ));
+
+        return "";
+
     }
 
 }
@@ -1410,9 +1453,27 @@ string tcir::IrGenerator::processInclusiveOrExpression(
     AstNode* node, 
     bool isInGlobalScope
 ) {
+
+    /*
+    
+        inclusive_or_expression
+            : exclusive_or_expression
+            | inclusive_or_expression '|' exclusive_or_expression
+            ;
+    
+    */
     
     if (node->children.size() == 1) {
         return processExclusiveOrExpression(node->children[0], isInGlobalScope);
+    } 
+    
+    if (isInGlobalScope) {
+
+        auto res1 = processInclusiveOrExpression(node->children[0], isInGlobalScope);
+        auto res2 = processExclusiveOrExpression(node->children[2], isInGlobalScope);
+
+        return to_string(stoll(res1) | stoll(res2));
+
     } else {
         this->addUnsupportedGrammarError(node);
         return "";
@@ -1425,8 +1486,26 @@ string tcir::IrGenerator::processExclusiveOrExpression(
     bool isInGlobalScope
 ) {
 
+    /*
+    
+        exclusive_or_expression
+            : and_expression
+            | exclusive_or_expression '^' and_expression
+            ;
+    
+    */
+
     if (node->children.size() == 1) {
         return processAndExpression(node->children[0], isInGlobalScope);
+    } 
+    
+    if (isInGlobalScope) {
+
+        auto&& res1 = processExclusiveOrExpression(node->children[0], isInGlobalScope);
+        auto&& res2 = processAndExpression(node->children[2], isInGlobalScope);
+
+        return to_string(stoll(res1) ^ stoll(res2));
+
     } else {
         this->addUnsupportedGrammarError(node);
         return "";
@@ -1439,9 +1518,27 @@ string tcir::IrGenerator::processAndExpression(
     AstNode* node, 
     bool isInGlobalScope
 ) {
+
+    /*
+    
+        and_expression
+            : equality_expression
+            | and_expression '&' equality_expression
+            ;
+    
+    */
     
     if (node->children.size() == 1) {
         return processEqualityExpression(node->children[0], isInGlobalScope);
+    } 
+    
+    if (isInGlobalScope) {
+
+        auto&& res1 = processAndExpression(node->children[0], isInGlobalScope);
+        auto&& res2 = processEqualityExpression(node->children[2], isInGlobalScope);
+
+        return to_string(stoll(res1) & stoll(res2));
+
     } else {
 
         this->addUnsupportedGrammarError(node);
