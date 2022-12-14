@@ -204,6 +204,8 @@ void tcir::IrGenerator::addUnsupportedGrammarError(AstNode* node) {
         firstToken = firstToken->children[0];
     }
 
+    err.astNode = node;
+
     err.msg = "not supported: (";
     err.msg += to_string(firstToken->token.row);
     err.msg += ", ";
