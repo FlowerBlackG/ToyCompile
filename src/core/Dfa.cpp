@@ -164,6 +164,13 @@ const DfaStateNode* Dfa::recognize(istream& inStream) {
             continue;
         }
 
+        // 2字节中文字符
+        while (ch >= 128) {
+            inStream.get();
+            inStream.get();
+            ch = inStream.peek();
+        }
+
         DfaStateNode* nextNode = currentNode->nextState(ch);
 
         if (nextNode) {
