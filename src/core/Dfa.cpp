@@ -157,18 +157,18 @@ const DfaStateNode* Dfa::recognize(istream& inStream) {
         // 由于流的 unget 和 putback 都很不好用，此处非必要不 get。
         int ch = inStream.peek();
 
-        // 别管 \r.
-        if (ch == '\r') {
-            
-            inStream.get();
-            continue;
-        }
-
         // 2字节中文字符
         while (ch >= 128) {
             inStream.get();
             inStream.get();
             ch = inStream.peek();
+        }
+        
+        // 别管 \r.
+        if (ch == '\r') {
+            
+            inStream.get();
+            continue;
         }
 
         DfaStateNode* nextNode = currentNode->nextState(ch);
@@ -181,6 +181,12 @@ const DfaStateNode* Dfa::recognize(istream& inStream) {
             inStream.get();
 
         } else {
+
+            // 如果读到结尾，但继续 peek，会导致流位置被设为 -1.
+            if (inStream.tellg() < 0) {
+                inStream.clear();
+                inStream.seekg(0, ios::end);
+            }
             
             // 下一状态是空的。识别结束。
 

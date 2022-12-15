@@ -1852,8 +1852,34 @@ string tcir::IrGenerator::processMultiplicativeExpression(AstNode* node, bool is
         return processCastExpression(node->children[0], isInGlobalScope);
     }
 
-    this->addUnsupportedGrammarError(node->children[1]); // 不支持乘法除法取模。
-    return "";
+    if (isInGlobalScope) {
+
+        auto&& res1 = processMultiplicativeExpression(node->children[0], isInGlobalScope);
+        auto&& res2 = processCastExpression(node->children[2], isInGlobalScope);
+
+        switch (node->children[1]->tokenKind) {
+            case TokenKind::star: {
+                return to_string(stoll(res1) * stoll(res2));
+            }
+
+            case TokenKind::slash: {
+                return to_string(stoll(res1) / stoll(res2));
+            }
+
+            case TokenKind::percent: {
+                return to_string(stoll(res1) % stoll(res2));
+            }
+
+            default: {
+                // 不应到达这里。
+                return "";
+            }
+        }
+
+    } else {
+        this->addUnsupportedGrammarError(node->children[1]); // 不支持乘法除法取模。
+        return "";
+    }
 
 }
 
