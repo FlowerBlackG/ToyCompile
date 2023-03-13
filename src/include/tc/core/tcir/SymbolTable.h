@@ -95,9 +95,19 @@ namespace tc::tcir {
         std::map< std::string, FunctionSymbol* > functions;
         std::map< std::string, VariableSymbol* > variables;
 
+        FunctionSymbol* getFunction(const std::string& name);
         VariableSymbol* getVariable(const std::string& name);
 
+        void put(FunctionSymbol* func);
+        void put(VariableSymbol* vari);
+
         void clear();
+
+        static int build(
+            std::istream& in, 
+            std::ostream& err,
+            GlobalSymbolTable& container
+        );
 
         ~GlobalSymbolTable();
             
@@ -147,6 +157,8 @@ namespace tc::tcir {
         std::vector< VariableSymbol* > symbols;
         std::map< std::string, VariableSymbol* > symbolNameMap;
 
+        std::vector< BlockSymbolTable* > children;
+
         /**
          * 上级代码块的符号表。如果自己是祖先，则将此值设为自己。
          */
@@ -167,6 +179,29 @@ namespace tc::tcir {
          * @param out 输出流。
          */
         void dump(std::ostream& out);
+
+        /**
+         * 导入。
+         * 
+         * 输入串样例：
+         * 
+         * @ begin of block-symtab <- 这一行会在外部被过滤掉。
+         * % begin
+         * tab-id 1
+         * parent-tab-id 1
+         * var 1 c s32 4
+         * % end
+         *
+         * @ end of block-symtab
+         * 
+         * @param in 输入流。tcir 格式。
+         */
+        static int build(
+            std::istream& in, 
+            std::ostream& err,
+            std::map<int, BlockSymbolTable*>& container,
+            VariableDescriptionTable* descTable
+        );
 
         ~BlockSymbolTable();
     };

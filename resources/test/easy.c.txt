@@ -1,5 +1,10 @@
 
-float lb(int a, int b) {
-    int c = a + 2;
-    return c * b;
+int lb(int a, int b) {
+    int c = a + 2 - 5;
+    int i;
+    for ( i = 3; i < 7; i++) {
+        c = c + i;
+        int d = c + i;
+    }
+    return c + b;
 }

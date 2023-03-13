@@ -128,14 +128,14 @@ int ${access} ${value name} ${length} ${value}
 
 其中，length 可选值如下：
 
-| 内容 |      备注       |
+| 内容 |      备注      |
 | :--: | :-------------: |
-|  s8  |  signed int 8   |
-|  u8  | unsigned int 8  |
-| s16  |  signed int 16  |
-| u16  | unsigned int 16 |
-| s32  |  signed int 32  |
-| u32  | unsigned int 32 |
+|  s8  |  signed int 8  |
+|  u8  | unsigned int 8 |
+| s16 |  signed int 16  |
+| u16 | unsigned int 16 |
+| s32 |  signed int 32  |
+| u32 | unsigned int 32 |
 
 value 为值，以 10 进制形式表示。允许有前缀负号。
 
@@ -247,8 +247,6 @@ parent-tab-id ${id}
 var ${id} ${name} ${type} ${bytes}
 ```
 
-
-
 ## 指令概述
 
 指令区通过以下形式划出：
@@ -287,8 +285,6 @@ ${instructions}
 mov vreg 0 imd 2  // t0 = 2
 ```
 
-
-
 ## 指令
 
 ### 标签与跳转
@@ -302,6 +298,12 @@ label ${name}
 建议当成汇编里的标签看。
 
 如果这个标签表示一个函数，在 ir 内不用考虑寄存器保护问题。后续转汇编时，结合全局函数表，判断标签是否为函数，再决定是否要保护寄存器。
+
+对于函数定义标签，额外加入其块符号表id。
+
+```
+fun-label ${name} ${sym-tab id}
+```
 
 #### 直接跳转
 
@@ -419,7 +421,11 @@ neg ${value1}  // value1 = -value1
 
 #### 乘法和除法
 
-暂不支持
+```
+mul ${value1} ${value2}
+```
+
+仅支持 32 位乘法。
 
 #### and
 
@@ -472,8 +478,6 @@ cmp ${value1} ${value2} ${true-condition}
 xchg ${value1} ${value2}  // swap value1, value2
 ```
 
-
-
 ## 参考
 
 - [1] 王爽. 汇编语言（第3版）. 清华大学出版社，2013
@@ -484,4 +488,3 @@ xchg ${value1} ${value2}  // swap value1, value2
 - [6] 华为. MAPLE IR Specification. https://gitee.com/openarkcompiler/OpenArkCompiler/blob/master/doc/en/MapleIRDesign.md
 - [7] 陈火旺等. 程序设计语言编译原理（第3版）. 国防工业出版社，2000
 - [8] 同济大学计算机系. 第七章 语义分析和中间代码产生. 同济大学计算机系
-

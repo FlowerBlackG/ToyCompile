@@ -19,6 +19,7 @@
 #include <tc/core/YaccTcey.h>
 #include <tc/core/Lr1Grammar.h>
 #include <tc/core/tcir/IrGenerator.h>
+#include <tc/core/Intel386AssemblyGenerator.h>
 
 using namespace std;
 using namespace tc;
@@ -88,6 +89,9 @@ void UniCli::printUsage(std::ostream& out) {
     out << "  dump-ir        : dump toycompile ir code." << endl;
     out << "  ir-to-file:[x] : store ir code to file." << endl;
     out << "  disable-color  : disable color to log output stream." << endl;
+    out << endl;
+    out << "  -o-std          : put asm to stdout." << endl;
+    out << "  -o:[file]      : asm output file." << endl;
 
     setOutputColor(0xfb, 0x99, 0x68);
     out << endl;
@@ -488,7 +492,32 @@ int UniCli::run(
         return resCode;
     }
 
-    // todo: 中间代码转汇编。
+    /* -------- 生成 i386 汇编。 -------- */
+    stringstream tcirStream;
+    i386::Intel386AssemblyGenerator i386asmGen;
+    irGen.dump(tcirStream, false);
+
+    ostream* asmOut = nullptr;
+    bool asmOutIsFile = false;
+    if (paramSet.count("o-std")) {
+        asmOut = &out;
+    } else if (paramMap.count("o")) {
+        string fileName = paramMap["o"];
+        auto fout = new ofstream(fileName, ios::binary);
+        if (fout->is_open()) {
+            asmOut = fout;
+            asmOutIsFile = true;
+        }
+    }
+
+    if (asmOut) {
+        i386asmGen.generate(tcirStream, *asmOut, cerr);
+    }
+
+    if (asmOutIsFile) {
+        reinterpret_cast<ofstream*>(asmOut)->close();
+        delete asmOut;
+    }
 
     return 0;
 

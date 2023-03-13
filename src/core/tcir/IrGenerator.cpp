@@ -12,54 +12,10 @@ using namespace tc;
 
 static tcir::IrInstructionCode __tcMakeIrInstruction(const string& tcirCode) {
 
-    string code = tcirCode;
-
     tcir::IrInstructionCode ins;
-
-    auto isBlank = [] (const char c) {
-        return c == ' ' || c == '\t' || c == '\r' || c == '\n';
-    };
-
-    while (code.length() > 0 && isBlank(code.back())) {
-        code.pop_back();
-    }
-
-    if (code.length() == 0) {
-        return ins;
-    }
-
-    string codeSegment;
-
-    int currPos = 0;
-
-    // code: "  xxxx   xxxx   xxxx"  <-- 结尾没有空格。
-    while (currPos < code.length()) {
-        char c = code[currPos];
-
-        while (isBlank(c)) {
-            c = code[++currPos];
-        }
-
-        codeSegment.clear();
-
-        while (true) {
-            codeSegment += c;
-
-            if ((++currPos) >= code.length()) {
-                break;
-            }
-
-            c = code[currPos];
-            
-            if (isBlank(c)) {
-                break;
-            }
-        }
-
-        ins.push_back(codeSegment);
-    }
-
+    ins = tcirCode;
     return ins;
+
 }
 
 int tcir::IrGenerator::process(AstNode* root) {
@@ -344,13 +300,7 @@ void tcir::IrGenerator::processFunctionDeclaration(AstNode* node) {
             // 反向遍历。
             for (auto it = paramDeclarations.rbegin(); it != paramDeclarations.rend(); it++) {
                 auto& paramDecl = *it;
-                
-                if (paramDecl->children.size() == 1) {
-                    // parameter_declaration -> declaration_specifiers
-                    this->addUnsupportedGrammarError(paramDecl);
-                    continue;
-                }
-
+            
                 // 读取数据类型。
                 vector<TokenKind> resContainer;
                 int resCode = this->processDeclarationSpecifiers(
@@ -359,6 +309,23 @@ void tcir::IrGenerator::processFunctionDeclaration(AstNode* node) {
 
                 if (resCode) {
                     
+                    continue;
+                }
+
+                if (paramDecl->children.size() == 1) {
+                    // parameter_declaration -> declaration_specifiers
+                    
+                    auto& param = functionParams.emplace_back();
+                    param.symbolType = SymbolType::functionParam;
+                    param.isPointer = false;
+                    param.isVaList = false;
+                    param.name = "";
+                    if (resContainer[0] == TokenKind::kw_int) {
+                        param.valueType = ValueType::s32;
+                    } else {
+                        param.valueType = ValueType::type_void;
+                    }
+
                     continue;
                 }
 
@@ -439,8 +406,9 @@ void tcir::IrGenerator::processFunctionDeclaration(AstNode* node) {
         // 生成标签。
         instructionList.emplace_back();
         auto& irInstructionCode = instructionList.back();
-        irInstructionCode.push_back("label");
+        irInstructionCode.push_back("fun-label");
         irInstructionCode.push_back(functionName);
+        irInstructionCode.push_back(to_string(this->nextBlockSymTabId));
 
         // 处理 compound statement
 
@@ -1798,8 +1766,6 @@ string tcir::IrGenerator::processAdditiveExpression(AstNode* node, bool isInGlob
     
     } else {
 
-        
-
         this->instructionList.push_back(__tcMakeIrInstruction("push 4 vreg 0"));
 
         auto multiplicationResult = processMultiplicativeExpression(
@@ -1852,9 +1818,13 @@ string tcir::IrGenerator::processMultiplicativeExpression(AstNode* node, bool is
         return processCastExpression(node->children[0], isInGlobalScope);
     }
 
+    // 下方代码执行时，children size 一定是 3.
+
+    auto&& res1 = processMultiplicativeExpression(node->children[0], isInGlobalScope);
+
     if (isInGlobalScope) {
 
-        auto&& res1 = processMultiplicativeExpression(node->children[0], isInGlobalScope);
+        
         auto&& res2 = processCastExpression(node->children[2], isInGlobalScope);
 
         switch (node->children[1]->tokenKind) {
@@ -1876,10 +1846,45 @@ string tcir::IrGenerator::processMultiplicativeExpression(AstNode* node, bool is
             }
         }
 
-    } else {
-        this->addUnsupportedGrammarError(node->children[1]); // 不支持乘法除法取模。
+    } 
+    
+    
+    // 执行到这里时，处理的代码不在全局。
+    // 即：isInGlobalScope = false
+
+    this->instructionList.push_back(__tcMakeIrInstruction("push 4 vreg 0"));
+
+    auto&& mulResult = res1;
+
+    auto errCount = errorList.size();
+
+    auto&& castResult = processCastExpression(node->children[2], isInGlobalScope);
+
+    if (errorList.size() - errCount) {
         return "";
     }
+
+    this->instructionList.push_back(__tcMakeIrInstruction("pop 4 vreg 1"));
+    
+    if (node->children[1]->tokenKind == TokenKind::star) {
+
+        
+        // 乘法
+        this->instructionList.push_back(__tcMakeIrInstruction("mul vreg 0 vreg 1"));
+
+        
+    } else if (node->children[1]->tokenKind == TokenKind::slash) {
+
+        // 除法
+        this->addUnsupportedGrammarError(node->children[1]); // 不支持除法。
+
+    } else {
+        // 取模
+
+        this->addUnsupportedGrammarError(node->children[1]); // 不支持取模。
+    }
+
+    return "";
 
 }
 
@@ -2127,7 +2132,7 @@ string tcir::IrGenerator::processPostfixExpression(AstNode* node, bool isInGloba
 
     /*
 
-      剩余未处理的：
+      即将处理的：
 
         postfix_expression
             | postfix_expression '(' ')'
@@ -2138,32 +2143,52 @@ string tcir::IrGenerator::processPostfixExpression(AstNode* node, bool isInGloba
     
     */
 
-    // ================================================
-    //
-    //
-    //
-    //
-    //
-    //   // todo: 函数调用是课设必做项目。这里先搁置。
-    //
-    //
-    //
-    //
-    //
-    // - - - - - - - - - - - - - - - - - - - - - - - - 
-    //
-    //
-    //
-    //
-        #if 1
-            this->addUnsupportedGrammarError(node);
-            return "";
-        #endif
-    //
-    //
-    //
-    //
-    // ================================================
+    if (node->children.size() > 3) {
+
+        // 带参数的函数调用。
+        processArgumentExpressionList(node->children[2]);
+        
+    }
+
+    IrInstructionCode code;
+    code.push_back("call");
+
+    // 假设只有最简单的名称，如 func()
+    //   而不存在如 (func)() 这种麻烦的。
+    auto&& funcName = node->children[0]->children[0]->children[0]->token.content;
+
+    auto funcPtr = this->globalSymbolTable.getFunction(funcName);
+    if ( !funcPtr ) {
+        auto&& err = this->errorList.emplace_back();
+        err.astNode = node->children[0];
+        err.msg = "this function is undefined: ";
+        err.msg += funcName;
+        return "";
+    }
+
+    code.push_back(funcName);
+    instructionList.push_back(code);
+
+    return "";
+
+}
+
+void tcir::IrGenerator::processArgumentExpressionList(AstNode* node) {
+    /*
+    
+        argument_expression_list
+            : assignment_expression
+            | argument_expression_list ',' assignment_expression
+            ;
+    
+    */
+
+    if (node->children.size() > 1) {
+        this->processArgumentExpressionList(node->children[0]);
+    }
+
+    processAssignmentExpression(node->children.back(), false);
+    instructionList.push_back(__tcMakeIrInstruction("pushfc vreg 0"));
 
 }
 

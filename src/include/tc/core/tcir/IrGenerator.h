@@ -10,6 +10,7 @@
 #include <tc/core/tcir/SymbolTable.h>
 #include <tc/core/tcir/ValueType.h>
 #include <tc/core/AstNode.h>
+#include <tc/core/tcir/IrContainer.h>
 
 #include <string>
 #include <vector>
@@ -19,15 +20,7 @@
 
 namespace tc::tcir {
 
-    /**
-     * 单条 IR 指令码。
-     *
-     *   mov   vreg  0   vreg  1  <- 1条指令。
-     *    ^     ^    ^    ^    ^   
-     *   [0]   [1]  [2]  [3]  [4]
-     * 
-     */
-    typedef std::vector<std::string> IrInstructionCode;
+    
 
     struct IrGeneratorError {
         std::string msg;
@@ -208,6 +201,9 @@ namespace tc::tcir {
         std::string processExpression(AstNode* node, bool isInGlobalScope);
         std::string processUnaryExpression(AstNode* node, bool isInGlobalScope);
         std::string processPostfixExpression(AstNode* node, bool isInGlobalScope);
+
+        void processArgumentExpressionList(AstNode* node);
+
         std::string processPrimaryExpression(AstNode* node, bool isInGlobalScope);
         
 
@@ -220,6 +216,7 @@ namespace tc::tcir {
         int processDeclarationSpecifiers(
             AstNode* node, std::vector< TokenKind >& tokenListContainer
         );
+
 
         std::string symbolToIrValueCode(SymbolBase* symbol);
 
