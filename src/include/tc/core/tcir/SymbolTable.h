@@ -72,6 +72,9 @@ namespace tc::tcir {
          * @return 指向参数表内某符号的指针。注意，参数表发生变化时，可能导致该指针失效。 
          */
         FunctionParamSymbol* findParamSymbol(const std::string& paramName);
+        int findParamSymbolIndex(const std::string& paramName);
+
+        int rootSymTabId = -1;
 
 
     };
@@ -195,6 +198,7 @@ namespace tc::tcir {
          * @ end of block-symtab
          * 
          * @param in 输入流。tcir 格式。
+         * @param container 存储构造的块符号表的容器。从符号表 id 映射到符号表本体。
          */
         static int build(
             std::istream& in, 

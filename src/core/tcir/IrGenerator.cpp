@@ -86,7 +86,8 @@ void tcir::IrGenerator::dump(ostream& out, bool withColor) {
         }
 
         out << fun.first << " " << fun.second->params.size() << " ";
-        out << ValueTypeUtils::getName(fun.second->returnType) << endl;
+        out << ValueTypeUtils::getName(fun.second->returnType) << " ";
+        out << fun.second->rootSymTabId << endl;
 
         for (auto& param : fun.second->params) {
             out << "  ";
@@ -97,10 +98,9 @@ void tcir::IrGenerator::dump(ostream& out, bool withColor) {
         }
     }
 
-    // 变量（临时）
-    for (auto& var : this->varDescTable.symbolMap) {
+    // 变量。
+    for (auto& var : this->globalSymbolTable.variables) {
         out << "var " << var.first << " ";
-        out << var.second->name << " ";
         out << ValueTypeUtils::getName(var.second->valueType);
         out << " " << ValueTypeUtils::getBytes(var.second->valueType);
         out << endl;
@@ -450,6 +450,10 @@ void tcir::IrGenerator::processCompoundStatement(AstNode* node) {
     symbolTab->parent = currentBlockSymbolTable ? currentBlockSymbolTable : symbolTab;
     currentBlockSymbolTable = symbolTab;
     symbolTab->descTable = &varDescTable;
+
+    if (this->currentFunction->rootSymTabId == -1) {
+        this->currentFunction->rootSymTabId = symbolTab->id;
+    }
     
     // 处理语句。
     this->processBlockItemList(node->children[1]);
@@ -2188,7 +2192,7 @@ void tcir::IrGenerator::processArgumentExpressionList(AstNode* node) {
     }
 
     processAssignmentExpression(node->children.back(), false);
-    instructionList.push_back(__tcMakeIrInstruction("pushfc vreg 0"));
+    instructionList.push_back(__tcMakeIrInstruction("pushfc 4 vreg 0"));
 
 }
 

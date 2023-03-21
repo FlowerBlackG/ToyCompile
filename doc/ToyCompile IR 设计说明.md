@@ -147,7 +147,7 @@ int var year s32 2022  // int year = 2022;
 
 ## 全文符号表
 
-该表为后续代码区域提供辅助说明信息。全文不是全局的意思，该表记录所有可能用到的符号，包含那些并没有暴露给全局的符号。
+该表为后续代码区域提供辅助说明信息。记录定义在全局的函数和变量，包含不对外开放的。
 
 ```
 @ begin of global-symtab
@@ -158,11 +158,13 @@ ${body}
 ### 函数定义
 
 ```
-fun ${visibility} ${name} ${argc} ${return-type}
+fun ${visibility} ${name} ${argc} ${return-type} ${root-tab-id}
     ${...args}
 ```
 
 \${name} 指定函数名。\${argc} 指定参数个数。\${...args} 表示参数表。
+
+\${root-tab-id}: 根代码块的符号表id。
 
 \${visibility}:
 
@@ -192,11 +194,8 @@ ${type} ${ "value" | "ptr" } ${name}
 
 ### 变量符号说明表
 
-代码指令中的栈上变量以一个 id 记录。通过 id 在**变量符号说明表**内寻找其详细信息。
-
 详细信息包括：
 
-* 符号 id
 * 符号名
 * 符号类型
 * 字节宽度
@@ -204,7 +203,7 @@ ${type} ${ "value" | "ptr" } ${name}
 描述格式：
 
 ```
-var ${id} ${name} ${type} ${bytes}
+var ${name} ${type} ${bytes}
 ```
 
 ## 块符号表
@@ -282,7 +281,7 @@ ${instructions}
 例：
 
 ```
-mov vreg 0 imd 2  // t0 = 2
+mov vreg 0 imm 2  // t0 = 2
 ```
 
 ## 指令
@@ -373,12 +372,6 @@ pushfc ${bytes} ${value}
 ```
 pop ${bytes} ${value}
 pop ${bytes}  // 空弹出
-```
-
-#### popfc 函数调用弹出
-
-```
-popfc ${bytes}
 ```
 
 ### 存取

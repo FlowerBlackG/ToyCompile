@@ -14,13 +14,28 @@ tcir::FunctionParamSymbol* tcir::FunctionSymbol::findParamSymbol(
     const std::string& paramName
 ) {
 
-    for (auto& it : this->params) {
-        if (it.name == paramName) {
-            return &it;
+    int idx = this->findParamSymbolIndex(paramName);
+
+    if (idx == -1) {
+        return nullptr;
+    } else {
+        return &this->params[idx];
+    }
+
+}
+
+int tcir::FunctionSymbol::findParamSymbolIndex(
+    const std::string& paramName
+) {
+
+    for (int i = 0; i < this->params.size(); i++) {
+
+        if (this->params[i].name == paramName) {
+            return i;
         }
     }
 
-    return nullptr;
+    return -1;
 
 }
 
@@ -75,34 +90,54 @@ int tcir::GlobalSymbolTable::build(
 ) {
 
     string token;
+
     while (true) {
         in >> token;
+        
         if (token == "@") {
             in >> token >> token >> token;
             break;
         } else if (token == "fun") {
 
-            string visi, name, argc, retType;
-            in >> visi >> name >> argc >> retType;
+            string visi, name, argc, retType, rootSymTabId;
+            in >> visi >> name >> argc >> retType >> rootSymTabId;
 
             auto pFun = new FunctionSymbol;
             pFun->name = name;
             pFun->isImported = false;
             pFun->visibility = SymbolVisibility::global;
             pFun->symbolType = SymbolType::functionDefine;
-            
+            pFun->rootSymTabId = stoi(rootSymTabId);
+
             container.put(pFun);
 
-            // 忽略参数表。
+            // 处理参数表。
+
             int i32argc = stoi(argc);
+
             for (int i = 0; i < i32argc; i++) {
-                in >> token >> token >> token;
+                string type, valueOrPtr, name; 
+                in >> type >> valueOrPtr ;
+                
+                if (type == "void") {
+                    continue;
+                }
+                
+                in >> name;
+
+                auto pParamSym = pFun->params.emplace_back();
+                pParamSym.isPointer = false;
+                pParamSym.isVaList = false;
+                pParamSym.name = name;
+                pParamSym.symbolType = SymbolType::functionParam;
+                pParamSym.valueType = ValueType::s32;
+                pParamSym.visibility = SymbolVisibility::internal;
             }
 
         } else if (token == "var") {
 
-            string id, name, type, bytes;
-            in >> id >> name >> type >> bytes;
+            string name, type, bytes;
+            in >> name >> type >> bytes;
             auto pVar = new VariableSymbol;
 
             pVar->name = name;
@@ -286,6 +321,8 @@ int tcir::BlockSymbolTable::build(
                 // todo: 无法识别的符号。
             }
         }
+
+        container[pSymTab->id] = pSymTab;
     };
 
     while (true) {
@@ -304,8 +341,12 @@ int tcir::BlockSymbolTable::build(
     // 母子关系绑定。
     for (auto& it : container) {
         auto& pParent = container[parentIdMap[it.second]];
-        pParent->children.push_back(it.second);
-        it.second->parent = pParent;
+
+        if (pParent != it.second) {
+
+            pParent->children.push_back(it.second);
+            it.second->parent = pParent;
+        }
     }
 
     return 0;
