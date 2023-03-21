@@ -125,7 +125,7 @@ int tcir::GlobalSymbolTable::build(
                 
                 in >> name;
 
-                auto pParamSym = pFun->params.emplace_back();
+                auto& pParamSym = pFun->params.emplace_back();
                 pParamSym.isPointer = false;
                 pParamSym.isVaList = false;
                 pParamSym.name = name;

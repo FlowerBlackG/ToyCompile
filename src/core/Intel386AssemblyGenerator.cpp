@@ -329,6 +329,18 @@ void Intel386AssemblyGenerator::parseCode(
     } else if (code.isCall()) {
 
         out << "  call " << code[1] << endl;
+        
+        auto& funcParamList = globalSymTab.getFunction(code[1])->params;
+        int restoreStackSize = 0;
+        for (auto& it : funcParamList) {
+            
+            restoreStackSize += tcir::ValueTypeUtils::getBytes(it.valueType);
+        }
+
+        if (restoreStackSize) {
+            out << "  add esp, " << restoreStackSize << endl;
+        }
+        
 
     } else if (code.isPushForCall()) {
 
