@@ -131,7 +131,9 @@ static void __optimizeInstructions(
             // 删除成对出现的 push pop。
             // 注意，实际情况下对于 eflags 的成对 pop push 不宜删除。
             if (curr.isPairedPushPopWith(next)) {
-                REMOVE_NEXT_AND_CONTINUE();
+                instructions.erase(instructions.begin() + idx);
+                instructions.erase(instructions.begin() + idx);
+                idx--;
             }
 
             if (curr == next && curr.isMov()) {
@@ -274,15 +276,16 @@ void Intel386AssemblyGenerator::parseVariable(
             // 进入函数时，已经预先分配栈空间（add esp, x）。
             // 因此，栈内存位置应该比 esp 的值大。
 
-            auto offset = this->variableStackOffsetMap[valId];
-            out << "[esp ";
+            auto offset = this->variableStackOffsetMap[valId] - 4;
+            out << "[ebp ";
             if (offset > 0) {
-                out << -offset;
+                out << "+ ";
+                out << offset;
             } else if (offset == 0) {
                 // do nothing
             } else { // offset < 0
-                out << "+ ";
-                out << -offset;
+                
+                out << offset;
             }
             out << "]";
         }
@@ -314,10 +317,6 @@ void Intel386AssemblyGenerator::parseCode(
 ) {
 
     if (code.isRet()) {
-
-        if (this->currFunctionStackMemory) {   
-            out << "  add esp, " << this->currFunctionStackMemory << endl;
-        }
         
         out << "  leave" << endl
             << "  ret" << endl << endl;

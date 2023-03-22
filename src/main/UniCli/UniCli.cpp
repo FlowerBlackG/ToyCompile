@@ -90,7 +90,7 @@ void UniCli::printUsage(std::ostream& out) {
     out << "  ir-to-file:[x] : store ir code to file." << endl;
     out << "  disable-color  : disable color to log output stream." << endl;
     out << endl;
-    out << "  -o-std          : put asm to stdout." << endl;
+    out << "  -o-std         : put asm to stdout." << endl;
     out << "  -o:[file]      : asm output file." << endl;
 
     setOutputColor(0xfb, 0x99, 0x68);
