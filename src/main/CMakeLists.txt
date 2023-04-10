@@ -9,12 +9,14 @@ add_library(
     main 
 
     # UniServer
-        UniServer/UniServer.cpp
+    UniServer/UniServer.cpp
 
     # LexerCli
     LexerCli/LexerCli.cpp
 
     ParserCli/ParserCli.cpp
+    
+    UniCli/UniCli.cpp
 )
 
 target_include_directories(

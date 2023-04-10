@@ -96,7 +96,17 @@
         "cfenv": "cpp",
         "unordered_set": "cpp",
         "cinttypes": "cpp",
-        "*.txt": "c"
+        "forward_list": "cpp",
+        "regex": "cpp",
+        "rope": "cpp",
+        "slist": "cpp",
+        "numbers": "cpp",
+        "scoped_allocator": "cpp",
+        "semaphore": "cpp",
+        "shared_mutex": "cpp",
+        "span": "cpp",
+        "valarray": "cpp"
     },
-    "cmake.sourceDirectory": "${workspaceFolder}/src"
+    "cmake.sourceDirectory": "${workspaceFolder}/src",
+    "cmake.configureOnOpen": false
 }

@@ -11,6 +11,7 @@
 
 #include <tc/core/Token.h>
 #include <tc/core/TokenKinds.h>
+#include <tc/core/SymbolKinds.h>
 #include <tc/core/Grammar.h>
 
 #include <vector>
@@ -41,6 +42,9 @@ namespace tc {
          * 符号类型。
          */
         grammar::SymbolType& symbolType = symbol.type;
+
+        TokenKind& tokenKind = symbol.tokenKind;
+        SymbolKind& symbolKind = symbol.symbolKind;
 
         /**
          * 终结符。仅当符号为终结符时可用。

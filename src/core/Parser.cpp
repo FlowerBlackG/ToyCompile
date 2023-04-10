@@ -169,7 +169,9 @@ int Parser::parse(
 
         AstNode* reducedNode = new AstNode; // 归约得到的节点。
         reducedNode->symbol = symbolList[expression.targetSymbolId];
+
         int ruleSize = expression.rule.size();
+        
         for (int nodeIdx = nodes.size() - ruleSize; nodeIdx < nodes.size(); nodeIdx++) {
             auto node = nodes[nodeIdx];
             node->mother = reducedNode;
@@ -222,7 +224,6 @@ int Parser::parse(
                 .append( token.content );
 
             errorCount++;
-
 
             break;
         }

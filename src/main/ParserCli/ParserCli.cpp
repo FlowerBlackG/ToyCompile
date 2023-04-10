@@ -16,6 +16,8 @@
 #include <fstream>
 #include <iostream>
 
+#include <tc/utils/ConsoleColorPad.h>
+
 using namespace std;
 using namespace tc;
 
@@ -223,7 +225,18 @@ int ParserCli::run(
 
     if (!parserErrors.empty()) {
         for (auto& err : parserErrors) {
-            out << "parser error: " << err.msg << ". ";
+            
+            if (&out == &cout) {
+                ConsoleColorPad::setColor(0xee, 0x27, 0x46);
+            }
+
+            out << "parser error: ";
+
+            if (&out == &cout) {
+                ConsoleColorPad::setColor();
+            }
+
+            out << err.msg << ". ";
 
             if (err.tokenRelated) {
                 out << "at: (" << err.token.row

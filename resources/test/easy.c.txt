@@ -1,24 +1,10 @@
 
-float lb(int a, int b) {
-    int c = a + 2;
-    return c * b;
-}
-
-struct yq {
-    int age;
-    double reliable;
-};
-
-int pretty(double x) {
-    return lb(1, 2) * x;
-}
-
-int main() {
-
-    struct yq qq;
-    qq.age = 10;
-    pretty(qq.age);
-
-    return 0;
-
+int lb(int a, int b) {
+    int c = a + 2 - 5;
+    int i;
+    for ( i = 3; i < 7; i++) {
+        c = c + i;
+        int d = c + i;
+    }
+    return c + b;
 }

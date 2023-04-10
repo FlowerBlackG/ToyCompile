@@ -3,7 +3,7 @@
     创建于 2022年9月26日。
 ]]
 
-file(GLOB core_lib_source_files *.cpp)
+file(GLOB_RECURSE core_lib_source_files *.cpp)
 
 add_library(
     core 

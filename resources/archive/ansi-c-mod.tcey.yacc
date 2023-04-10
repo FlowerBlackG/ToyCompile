@@ -1,20 +1,16 @@
 /*
 
 ANSI C Yacc grammar
-(This yacc file is accompanied by a matching lex file.)
-In 1985, Jeff Lee published his Yacc grammar for the April 30, 1985 draft version of the ANSI C standard.  Tom Stockfisch reposted it to net.sources in 1987; that original, as mentioned in the answer to question 17.25 of the comp.lang.c FAQ, used to be available via ftp from ftp.uu.net as usenet/net.sources/ansi.c.grammar.Z
 
-The version you see here has been updated based on an 1999 draft of the standards document. It allows for restricted pointers, variable arrays, "inline", and designated initializers. The previous version's lex and yacc files (ANSI C as of ca 1995) are still around as archived copies.
+In 1985, Jeff Lee published his Yacc grammar (which is accompanied by a matching Lex specification) for the April 30, 1985 draft version of the ANSI C standard.  Tom Stockfisch reposted it to net.sources in 1987; that original, as mentioned in the answer to question 17.25 of the comp.lang.c FAQ, can be ftp'ed from ftp.uu.net, file usenet/net.sources/ansi.c.grammar.Z.
 
-I want to keep this version as close to the 1999 Standard C grammar as possible; please let me know if you discover discrepancies.
-(If you feel like it, read the FAQ first.)
+Jutta Degener, 1995
 
-Jutta Degener, 2012
+https://www.lysator.liu.se/c/ANSI-C-grammar-y.html
 
+lex script: https://www.lysator.liu.se/c/ANSI-C-grammar-l.html
 
 */
-
-
 
 /*
 
@@ -127,11 +123,10 @@ token-key STRING_LITERAL --_string_literal_
 %token PTR_OP INC_OP DEC_OP LEFT_OP RIGHT_OP LE_OP GE_OP EQ_OP NE_OP
 %token AND_OP OR_OP MUL_ASSIGN DIV_ASSIGN MOD_ASSIGN ADD_ASSIGN
 %token SUB_ASSIGN LEFT_ASSIGN RIGHT_ASSIGN AND_ASSIGN
-%token XOR_ASSIGN OR_ASSIGN
+%token XOR_ASSIGN OR_ASSIGN TYPE_NAME
 
-%token TYPEDEF EXTERN STATIC AUTO 
+%token TYPEDEF EXTERN STATIC AUTO REGISTER
 %token CHAR SHORT INT LONG SIGNED UNSIGNED FLOAT DOUBLE CONST VOLATILE VOID
-
 %token STRUCT UNION ENUM ELLIPSIS
 
 %token CASE DEFAULT IF ELSE SWITCH WHILE DO FOR GOTO CONTINUE BREAK RETURN
@@ -155,8 +150,6 @@ postfix_expression
 	| postfix_expression PTR_OP IDENTIFIER
 	| postfix_expression INC_OP
 	| postfix_expression DEC_OP
-	| '(' type_name ')' '{' initializer_list '}'
-	| '(' type_name ')' '{' initializer_list ',' '}'
 	;
 
 argument_expression_list
@@ -307,6 +300,7 @@ storage_class_specifier
 	| EXTERN
 	| STATIC
 	| AUTO
+	| REGISTER
 	;
 
 type_specifier
@@ -364,8 +358,6 @@ struct_declarator
 enum_specifier
 	: ENUM '{' enumerator_list '}'
 	| ENUM IDENTIFIER '{' enumerator_list '}'
-	| ENUM '{' enumerator_list ',' '}'
-	| ENUM IDENTIFIER '{' enumerator_list ',' '}'
 	| ENUM IDENTIFIER
 	;
 
@@ -384,23 +376,15 @@ type_qualifier
 	| VOLATILE
 	;
 
-
 declarator
 	: pointer direct_declarator
 	| direct_declarator
 	;
 
-
 direct_declarator
 	: IDENTIFIER
 	| '(' declarator ')'
-	| direct_declarator '[' type_qualifier_list assignment_expression ']'
-	| direct_declarator '[' type_qualifier_list ']'
-	| direct_declarator '[' assignment_expression ']'
-	| direct_declarator '[' STATIC type_qualifier_list assignment_expression ']'
-	| direct_declarator '[' type_qualifier_list STATIC assignment_expression ']'
-	| direct_declarator '[' type_qualifier_list '*' ']'
-	| direct_declarator '[' '*' ']'
+	| direct_declarator '[' constant_expression ']'
 	| direct_declarator '[' ']'
 	| direct_declarator '(' parameter_type_list ')'
 	| direct_declarator '(' identifier_list ')'
@@ -455,11 +439,9 @@ abstract_declarator
 direct_abstract_declarator
 	: '(' abstract_declarator ')'
 	| '[' ']'
-	| '[' assignment_expression ']'
+	| '[' constant_expression ']'
 	| direct_abstract_declarator '[' ']'
-	| direct_abstract_declarator '[' assignment_expression ']'
-	| '[' '*' ']'
-	| direct_abstract_declarator '[' '*' ']'
+	| direct_abstract_declarator '[' constant_expression ']'
 	| '(' ')'
 	| '(' parameter_type_list ')'
 	| direct_abstract_declarator '(' ')'
@@ -474,23 +456,7 @@ initializer
 
 initializer_list
 	: initializer
-	| designation initializer
 	| initializer_list ',' initializer
-	| initializer_list ',' designation initializer
-	;
-
-designation
-	: designator_list '='
-	;
-
-designator_list
-	: designator
-	| designator_list designator
-	;
-
-designator
-	: '[' constant_expression ']'
-	| '.' IDENTIFIER
 	;
 
 statement
@@ -510,17 +476,19 @@ labeled_statement
 
 compound_statement
 	: '{' '}'
-	| '{' block_item_list '}'
+	| '{' statement_list '}'
+	| '{' declaration_list '}'
+	| '{' declaration_list statement_list '}'
 	;
 
-block_item_list
-	: block_item
-	| block_item_list block_item
-	;
-
-block_item
+declaration_list
 	: declaration
-	| statement
+	| declaration_list declaration
+	;
+
+statement_list
+	: statement
+	| statement_list statement
 	;
 
 expression_statement
@@ -539,8 +507,6 @@ iteration_statement
 	| DO statement WHILE '(' expression ')' ';'
 	| FOR '(' expression_statement expression_statement ')' statement
 	| FOR '(' expression_statement expression_statement expression ')' statement
-	| FOR '(' declaration expression_statement ')' statement
-	| FOR '(' declaration expression_statement expression ')' statement
 	;
 
 jump_statement
@@ -564,21 +530,20 @@ external_declaration
 function_definition
 	: declaration_specifiers declarator declaration_list compound_statement
 	| declaration_specifiers declarator compound_statement
-	;
-
-declaration_list
-	: declaration
-	| declaration_list declaration
+	| declarator declaration_list compound_statement
+	| declarator compound_statement
 	;
 
 
 %%
+
 #include <stdio.h>
 
 extern char yytext[];
 extern int column;
 
-void yyerror(char const *s)
+yyerror(s)
+char *s;
 {
 	fflush(stdout);
 	printf("\n%*s\n%*s\n", column, "^", column, s);

@@ -116,6 +116,11 @@ namespace tc::lr1grammar {
 
         /**
          * GO 函数列表。
+         * 
+         * int1 -> < int2 -> int3 >:
+         *   int1: 当前状态 id
+         *   int2: 造成转移的符号的 id
+         *   int3: 转移到达的状态 id
          */
         std::unordered_map<int, std::unordered_map<int, int> > transitionMap;
 

@@ -64,8 +64,9 @@ namespace tc {
      * 
      * tcpt 命令：
      *   pStId [x]: 设置 primaryStateId。
-     *   sym [n] [i] [t] [tk]: 添加一个 Symbol。
+     *   sym [n] [i] [t] [tk] [sk]: 添加一个 Symbol。
      *                         n -> name, i -> id, t -> type, tk -> tokenKind
+     *                         sk -> symbolKind
      *   fe [i] [ti] (rule values...) end: 添加一条表达式。
      *                         i -> id, ti -> targetSymbolId
      * 
