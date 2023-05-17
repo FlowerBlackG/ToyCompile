@@ -84,6 +84,8 @@ namespace tc::tcir {
         int bytes;
         ValueType valueType;
 
+        std::vector<int> dims;
+
         /** 默认值。对全局变量有效。 */
         long long initValue = 0;
     };

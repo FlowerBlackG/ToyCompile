@@ -20,11 +20,10 @@
 
 namespace tc::tcir {
 
-    
 
     struct IrGeneratorError {
         std::string msg;
-        AstNode* astNode = nullptr;
+        AstNode *astNode = nullptr;
     };
 
     /**
@@ -43,7 +42,7 @@ namespace tc::tcir {
          * @param root 语法树根节点。需要translationUnit，且遵循指定文法（C99）。
          * @return 遇到的错误数量。 
          */
-        int process(AstNode* root);
+        int process(AstNode *root);
 
         /**
          * 导出 IR。
@@ -51,17 +50,17 @@ namespace tc::tcir {
          * @param out 输出流。
          * @param withColor 是否同时输出颜色控制码。
          */
-        void dump(std::ostream& out, bool withColor = false);
+        void dump(std::ostream &out, bool withColor = false);
 
-        std::vector<IrGeneratorError>& getErrorList() {
+        std::vector<IrGeneratorError> &getErrorList() {
             return this->errorList;
         }
 
-        std::vector<IrGeneratorError>& getWarningList() {
+        std::vector<IrGeneratorError> &getWarningList() {
             return this->warningList;
         }
 
-        std::vector< IrInstructionCode >& getInstructionCodeList() {
+        std::vector<IrInstructionCode> &getInstructionCodeList() {
             return this->instructionList;
         }
 
@@ -87,7 +86,7 @@ namespace tc::tcir {
         /**
          * 当前正在处理的块的符号表。
          */
-        BlockSymbolTable* currentBlockSymbolTable = nullptr;
+        BlockSymbolTable *currentBlockSymbolTable = nullptr;
 
         // 上一个表达式计算结果类型。
         ValueType resultValueType = ValueType::type_void;
@@ -99,13 +98,13 @@ namespace tc::tcir {
          * 
          * @todo 很多地方并没有合理清空该值。
          */
-        SymbolBase* directResultSymbol = nullptr;
+        SymbolBase *directResultSymbol = nullptr;
 
         /**
          * 当前正在处理的函数。指向 globalSymbolTable 内的成员。
          * 只负责指向，不负责管理内存。
          */
-        FunctionSymbol* currentFunction = nullptr;
+        FunctionSymbol *currentFunction = nullptr;
 
         int nextLabelId = 1;
         int nextVarId = 1;
@@ -114,18 +113,18 @@ namespace tc::tcir {
         std::vector<IrGeneratorError> errorList;
         std::vector<IrGeneratorError> warningList;
 
-        std::vector< IrInstructionCode > instructionList;
+        std::vector<IrInstructionCode> instructionList;
 
         /**
          * 跳出目标。用于登记循环和 switch 内 break 的跳出目标。
          */
-        std::vector< std::string > breakStmtTargets;
+        std::vector<std::string> breakStmtTargets;
 
-        
+
         /**
          * 跳出目标。用于登记循环内 continue 的跳出目标。
          */
-        std::vector< std::string > continueStmtTargets;
+        std::vector<std::string> continueStmtTargets;
 
         /**
          * 块符号表生成的 ir。每张表在离开其负责的代码块前，
@@ -135,34 +134,40 @@ namespace tc::tcir {
 
     protected:
 
-        void addUnsupportedGrammarError(AstNode* node);
+        void addUnsupportedGrammarError(AstNode *node);
 
     protected: /* 模块处理函数。 */
 
-        void processTranslationUnit(AstNode* node);
-        void processExternalDeclaration(AstNode* node);
-        void processFunctionDeclaration(AstNode* node);
+        void processTranslationUnit(AstNode *node);
 
-        void processCompoundStatement(AstNode* node);
-        void processBlockItemList(AstNode* node);
-        void processBlockItem(AstNode* node);
+        void processExternalDeclaration(AstNode *node);
 
-        void processStatement(AstNode* node);
+        void processFunctionDeclaration(AstNode *node);
 
-        void processSelectionStatement(AstNode* node);
-        void processIterationStatement(AstNode* node);
+        void processCompoundStatement(AstNode *node);
 
-        void processIterationStatementDoWhile(AstNode* statement, AstNode* expression);
-        void processIterationStatementWhileLoop(AstNode* expression, AstNode* statement);
+        void processBlockItemList(AstNode *node);
+
+        void processBlockItem(AstNode *node);
+
+        void processStatement(AstNode *node);
+
+        void processSelectionStatement(AstNode *node);
+
+        void processIterationStatement(AstNode *node);
+
+        void processIterationStatementDoWhile(AstNode *statement, AstNode *expression);
+
+        void processIterationStatementWhileLoop(AstNode *expression, AstNode *statement);
 
         void processIterationStatementForLoop(
-            AstNode* expStmtOrDeclaration, 
-            AstNode* expStmt, 
-            AstNode* expression,
-            AstNode* statement
+                AstNode *expStmtOrDeclaration,
+                AstNode *expStmt,
+                AstNode *expression,
+                AstNode *statement
         );
 
-        void processJumpStatement(AstNode* node);
+        void processJumpStatement(AstNode *node);
 
         /**
          * 处理 declaration 节点。
@@ -173,39 +178,60 @@ namespace tc::tcir {
          *             位于全局环境时，不能处理算术运算。
          *             不在全局环境时，可能会生成计算语句。
          */
-        void processVariableDeclaration(AstNode* node, bool isInGlobalScope);
+        void processVariableDeclaration(AstNode *node, bool isInGlobalScope);
 
         void processVariableInitDeclarator(
-            AstNode* node, 
-            std::vector<TokenKind>& declarationSpecifierTokens, 
-            bool isInGlobalScope
+                AstNode *node,
+                std::vector<TokenKind> &declarationSpecifierTokens,
+                bool isInGlobalScope
         );
 
-        std::string processAssignmentExpression(AstNode* node, bool isInGlobalScope);
-        std::string processConditionalExpression(AstNode* node, bool isInGlobalScope);
-        std::string processLogicalOrExpression(AstNode* node, bool isInGlobalScope);
-        std::string processLogicalAndExpression(AstNode* node, bool isInGlobalScope);
-        std::string processInclusiveOrExpression(AstNode* node, bool isInGlobalScope);
-        std::string processExclusiveOrExpression(AstNode* node, bool isInGlobalScope);
-        std::string processAndExpression(AstNode* node, bool isInGlobalScope);
-        std::string processEqualityExpression(AstNode* node, bool isInGlobalScope);
-        std::string processRelationalExpression(AstNode* node, bool isInGlobalScope);
+        void processVariableDirectDeclarator(
+                AstNode *node,
+                ValueType valueType,
+                std::vector<int> &dimensions,
+                AstNode *initializer,
+                bool isInGlobalScope
+        );
 
-        std::string processShiftExpression(AstNode* node, bool isInGlobalScope);
-        std::string processAdditiveExpression(AstNode* node, bool isInGlobalScope);
-        std::string processMultiplicativeExpression(AstNode* node, bool isInGlobalScope);
-        std::string processCastExpression(AstNode* node, bool isInGlobalScope);
+        std::string processAssignmentExpression(AstNode *node, bool isInGlobalScope);
 
-        void processExpressionStatement(AstNode* node);
-        
-        std::string processExpression(AstNode* node, bool isInGlobalScope);
-        std::string processUnaryExpression(AstNode* node, bool isInGlobalScope);
-        std::string processPostfixExpression(AstNode* node, bool isInGlobalScope);
+        std::string processConditionalExpression(AstNode *node, bool isInGlobalScope);
 
-        void processArgumentExpressionList(AstNode* node);
+        std::string processLogicalOrExpression(AstNode *node, bool isInGlobalScope);
 
-        std::string processPrimaryExpression(AstNode* node, bool isInGlobalScope);
-        
+        std::string processLogicalAndExpression(AstNode *node, bool isInGlobalScope);
+
+        std::string processInclusiveOrExpression(AstNode *node, bool isInGlobalScope);
+
+        std::string processExclusiveOrExpression(AstNode *node, bool isInGlobalScope);
+
+        std::string processAndExpression(AstNode *node, bool isInGlobalScope);
+
+        std::string processEqualityExpression(AstNode *node, bool isInGlobalScope);
+
+        std::string processRelationalExpression(AstNode *node, bool isInGlobalScope);
+
+        std::string processShiftExpression(AstNode *node, bool isInGlobalScope);
+
+        std::string processAdditiveExpression(AstNode *node, bool isInGlobalScope);
+
+        std::string processMultiplicativeExpression(AstNode *node, bool isInGlobalScope);
+
+        std::string processCastExpression(AstNode *node, bool isInGlobalScope);
+
+        void processExpressionStatement(AstNode *node);
+
+        std::string processExpression(AstNode *node, bool isInGlobalScope);
+
+        std::string processUnaryExpression(AstNode *node, bool isInGlobalScope);
+
+        std::string processPostfixExpression(AstNode *node, std::vector<int> &dimensions, bool isInGlobalScope);
+
+        void processArgumentExpressionList(AstNode *node);
+
+        std::string processPrimaryExpression(AstNode *node, std::vector<int> &dimensions, bool isInGlobalScope);
+
 
         /**
          * 处理 declaration_specifiers 节点。
@@ -214,15 +240,15 @@ namespace tc::tcir {
          * @return int 处理过程产生的错误数量。
          */
         int processDeclarationSpecifiers(
-            AstNode* node, std::vector< TokenKind >& tokenListContainer
+                AstNode *node, std::vector<TokenKind> &tokenListContainer
         );
 
 
-        std::string symbolToIrValueCode(SymbolBase* symbol);
+        std::string symbolToIrValueCode(SymbolBase *symbol);
 
 
     private:
-        IrGenerator(const IrGenerator&) {};
+        IrGenerator(const IrGenerator &) {};
 
     };
 
