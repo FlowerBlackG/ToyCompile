@@ -1001,6 +1001,9 @@ void tcir::IrGenerator::processVariableDirectDeclarator(
     if (node->children.size() > 1) {
         AstNode *assignmentExp = node->children[2];
 
+        cout << assignmentExp << endl;
+        cout << assignmentExp->symbol.name << endl;
+
         auto prevErrCount = this->errorList.size();
         string expRes = this->processAssignmentExpression(assignmentExp, isInGlobalScope);
 
@@ -1958,7 +1961,7 @@ string tcir::IrGenerator::processUnaryExpression(AstNode *node, bool isInGlobalS
     */
 
     if (node->children.size() == 1) {
-        vector<int> dimensions;
+        vector<string> dimensions;
         return processPostfixExpression(node->children[0], dimensions, isInGlobalScope);
     }
 
@@ -2027,7 +2030,7 @@ string tcir::IrGenerator::processUnaryExpression(AstNode *node, bool isInGlobalS
 }
 
 
-string tcir::IrGenerator::processPostfixExpression(AstNode *node, vector<int> &dimensions, bool isInGlobalScope) {
+string tcir::IrGenerator::processPostfixExpression(AstNode *node, vector<string> &dimensions, bool isInGlobalScope) {
 
     /*
         postfix_expression
@@ -2116,7 +2119,7 @@ string tcir::IrGenerator::processPostfixExpression(AstNode *node, vector<int> &d
         if (errorList.size() - prevErrCount > 0) {
             return ""; // 遇到错误，不继续。
         }
-        dimensions.push_back(stoi(expRes));
+        dimensions.push_back(expRes);
         processPostfixExpression(node->children[0], dimensions, isInGlobalScope);
     }
 
@@ -2199,7 +2202,7 @@ void tcir::IrGenerator::processArgumentExpressionList(AstNode *node) {
 
 }
 
-string tcir::IrGenerator::processPrimaryExpression(AstNode *node, std::vector<int> &dimensions, bool isInGlobalScope) {
+string tcir::IrGenerator::processPrimaryExpression(AstNode *node, std::vector<string> &dimensions, bool isInGlobalScope) {
 
     /*
     
@@ -2409,7 +2412,7 @@ int tcir::IrGenerator::processDeclarationSpecifiers(
 
 string tcir::IrGenerator::symbolToIrValueCode(SymbolBase *symbol) {
 
-    VariableSymbol *varSymbol = (VariableSymbol *) symbol;
+    auto *varSymbol = (VariableSymbol *) symbol;
 
     if (varSymbol->visibility == SymbolVisibility::global) {
         return "val " + varSymbol->name;

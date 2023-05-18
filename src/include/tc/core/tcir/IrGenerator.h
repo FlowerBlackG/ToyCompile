@@ -226,11 +226,11 @@ namespace tc::tcir {
 
         std::string processUnaryExpression(AstNode *node, bool isInGlobalScope);
 
-        std::string processPostfixExpression(AstNode *node, std::vector<int> &dimensions, bool isInGlobalScope);
+        std::string processPostfixExpression(AstNode *node, std::vector<std::string> &dimensions, bool isInGlobalScope);
 
         void processArgumentExpressionList(AstNode *node);
 
-        std::string processPrimaryExpression(AstNode *node, std::vector<int> &dimensions, bool isInGlobalScope);
+        std::string processPrimaryExpression(AstNode *node, std::vector<std::string> &dimensions, bool isInGlobalScope);
 
 
         /**

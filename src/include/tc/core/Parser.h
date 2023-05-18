@@ -77,7 +77,7 @@ namespace tc {
     public:
 
         Parser();
-        Parser(const LrParserTable& parserTable);
+        explicit Parser(const LrParserTable& parserTable);
 
         /**
          * 加载 Action Goto 表。会将输入的表复制一份到 parser 内。
