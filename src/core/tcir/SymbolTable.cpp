@@ -268,7 +268,7 @@ void tcir::BlockSymbolTable::dump(ostream& out) {
         out << sym->id << " ";
         out << sym->name << " ";
         out << ValueTypeUtils::getName(sym->valueType) << " ";
-        out << ValueTypeUtils::getBytes(sym->valueType) << endl;
+        out << sym->bytes/*ValueTypeUtils::getBytes(sym->valueType)*/ << endl;
     }
 
     out << "% end" << endl;

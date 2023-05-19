@@ -102,7 +102,7 @@ void tcir::IrGenerator::dump(ostream &out, bool withColor) {
     for (auto &var: this->globalSymbolTable.variables) {
         out << "var " << var.first << " ";
         out << ValueTypeUtils::getName(var.second->valueType);
-        out << " " << ValueTypeUtils::getBytes(var.second->valueType);
+        out << " " << var.second->bytes; //ValueTypeUtils::getBytes(var.second->valueType);
         out << endl;
     }
 
@@ -1001,9 +1001,6 @@ void tcir::IrGenerator::processVariableDirectDeclarator(
     if (node->children.size() > 1) {
         AstNode *assignmentExp = node->children[2];
 
-        cout << assignmentExp << endl;
-        cout << assignmentExp->symbol.name << endl;
-
         auto prevErrCount = this->errorList.size();
         string expRes = this->processAssignmentExpression(assignmentExp, isInGlobalScope);
 
@@ -1110,15 +1107,15 @@ void tcir::IrGenerator::processVariableDirectDeclarator(
             }
 
             // 注册到符号表。在 assignment exp 之后注册，防止表达式内直接调用自己。
-            if (isInGlobalScope) {
-                this->globalSymbolTable.variables[idName] = symbol;
-            } else {
-                this->currentBlockSymbolTable->put(symbol);
-            }
 
             if (isInGlobalScope) {
+                this->globalSymbolTable.variables[idName] = symbol;
                 this->globalSymbolTable.variables[idName]->initValue = stoi(expRes);
             } else {
+                this->currentBlockSymbolTable->put(symbol);
+                instructionList.push_back(__tcMakeIrInstruction(
+                        "mov vreg 0 imm " + expRes
+                ));
                 auto &inst = this->instructionList.emplace_back();
                 int varId = symbol->id;
                 // 因为只考虑 int，这里直接等号就行。
@@ -1186,7 +1183,7 @@ string tcir::IrGenerator::processAssignmentExpression(
 
     TokenKind op = node->children[1]->children[0]->tokenKind;
 
-    this->processAssignmentExpression(node->children[2], isInGlobalScope);
+    string expRes = this->processAssignmentExpression(node->children[2], isInGlobalScope);
     if (errCount - errorList.size()) {
         return "";
     }
@@ -2336,15 +2333,12 @@ string tcir::IrGenerator::processPrimaryExpression(AstNode *node, std::vector<st
 
         resultValueType = ValueType::s32;
 
-        if (isInGlobalScope) {
-            return content;
-        } else {
+        if (!isInGlobalScope) {
             instructionList.push_back(__tcMakeIrInstruction(
                     "mov vreg 0 imm " + content
             ));
-
-            return "";
         }
+        return content;
     }
 
 }
