@@ -49,6 +49,6 @@ public:
 
 private:
     TokenKindUtils();
-    ~TokenKindUtils() {};
+    ~TokenKindUtils() = default;
     TokenKindUtils(const TokenKindUtils&) {};
 };

@@ -10,7 +10,7 @@
 using namespace std;
 using namespace tc;
 
-static tcir::IrInstructionCode __tcMakeIrInstruction(const string& tcirCode) {
+static tcir::IrInstructionCode __tcMakeIrInstruction(const string &tcirCode) {
 
     tcir::IrInstructionCode ins;
     ins = tcirCode;
@@ -18,7 +18,7 @@ static tcir::IrInstructionCode __tcMakeIrInstruction(const string& tcirCode) {
 
 }
 
-int tcir::IrGenerator::process(AstNode* root) {
+int tcir::IrGenerator::process(AstNode *root) {
 
     this->clear();
 
@@ -27,9 +27,9 @@ int tcir::IrGenerator::process(AstNode* root) {
     return this->errorList.size();
 }
 
-void tcir::IrGenerator::dump(ostream& out, bool withColor) {
+void tcir::IrGenerator::dump(ostream &out, bool withColor) {
 
-    auto setColor = [withColor] (int red = -1, int green = 0, int blue = 0) {
+    auto setColor = [withColor](int red = -1, int green = 0, int blue = 0) {
         if (withColor) {
             if (red != -1) {
                 ConsoleColorPad::setColor(red, green, blue);
@@ -40,11 +40,11 @@ void tcir::IrGenerator::dump(ostream& out, bool withColor) {
     };
 
     /* 符号关联。 */
-    
+
     setColor(0xed, 0x5a, 0x65);
     out << "@ begin of extlink" << endl;
     // 函数导出。
-    for (auto& fun : this->globalSymbolTable.functions) {
+    for (auto &fun: this->globalSymbolTable.functions) {
         if (fun.second->visibility != SymbolVisibility::global) {
             continue;
         }
@@ -53,7 +53,7 @@ void tcir::IrGenerator::dump(ostream& out, bool withColor) {
     }
 
     // 变量导出。
-    for (auto& var : this->globalSymbolTable.variables) {
+    for (auto &var: this->globalSymbolTable.variables) {
         out << "export " << var.first << " var" << endl;
     }
 
@@ -64,7 +64,7 @@ void tcir::IrGenerator::dump(ostream& out, bool withColor) {
     /* 全局数据。 */
     setColor(0x7e, 0x16, 0x71);
     out << "@ begin of static-data" << endl;
-    for (auto& var : this->globalSymbolTable.variables) {
+    for (auto &var: this->globalSymbolTable.variables) {
         out << "int var " << var.first;
         out << " " << ValueTypeUtils::getName(var.second->valueType);
         out << " " << var.second->initValue << endl;
@@ -77,7 +77,7 @@ void tcir::IrGenerator::dump(ostream& out, bool withColor) {
     out << "@ begin of global-symtab" << endl;
 
     // 函数
-    for (auto& fun : this->globalSymbolTable.functions) {
+    for (auto &fun: this->globalSymbolTable.functions) {
         out << "fun ";
         if (fun.second->visibility == SymbolVisibility::global) {
             out << "visible ";
@@ -89,7 +89,7 @@ void tcir::IrGenerator::dump(ostream& out, bool withColor) {
         out << ValueTypeUtils::getName(fun.second->returnType) << " ";
         out << fun.second->rootSymTabId << endl;
 
-        for (auto& param : fun.second->params) {
+        for (auto &param: fun.second->params) {
             out << "  ";
             out << ValueTypeUtils::getName(param.valueType) << " ";
             out << (param.isPointer ? "ptr" : "value") << " ";
@@ -99,10 +99,10 @@ void tcir::IrGenerator::dump(ostream& out, bool withColor) {
     }
 
     // 变量。
-    for (auto& var : this->globalSymbolTable.variables) {
+    for (auto &var: this->globalSymbolTable.variables) {
         out << "var " << var.first << " ";
         out << ValueTypeUtils::getName(var.second->valueType);
-        out << " " << ValueTypeUtils::getBytes(var.second->valueType);
+        out << " " << var.second->bytes; //ValueTypeUtils::getBytes(var.second->valueType);
         out << endl;
     }
 
@@ -110,7 +110,7 @@ void tcir::IrGenerator::dump(ostream& out, bool withColor) {
     out << endl;
 
     // 块符号表。
-    
+
     setColor(0x43, 0xb2, 0x44);
     out << "@ begin of block-symtab" << endl;
     out << blockSymbolTableIrDumps.str() << endl;
@@ -120,8 +120,8 @@ void tcir::IrGenerator::dump(ostream& out, bool withColor) {
     /* 指令。 */
     setColor(0xfc, 0xa1, 0x06);
     out << "@ begin of instructions" << endl;
-    for (auto& insCode : this->instructionList) {
-        for (auto& codeSegment : insCode) {
+    for (auto &insCode: this->instructionList) {
+        for (auto &codeSegment: insCode) {
             out << codeSegment << " ";
         }
         out << endl;
@@ -129,7 +129,7 @@ void tcir::IrGenerator::dump(ostream& out, bool withColor) {
     out << "@ end of instructions" << endl;
 
     setColor();
-    
+
     out << endl;
 
 }
@@ -151,11 +151,11 @@ void tcir::IrGenerator::clear() {
     this->nextBlockSymTabId = 1;
 }
 
-void tcir::IrGenerator::addUnsupportedGrammarError(AstNode* node) {
-    
-    auto& err = errorList.emplace_back();
+void tcir::IrGenerator::addUnsupportedGrammarError(AstNode *node) {
 
-    AstNode* firstToken = node;
+    auto &err = errorList.emplace_back();
+
+    AstNode *firstToken = node;
     while (firstToken->symbolType == grammar::SymbolType::NON_TERMINAL) {
         firstToken = firstToken->children[0];
     }
@@ -174,16 +174,16 @@ void tcir::IrGenerator::addUnsupportedGrammarError(AstNode* node) {
 
 /* ----------- 模块处理函数。 ------------ */
 
-void tcir::IrGenerator::processTranslationUnit(AstNode* node) {
+void tcir::IrGenerator::processTranslationUnit(AstNode *node) {
 
 
     if (node->children.size() == 1) {
-        
+
         // translation_unit -> external_declaration
         processExternalDeclaration(node->children[0]);
 
     } else {
-        
+
         // translation_unit -> translation_unit external_declaration
         processTranslationUnit(node->children[0]);
         processExternalDeclaration(node->children[1]);
@@ -191,7 +191,7 @@ void tcir::IrGenerator::processTranslationUnit(AstNode* node) {
     }
 }
 
-void tcir::IrGenerator::processExternalDeclaration(AstNode* node) {
+void tcir::IrGenerator::processExternalDeclaration(AstNode *node) {
 
     /*
         external_declaration
@@ -200,7 +200,7 @@ void tcir::IrGenerator::processExternalDeclaration(AstNode* node) {
     
     */
 
-    AstNode* child = node->children[0];
+    AstNode *child = node->children[0];
 
     if (child->symbolKind == SymbolKind::function_definition) {
 
@@ -219,7 +219,7 @@ void tcir::IrGenerator::processExternalDeclaration(AstNode* node) {
 }
 
 
-void tcir::IrGenerator::processFunctionDeclaration(AstNode* node) {
+void tcir::IrGenerator::processFunctionDeclaration(AstNode *node) {
 
 
     if (node->children.size() == 3) {
@@ -237,21 +237,21 @@ void tcir::IrGenerator::processFunctionDeclaration(AstNode* node) {
                 如：{ return f(x - 1); }
         */
 
-       
-        AstNode* declarationSpecifiersNode = node->children[0];
-        AstNode* declaratorNode = node->children[1];
-        AstNode* compoundStmtNode = node->children[2];
+
+        AstNode *declarationSpecifiersNode = node->children[0];
+        AstNode *declaratorNode = node->children[1];
+        AstNode *compoundStmtNode = node->children[2];
 
         // 处理返回类型。
         // 仅允许 int 和 void。
 
         vector<TokenKind> declarationSpecifierTokens;
         int resCode = this->processDeclarationSpecifiers(
-            declarationSpecifiersNode, declarationSpecifierTokens
+                declarationSpecifiersNode, declarationSpecifierTokens
         );
 
         if (resCode > 0) {
-            
+
             return;
         }
 
@@ -263,7 +263,7 @@ void tcir::IrGenerator::processFunctionDeclaration(AstNode* node) {
 
         // 仅支持 direct_declarator -> direct_declarator '(' parameter_type_list ')'
         //    以及 direct_declarator -> direct_declarator '(' ')'
-        AstNode* directDeclarator = declaratorNode->children[0];
+        AstNode *directDeclarator = declaratorNode->children[0];
 
         vector<FunctionParamSymbol> functionParams;
 
@@ -271,123 +271,125 @@ void tcir::IrGenerator::processFunctionDeclaration(AstNode* node) {
         if (directDeclarator->children.size() == 3
             && directDeclarator->children[1]->symbolType == grammar::SymbolType::TERMINAL
             && directDeclarator->children[1]->tokenKind == TokenKind::l_paren
-        ) {
-            
+                ) {
+
             // do nothing
-        
+
         } else if (directDeclarator->children.size() == 4
-            && directDeclarator->children[2]->symbolKind == SymbolKind::parameter_type_list
-        ) do { // 采用 do while(0) 结构，更好中途跳出。
+                   && directDeclarator->children[2]->symbolKind == SymbolKind::parameter_type_list
+                )
+            do { // 采用 do while(0) 结构，更好中途跳出。
 
-            AstNode* parameterTypeList = directDeclarator->children[2];
-            if (parameterTypeList->children.size() != 1) {
-                // 带变长参数的，不支持。
-                this->addUnsupportedGrammarError(parameterTypeList);
-                break;
-            } 
-
-            AstNode* paramList = parameterTypeList->children[0];
-            vector<AstNode*> paramDeclarations;
-
-            while (paramList->children.size() > 1) {
-                paramDeclarations.push_back(paramList->children[2]);
-                paramList = paramList->children[0];
-            }
-
-            // 现在，所谓 "paramList" 只有一个孩子，并且它不是 paramList。
-            paramDeclarations.push_back(paramList->children[0]);
-
-            // 反向遍历。
-            for (auto it = paramDeclarations.rbegin(); it != paramDeclarations.rend(); it++) {
-                auto& paramDecl = *it;
-            
-                // 读取数据类型。
-                vector<TokenKind> resContainer;
-                int resCode = this->processDeclarationSpecifiers(
-                    paramDecl->children[0], resContainer
-                );
-
-                if (resCode) {
-                    
-                    continue;
+                AstNode *parameterTypeList = directDeclarator->children[2];
+                if (parameterTypeList->children.size() != 1) {
+                    // 带变长参数的，不支持。
+                    this->addUnsupportedGrammarError(parameterTypeList);
+                    break;
                 }
 
-                if (paramDecl->children.size() == 1) {
-                    // parameter_declaration -> declaration_specifiers
-                    
-                    auto& param = functionParams.emplace_back();
+                AstNode *paramList = parameterTypeList->children[0];
+                vector<AstNode *> paramDeclarations;
+
+                while (paramList->children.size() > 1) {
+                    paramDeclarations.push_back(paramList->children[2]);
+                    paramList = paramList->children[0];
+                }
+
+                // 现在，所谓 "paramList" 只有一个孩子，并且它不是 paramList。
+                paramDeclarations.push_back(paramList->children[0]);
+
+                // 反向遍历。
+                for (auto it = paramDeclarations.rbegin(); it != paramDeclarations.rend(); it++) {
+                    auto &paramDecl = *it;
+
+                    // 读取数据类型。
+                    vector<TokenKind> resContainer;
+                    int resCode = this->processDeclarationSpecifiers(
+                            paramDecl->children[0], resContainer
+                    );
+
+                    if (resCode) {
+
+                        continue;
+                    }
+
+                    if (paramDecl->children.size() == 1) {
+                        // parameter_declaration -> declaration_specifiers
+
+                        auto &param = functionParams.emplace_back();
+                        param.symbolType = SymbolType::functionParam;
+                        param.isPointer = false;
+                        param.isVaList = false;
+                        param.name = "";
+                        if (resContainer[0] == TokenKind::kw_int) {
+                            param.valueType = ValueType::s32;
+                        } else {
+                            param.valueType = ValueType::type_void;
+                        }
+
+                        continue;
+                    }
+
+
+                    if (paramDecl->children[1]->symbolKind == SymbolKind::abstract_declarator) {
+                        this->addUnsupportedGrammarError(paramDecl->children[1]);
+                        continue;
+                    }
+
+                    // parameter_declaration -> declaration_specifiers declarator
+                    AstNode *declarator = paramDecl->children[1];
+                    if (declarator->children.size() != 1) {
+                        // 不支持指针。
+                        this->addUnsupportedGrammarError(declarator->children[0]);
+                        continue;
+                    }
+
+                    // direct_declarator
+                    AstNode *dirDecl = declarator->children[0];
+
+                    if (dirDecl->children.size() != 1) {
+                        this->addUnsupportedGrammarError(paramDecl);
+                        continue;
+                    }
+
+                    string &name = dirDecl->children[0]->token.content;
+
+                    auto &param = functionParams.emplace_back();
+
                     param.symbolType = SymbolType::functionParam;
                     param.isPointer = false;
                     param.isVaList = false;
-                    param.name = "";
+                    param.name = name;
                     if (resContainer[0] == TokenKind::kw_int) {
+
                         param.valueType = ValueType::s32;
                     } else {
                         param.valueType = ValueType::type_void;
                     }
 
-                    continue;
                 }
 
 
-                if (paramDecl->children[1]->symbolKind == SymbolKind::abstract_declarator) {
-                    this->addUnsupportedGrammarError(paramDecl->children[1]);
-                    continue;
-                }
-
-                // parameter_declaration -> declaration_specifiers declarator
-                AstNode* declarator = paramDecl->children[1];
-                if (declarator->children.size() != 1) {
-                    // 不支持指针。
-                    this->addUnsupportedGrammarError(declarator->children[0]);
-                    continue;
-                }
-
-                // direct_declarator
-                AstNode* dirDecl = declarator->children[0];
-
-                if (dirDecl->children.size() != 1) {
-                    this->addUnsupportedGrammarError(paramDecl);
-                    continue;
-                }
-
-                string& name = dirDecl->children[0]->token.content;
-                
-                auto& param = functionParams.emplace_back();
-                
-                param.symbolType = SymbolType::functionParam;
-                param.isPointer = false;
-                param.isVaList = false;
-                param.name = name;
-                if (resContainer[0] == TokenKind::kw_int) {
-
-                    param.valueType = ValueType::s32;
-                } else {
-                    param.valueType = ValueType::type_void;
-                }
-
-            }
-
-
-        } while(false); else {
+            } while (false);
+        else {
 
             this->addUnsupportedGrammarError(declaratorNode);
             return;
 
         }
 
-        AstNode* identifierDirectDecl = directDeclarator->children[0];
+        AstNode *identifierDirectDecl = directDeclarator->children[0];
 
         if (identifierDirectDecl->children[0]->symbolType != grammar::SymbolType::TERMINAL) {
             this->addUnsupportedGrammarError(identifierDirectDecl);
             return;
         }
 
-        string& functionName = identifierDirectDecl->children[0]->token.content;
+        string &functionName = identifierDirectDecl->children[0]->token.content;
 
         // 生成函数信息。
 
-        FunctionSymbol* funcSymbol = new FunctionSymbol;
+        FunctionSymbol *funcSymbol = new FunctionSymbol;
         globalSymbolTable.functions[functionName] = funcSymbol;
         funcSymbol->params = functionParams;
 
@@ -405,7 +407,7 @@ void tcir::IrGenerator::processFunctionDeclaration(AstNode* node) {
 
         // 生成标签。
         instructionList.emplace_back();
-        auto& irInstructionCode = instructionList.back();
+        auto &irInstructionCode = instructionList.back();
         irInstructionCode.push_back("fun-label");
         irInstructionCode.push_back(functionName);
         irInstructionCode.push_back(to_string(this->nextBlockSymTabId));
@@ -436,7 +438,7 @@ void tcir::IrGenerator::processFunctionDeclaration(AstNode* node) {
 }
 
 
-void tcir::IrGenerator::processCompoundStatement(AstNode* node) {
+void tcir::IrGenerator::processCompoundStatement(AstNode *node) {
 
     if (node->children.size() == 2) {
         return; // compound_stmt -> { }
@@ -445,7 +447,7 @@ void tcir::IrGenerator::processCompoundStatement(AstNode* node) {
     // compound_stmt -> { block_item_list }
 
     // 构建并启用符号表
-    BlockSymbolTable* symbolTab = new BlockSymbolTable;
+    BlockSymbolTable *symbolTab = new BlockSymbolTable;
     symbolTab->id = nextBlockSymTabId++;
     symbolTab->parent = currentBlockSymbolTable ? currentBlockSymbolTable : symbolTab;
     currentBlockSymbolTable = symbolTab;
@@ -454,7 +456,7 @@ void tcir::IrGenerator::processCompoundStatement(AstNode* node) {
     if (this->currentFunction->rootSymTabId == -1) {
         this->currentFunction->rootSymTabId = symbolTab->id;
     }
-    
+
     // 处理语句。
     this->processBlockItemList(node->children[1]);
 
@@ -469,7 +471,7 @@ void tcir::IrGenerator::processCompoundStatement(AstNode* node) {
     delete symbolTab;
 }
 
-void tcir::IrGenerator::processBlockItemList(AstNode* node) {
+void tcir::IrGenerator::processBlockItemList(AstNode *node) {
     if (node->children.size() == 1) {
         this->processBlockItem(node->children[0]);
     } else {
@@ -478,23 +480,21 @@ void tcir::IrGenerator::processBlockItemList(AstNode* node) {
     }
 }
 
-void tcir::IrGenerator::processBlockItem(AstNode* node) {
-
-
+void tcir::IrGenerator::processBlockItem(AstNode *node) {
 
 
     if (node->children[0]->symbolKind == SymbolKind::statement) {
-        
+
         this->processStatement(node->children[0]);
-        
+
     } else {
-        
+
         this->processVariableDeclaration(node->children[0], false);
 
     }
 }
 
-void tcir::IrGenerator::processStatement(AstNode* node) {
+void tcir::IrGenerator::processStatement(AstNode *node) {
 
 
     /*
@@ -517,14 +517,14 @@ void tcir::IrGenerator::processStatement(AstNode* node) {
 
             break;
         }
-        
+
         case SymbolKind::compound_statement: {
 
             this->processCompoundStatement(node->children[0]);
 
             break;
         }
-        
+
         case SymbolKind::expression_statement: {
 
             /*
@@ -540,14 +540,14 @@ void tcir::IrGenerator::processStatement(AstNode* node) {
 
             break;
         }
-        
+
         case SymbolKind::selection_statement: {
-            
+
             this->processSelectionStatement(node->children[0]);
 
             break;
         }
-        
+
         case SymbolKind::iteration_statement: {
 
             this->processIterationStatement(node->children[0]);
@@ -563,7 +563,7 @@ void tcir::IrGenerator::processStatement(AstNode* node) {
 
         default: {
 
-            auto& err = errorList.emplace_back();
+            auto &err = errorList.emplace_back();
             err.astNode = node;
             err.msg = "internal error: code f8218f11";
 
@@ -574,7 +574,7 @@ void tcir::IrGenerator::processStatement(AstNode* node) {
 
 }
 
-void tcir::IrGenerator::processSelectionStatement(AstNode* node) {
+void tcir::IrGenerator::processSelectionStatement(AstNode *node) {
 
     if (node->children[0]->tokenKind == TokenKind::kw_switch) {
         this->addUnsupportedGrammarError(node->children[0]);
@@ -594,15 +594,15 @@ void tcir::IrGenerator::processSelectionStatement(AstNode* node) {
         elseLabel = ".if_else_" + to_string(nextLabelId++);
 
         instructionList.push_back(__tcMakeIrInstruction(
-            "je " + elseLabel
+                "je " + elseLabel
         ));
 
     } else {
 
         instructionList.push_back(__tcMakeIrInstruction(
-            "je " + endLabel
+                "je " + endLabel
         ));
-    
+
     }
 
     processStatement(node->children[4]);
@@ -610,25 +610,25 @@ void tcir::IrGenerator::processSelectionStatement(AstNode* node) {
     if (hasElseStmt) {
 
         instructionList.push_back(__tcMakeIrInstruction(
-            "jmp " + endLabel
+                "jmp " + endLabel
         ));
 
         instructionList.push_back(__tcMakeIrInstruction(
-            "label " + elseLabel
+                "label " + elseLabel
         ));
 
         processStatement(node->children[6]);
-        
-    } 
+
+    }
 
     instructionList.push_back(__tcMakeIrInstruction(
-        "label " + endLabel
+            "label " + endLabel
     ));
-    
+
 
 }
 
-void tcir::IrGenerator::processIterationStatement(AstNode* node) {
+void tcir::IrGenerator::processIterationStatement(AstNode *node) {
 
     // iteration_statement ->
 
@@ -637,13 +637,13 @@ void tcir::IrGenerator::processIterationStatement(AstNode* node) {
         // WHILE '(' expression ')' statement
 
         processIterationStatementWhileLoop(node->children[2], node->children[4]);
-        
+
     } else if (node->children[0]->tokenKind == TokenKind::kw_do) {
 
         // DO statement WHILE '(' expression ')' ';'
 
         processIterationStatementDoWhile(node->children[1], node->children[4]);
-        
+
     } else if (node->children.size() == 6) {
 
         // FOR '(' expression_statement expression_statement ')' statement
@@ -652,28 +652,28 @@ void tcir::IrGenerator::processIterationStatement(AstNode* node) {
         // for (int x = 1; x < 10;) { ... }
 
         this->processIterationStatementForLoop(
-            node->children[2], node->children[3], 
-            nullptr, node->children.back()
+                node->children[2], node->children[3],
+                nullptr, node->children.back()
         );
 
     } else {
 
         // FOR '(' declaration          expression_statement expression ')' statement
         // FOR '(' expression_statement expression_statement expression ')' statement
-    
+
         this->processIterationStatementForLoop(
-            node->children[2], node->children[3], 
-            node->children[4], node->children.back()
+                node->children[2], node->children[3],
+                node->children[4], node->children.back()
         );
-    
+
     }
 
 
 }
 
 void tcir::IrGenerator::processIterationStatementDoWhile(
-    AstNode* statement, 
-    AstNode* expression
+        AstNode *statement,
+        AstNode *expression
 ) {
 
     /*
@@ -699,11 +699,11 @@ void tcir::IrGenerator::processIterationStatementDoWhile(
 
     */
 
-    string&& labelIdStr = to_string(nextLabelId++);
+    string &&labelIdStr = to_string(nextLabelId++);
 
-    string&& stmtLabel = ".do_while_stmt_" + labelIdStr;
-    string&& expLabel = ".do_while_exp_" + labelIdStr;
-    string&& endLabel = ".do_while_end_" + labelIdStr;
+    string &&stmtLabel = ".do_while_stmt_" + labelIdStr;
+    string &&expLabel = ".do_while_exp_" + labelIdStr;
+    string &&endLabel = ".do_while_end_" + labelIdStr;
 
     this->continueStmtTargets.push_back(expLabel);
     this->breakStmtTargets.push_back(endLabel);
@@ -711,9 +711,9 @@ void tcir::IrGenerator::processIterationStatementDoWhile(
     instructionList.push_back(__tcMakeIrInstruction("label " + stmtLabel));
 
     processStatement(statement);
-    
+
     instructionList.push_back(__tcMakeIrInstruction("label " + expLabel));
-    
+
     processExpression(expression, false);
     instructionList.push_back(__tcMakeIrInstruction("je " + endLabel));
     instructionList.push_back(__tcMakeIrInstruction("j " + stmtLabel));
@@ -727,8 +727,8 @@ void tcir::IrGenerator::processIterationStatementDoWhile(
 }
 
 void tcir::IrGenerator::processIterationStatementWhileLoop(
-    AstNode* expression, 
-    AstNode* statement
+        AstNode *expression,
+        AstNode *statement
 ) {
 
     /*
@@ -754,11 +754,11 @@ void tcir::IrGenerator::processIterationStatementWhileLoop(
 
     */
 
-    string&& labelIdStr = to_string(nextLabelId++);
+    string &&labelIdStr = to_string(nextLabelId++);
 
-    string&& stmtLabel = ".while_loop_stmt_" + labelIdStr;
-    string&& expLabel = ".while_loop_exp_" + labelIdStr;
-    string&& endLabel = ".while_loop_end_" + labelIdStr;
+    string &&stmtLabel = ".while_loop_stmt_" + labelIdStr;
+    string &&expLabel = ".while_loop_exp_" + labelIdStr;
+    string &&endLabel = ".while_loop_end_" + labelIdStr;
 
     this->continueStmtTargets.push_back(expLabel);
     this->breakStmtTargets.push_back(endLabel);
@@ -770,7 +770,7 @@ void tcir::IrGenerator::processIterationStatementWhileLoop(
     processStatement(statement);
     instructionList.push_back(__tcMakeIrInstruction("jmp " + expLabel));
     instructionList.push_back(__tcMakeIrInstruction("label " + endLabel));
-    
+
 
     this->continueStmtTargets.pop_back();
     this->breakStmtTargets.pop_back();
@@ -779,10 +779,10 @@ void tcir::IrGenerator::processIterationStatementWhileLoop(
 
 
 void tcir::IrGenerator::processIterationStatementForLoop(
-    AstNode* expStmtOrDeclaration, 
-    AstNode* expStmt, 
-    AstNode* expression /* nullable */,
-    AstNode* statement 
+        AstNode *expStmtOrDeclaration,
+        AstNode *expStmt,
+        AstNode *expression /* nullable */,
+        AstNode *statement
 ) {
 
     if (expStmtOrDeclaration->symbolKind == SymbolKind::declaration) {
@@ -816,14 +816,14 @@ void tcir::IrGenerator::processIterationStatementForLoop(
     
     */
 
-    auto pushIr = [this] (const string& ir) {
+    auto pushIr = [this](const string &ir) {
         this->instructionList.push_back(__tcMakeIrInstruction(ir));
     };
 
-    string&& labelIdStr = to_string(nextLabelId++);
-    string&& estmtLabel = ".for_loop_estmt_" + labelIdStr;
-    string&& expLabel = ".for_loop_exp_" + labelIdStr;
-    string&& endLabel = ".for_loop_end_" + labelIdStr;
+    string &&labelIdStr = to_string(nextLabelId++);
+    string &&estmtLabel = ".for_loop_estmt_" + labelIdStr;
+    string &&expLabel = ".for_loop_exp_" + labelIdStr;
+    string &&endLabel = ".for_loop_end_" + labelIdStr;
 
     this->continueStmtTargets.push_back(expLabel);
     this->breakStmtTargets.push_back(endLabel);
@@ -855,13 +855,13 @@ void tcir::IrGenerator::processIterationStatementForLoop(
 
 }
 
-void tcir::IrGenerator::processJumpStatement(AstNode* node) {
+void tcir::IrGenerator::processJumpStatement(AstNode *node) {
 
     switch (node->children[0]->tokenKind) {
 
         case TokenKind::kw_goto: {
-            
-            auto& err = errorList.emplace_back();
+
+            auto &err = errorList.emplace_back();
             err.astNode = node->children[0];
             err.msg = "\"goto\" is not currently supported.";
 
@@ -871,14 +871,14 @@ void tcir::IrGenerator::processJumpStatement(AstNode* node) {
         case TokenKind::kw_continue: {
 
             if (continueStmtTargets.empty()) {
-                auto& err = errorList.emplace_back();
+                auto &err = errorList.emplace_back();
                 err.astNode = node->children[0];
                 err.msg = "nowhere to skip for \"continue\".";
-               
+
             } else {
 
                 instructionList.push_back(__tcMakeIrInstruction(
-                    "jmp " + continueStmtTargets.back()
+                        "jmp " + continueStmtTargets.back()
                 ));
             }
 
@@ -888,14 +888,14 @@ void tcir::IrGenerator::processJumpStatement(AstNode* node) {
         case TokenKind::kw_break: {
 
             if (breakStmtTargets.empty()) {
-                auto& err = errorList.emplace_back();
+                auto &err = errorList.emplace_back();
                 err.astNode = node->children[0];
                 err.msg = "nowhere to skip for \"break\".";
-                
+
             } else {
 
                 instructionList.push_back(__tcMakeIrInstruction(
-                    "jmp " + breakStmtTargets.back()
+                        "jmp " + breakStmtTargets.back()
                 ));
             }
 
@@ -921,14 +921,15 @@ void tcir::IrGenerator::processJumpStatement(AstNode* node) {
 
 }
 
-void tcir::IrGenerator::processVariableDeclaration(AstNode* node, bool isInGlobalScope) {
-    
+void tcir::IrGenerator::processVariableDeclaration(AstNode *node, bool isInGlobalScope) {
+
     if (node->children.size() == 2) {
         // declaration -> declaration_specifiers ';'
         return;
     }
 
     // declaration -> declaration_specifiers init_declarator_list ';'
+    // 获取数据类型
     vector<TokenKind> declSpecifierTokens;
     int resCode = processDeclarationSpecifiers(node->children[0], declSpecifierTokens);
 
@@ -940,13 +941,12 @@ void tcir::IrGenerator::processVariableDeclaration(AstNode* node, bool isInGloba
 
 
     auto initDeclList = node->children[1];
-    vector<AstNode*> initDecls;
+    vector<AstNode *> initDecls;
     while (initDeclList->children.size() > 1) {
         // init_declarator_list -> init_declarator_list ',' init_declarator
         initDecls.push_back(initDeclList->children[2]);
         initDeclList = initDeclList->children[0];
     }
-
 
 
     initDecls.push_back(initDeclList->children[0]);
@@ -960,16 +960,14 @@ void tcir::IrGenerator::processVariableDeclaration(AstNode* node, bool isInGloba
 }
 
 void tcir::IrGenerator::processVariableInitDeclarator(
-    AstNode* node, 
-    vector<TokenKind>& declarationSpecifierTokens, 
-    bool isInGlobalScope
+        AstNode *node,
+        vector<TokenKind> &declarationSpecifierTokens,
+        bool isInGlobalScope
 ) {
     ValueType valueType;
     // 目前仅支持 int
     if (declarationSpecifierTokens[0] == TokenKind::kw_int) {
-
         valueType = ValueType::s32;
-
     } else {
         errorList.emplace_back();
         errorList.back().astNode = node->children[0];
@@ -977,80 +975,85 @@ void tcir::IrGenerator::processVariableInitDeclarator(
         return;
     }
 
-
     // 先把 name 提取出来。
-    AstNode* declarator = node->children[0];
+    AstNode *declarator = node->children[0];
     if (declarator->children.size() > 1) {
         // 指针。不支持。
         this->addUnsupportedGrammarError(declarator->children[0]);
         return;
     }
 
-    AstNode* dirDecl = declarator->children[0];
-    if (dirDecl->children.size() > 1) {
-        // 仅支持 direct_decl -> IDENTIFIER
-        this->addUnsupportedGrammarError(dirDecl);
+    AstNode *dirDecl = declarator->children[0];
+
+    vector<int> dimensions;
+    processVariableDirectDeclarator(dirDecl, valueType, dimensions,
+                                    node->children.size() == 1 ? nullptr : node->children[2], isInGlobalScope);
+}
+
+void tcir::IrGenerator::processVariableDirectDeclarator(
+        AstNode *node,
+        ValueType valueType,
+        std::vector<int> &dimensions,
+        AstNode *initializer,
+        bool isInGlobalScope
+) {
+
+    if (node->children.size() > 1) {
+        AstNode *assignmentExp = node->children[2];
+
+        auto prevErrCount = this->errorList.size();
+        string expRes = this->processAssignmentExpression(assignmentExp, isInGlobalScope);
+
+        if (errorList.size() - prevErrCount > 0) {
+            return; // 遇到错误，不继续。
+        }
+
+        dimensions.push_back(stoi(expRes));
+        processVariableDirectDeclarator(node->children[0], valueType, dimensions, initializer, isInGlobalScope);
         return;
     }
 
+    string &idName = node->children[0]->token.content;
+    int sizes = 1;
+    for (int size: dimensions) {
+        sizes *= size;
+    }
 
-    string& idName = dirDecl->children[0]->token.content;
-
-
-    VariableSymbol* symbol = new VariableSymbol;
+    auto *symbol = new VariableSymbol;
     symbol->name = idName;
-    symbol->bytes = ValueTypeUtils::getBytes(valueType);
     symbol->valueType = valueType;
     symbol->symbolType = SymbolType::variableDefine;
+    symbol->bytes = ValueTypeUtils::getBytes(valueType) * sizes;
 
     if (isInGlobalScope) {
         symbol->visibility = SymbolVisibility::global;
-    } else {
-        symbol->visibility = SymbolVisibility::internal;
-    }
-
-
-    if (isInGlobalScope) {
         if (this->globalSymbolTable.variables.count(idName)) {
             this->warningList.emplace_back();
             this->warningList.back().astNode = node;
-            this->warningList.back().msg = "symbol redefined: ";
-            this->warningList.back().msg += idName;
-
+            this->warningList.back().msg = "symbol redefined: " + idName;
         }
-
         if (this->globalSymbolTable.functions.count(idName)) {
             this->errorList.emplace_back();
             this->errorList.back().astNode = node;
-            this->errorList.back().msg = "symbol defined as function: ";
-            this->errorList.back().msg += idName;
-
-
+            this->errorList.back().msg = "symbol defined as function: " + idName;
             return;
         }
-
-        
     } else {
-
+        symbol->visibility = SymbolVisibility::internal;
         if (this->currentBlockSymbolTable->get(idName, false)) {
-            auto& err = this->errorList.emplace_back();
+            auto &err = this->errorList.emplace_back();
             err.astNode = node;
-            err.msg = "already defined: ";
-            err.msg += idName;
-
-
+            err.msg = "already defined: " + idName;
             return;
         }
-
-
         symbol->id = this->nextVarId++;
     }
 
-    if (node->children.size() == 1) {
+    if (!initializer) {
         // init_decl -> declarator
 
         /*
-        
+
           例：
 
             int g;  <-- 这样。默认赋值为 0
@@ -1061,90 +1064,77 @@ void tcir::IrGenerator::processVariableInitDeclarator(
 
                 return 0;
             }
-        
+
         */
 
         if (isInGlobalScope) {
-
             this->globalSymbolTable.variables[idName] = symbol;
         } else {
-
             this->currentBlockSymbolTable->put(symbol);
         }
+    } else {
+        if (dimensions.empty()) {
+            // single var
+            // init_decl -> declarator '=' initializer
 
-        return;
-    }
+            /*
 
+              例：
 
-    // init_decl -> declarator '=' initializer
+                int g = 1;  <--
 
-    /*
-      
-      例：
-    
-        int g = 1;  <--
+                int main() {
 
-        int main() {
+                    int x = 2;  <--
 
-            int x = 2;  <--
+                    return 0;
+                }
 
-            return 0;
+            */
+            if (initializer->children.size() > 1) {
+                // { xxx }
+                this->addUnsupportedGrammarError(initializer);
+                return;
+            }
+
+            AstNode *assignmentExp = initializer->children[0];
+
+            auto prevErrCount = this->errorList.size();
+            string expRes = this->processAssignmentExpression(assignmentExp, isInGlobalScope);
+
+            if (errorList.size() - prevErrCount > 0) {
+                return; // 遇到错误，不继续。
+            }
+
+            // 注册到符号表。在 assignment exp 之后注册，防止表达式内直接调用自己。
+
+            if (isInGlobalScope) {
+                this->globalSymbolTable.variables[idName] = symbol;
+                this->globalSymbolTable.variables[idName]->initValue = stoi(expRes);
+            } else {
+                this->currentBlockSymbolTable->put(symbol);
+                instructionList.push_back(__tcMakeIrInstruction(
+                        "mov vreg 0 imm " + expRes
+                ));
+                auto &inst = this->instructionList.emplace_back();
+                int varId = symbol->id;
+                // 因为只考虑 int，这里直接等号就行。
+                inst.push_back("mov");
+                inst.push_back("val");
+                inst.push_back(to_string(varId));
+                inst.push_back("vreg");
+                inst.push_back("0");
+            }
+        } else {
+            this->addUnsupportedGrammarError(initializer);
         }
-
-    */
-
-    AstNode* initializer = node->children[2];
-
-    if (initializer->children.size() > 1) {
-        // { xxx }
-        this->addUnsupportedGrammarError(initializer);
-        return;
-    }
-
-    AstNode* assignmentExp = initializer->children[0];
-
-    int prevErrCount = this->errorList.size();
-    string expRes = this->processAssignmentExpression(assignmentExp, isInGlobalScope);
-
-    if (errorList.size() - prevErrCount > 0) {
-        return; // 遇到错误，不继续。
-    }
-
-    // 注册到符号表。在 assignment exp 之后注册，防止表达式内直接调用自己。
-    if (isInGlobalScope) {
-
-        this->globalSymbolTable.variables[idName] = symbol;
-    } else {
-
-        this->currentBlockSymbolTable->put(symbol);
-    }
-
-    if (isInGlobalScope) {
-
-        this->globalSymbolTable.variables[idName]->initValue = stoi(expRes);
-
-    } else {
-
-        auto& inst = this->instructionList.emplace_back();
-
-        int varId = symbol->id;
-
-        // 因为只考虑 int，这里直接等号就行。
-
-        inst.push_back("mov");
-
-        inst.push_back("val");
-        inst.push_back(to_string(varId));
-
-        inst.push_back("vreg");
-        inst.push_back("0");
-
     }
 }
 
+
 string tcir::IrGenerator::processAssignmentExpression(
-    AstNode* node, 
-    bool isInGlobalScope
+        AstNode *node,
+        bool isInGlobalScope
 ) {
 
 
@@ -1161,14 +1151,14 @@ string tcir::IrGenerator::processAssignmentExpression(
 
         return processConditionalExpression(node->children[0], isInGlobalScope);
     }
-   
-    
+
+
     if (isInGlobalScope) {
         this->addUnsupportedGrammarError(node);
 
         return "";
     }
-        
+
 
     int errCount = errorList.size();
 
@@ -1180,7 +1170,7 @@ string tcir::IrGenerator::processAssignmentExpression(
     }
 
     if (!directResultSymbol) {
-        auto& err = errorList.emplace_back();
+        auto &err = errorList.emplace_back();
 
         err.astNode = node;
         err.msg = "cannot find symbol.";
@@ -1193,7 +1183,7 @@ string tcir::IrGenerator::processAssignmentExpression(
 
     TokenKind op = node->children[1]->children[0]->tokenKind;
 
-    this->processAssignmentExpression(node->children[2], isInGlobalScope);
+    string expRes = this->processAssignmentExpression(node->children[2], isInGlobalScope);
     if (errCount - errorList.size()) {
         return "";
     }
@@ -1202,7 +1192,7 @@ string tcir::IrGenerator::processAssignmentExpression(
         case TokenKind::equal: {
 
             instructionList.push_back(__tcMakeIrInstruction(
-                "mov " + valueName + " vreg 0"
+                    "mov " + valueName + " vreg 0"
             ));
 
             break;
@@ -1213,7 +1203,7 @@ string tcir::IrGenerator::processAssignmentExpression(
             // 暂不支持 +=
             break;
         }
-        
+
         case TokenKind::minusequal: {
             this->addUnsupportedGrammarError(node->children[1]->children[0]);
             // 暂不支持 -=
@@ -1231,8 +1221,8 @@ string tcir::IrGenerator::processAssignmentExpression(
 }
 
 string tcir::IrGenerator::processConditionalExpression(
-    AstNode* node, 
-    bool isInGlobalScope
+        AstNode *node,
+        bool isInGlobalScope
 ) {
 
     /*
@@ -1243,7 +1233,7 @@ string tcir::IrGenerator::processConditionalExpression(
             ;
     
     */
-   
+
 
     int errCount = errorList.size();
     auto logiOrRes = processLogicalOrExpression(node->children[0], isInGlobalScope);
@@ -1251,7 +1241,7 @@ string tcir::IrGenerator::processConditionalExpression(
     if (errorList.size() - errCount) {
         return "";
     }
-    
+
     if (node->children.size() == 1) {
         return logiOrRes;
     }
@@ -1286,27 +1276,27 @@ string tcir::IrGenerator::processConditionalExpression(
         */
 
         auto labelId = this->nextLabelId++;
-        auto&& exitLabel = ".con_exit_" + to_string(labelId);
-        auto&& falseLabel = ".con_false_" + to_string(labelId);
+        auto &&exitLabel = ".con_exit_" + to_string(labelId);
+        auto &&falseLabel = ".con_false_" + to_string(labelId);
 
         this->instructionList.push_back(__tcMakeIrInstruction(
-            "je " + falseLabel
+                "je " + falseLabel
         ));
 
         this->processExpression(node->children[2], isInGlobalScope);
 
         this->instructionList.push_back(__tcMakeIrInstruction(
-            "jmp " + exitLabel
+                "jmp " + exitLabel
         ));
 
         this->instructionList.push_back(__tcMakeIrInstruction(
-            "label " + falseLabel
+                "label " + falseLabel
         ));
 
         this->processConditionalExpression(node->children[4], isInGlobalScope);
 
         this->instructionList.push_back(__tcMakeIrInstruction(
-            "label " + exitLabel
+                "label " + exitLabel
         ));
 
         return "";
@@ -1316,8 +1306,8 @@ string tcir::IrGenerator::processConditionalExpression(
 }
 
 string tcir::IrGenerator::processLogicalOrExpression(
-    AstNode* node, 
-    bool isInGlobalScope
+        AstNode *node,
+        bool isInGlobalScope
 ) {
 
     /*
@@ -1328,7 +1318,7 @@ string tcir::IrGenerator::processLogicalOrExpression(
             ;
     
     */
-    
+
     if (node->children.size() == 1) {
         return processLogicalAndExpression(node->children[0], isInGlobalScope);
     }
@@ -1370,8 +1360,8 @@ string tcir::IrGenerator::processLogicalOrExpression(
 }
 
 string tcir::IrGenerator::processLogicalAndExpression(
-    AstNode* node, 
-    bool isInGlobalScope
+        AstNode *node,
+        bool isInGlobalScope
 ) {
 
 
@@ -1383,7 +1373,7 @@ string tcir::IrGenerator::processLogicalAndExpression(
             ;
     
     */
-    
+
     if (node->children.size() == 1) {
         return processInclusiveOrExpression(node->children[0], isInGlobalScope);
     }
@@ -1424,8 +1414,8 @@ string tcir::IrGenerator::processLogicalAndExpression(
 }
 
 string tcir::IrGenerator::processInclusiveOrExpression(
-    AstNode* node, 
-    bool isInGlobalScope
+        AstNode *node,
+        bool isInGlobalScope
 ) {
 
     /*
@@ -1436,11 +1426,11 @@ string tcir::IrGenerator::processInclusiveOrExpression(
             ;
     
     */
-    
+
     if (node->children.size() == 1) {
         return processExclusiveOrExpression(node->children[0], isInGlobalScope);
-    } 
-    
+    }
+
     if (isInGlobalScope) {
 
         auto res1 = processInclusiveOrExpression(node->children[0], isInGlobalScope);
@@ -1456,8 +1446,8 @@ string tcir::IrGenerator::processInclusiveOrExpression(
 }
 
 string tcir::IrGenerator::processExclusiveOrExpression(
-    AstNode* node, 
-    bool isInGlobalScope
+        AstNode *node,
+        bool isInGlobalScope
 ) {
 
     /*
@@ -1471,12 +1461,12 @@ string tcir::IrGenerator::processExclusiveOrExpression(
 
     if (node->children.size() == 1) {
         return processAndExpression(node->children[0], isInGlobalScope);
-    } 
-    
+    }
+
     if (isInGlobalScope) {
 
-        auto&& res1 = processExclusiveOrExpression(node->children[0], isInGlobalScope);
-        auto&& res2 = processAndExpression(node->children[2], isInGlobalScope);
+        auto &&res1 = processExclusiveOrExpression(node->children[0], isInGlobalScope);
+        auto &&res2 = processAndExpression(node->children[2], isInGlobalScope);
 
         return to_string(stoll(res1) ^ stoll(res2));
 
@@ -1489,8 +1479,8 @@ string tcir::IrGenerator::processExclusiveOrExpression(
 
 
 string tcir::IrGenerator::processAndExpression(
-    AstNode* node, 
-    bool isInGlobalScope
+        AstNode *node,
+        bool isInGlobalScope
 ) {
 
     /*
@@ -1501,15 +1491,15 @@ string tcir::IrGenerator::processAndExpression(
             ;
     
     */
-    
+
     if (node->children.size() == 1) {
         return processEqualityExpression(node->children[0], isInGlobalScope);
-    } 
-    
+    }
+
     if (isInGlobalScope) {
 
-        auto&& res1 = processAndExpression(node->children[0], isInGlobalScope);
-        auto&& res2 = processEqualityExpression(node->children[2], isInGlobalScope);
+        auto &&res1 = processAndExpression(node->children[0], isInGlobalScope);
+        auto &&res2 = processEqualityExpression(node->children[2], isInGlobalScope);
 
         return to_string(stoll(res1) & stoll(res2));
 
@@ -1522,7 +1512,7 @@ string tcir::IrGenerator::processAndExpression(
 }
 
 
-string tcir::IrGenerator::processEqualityExpression(AstNode* node, bool isInGlobalScope) {
+string tcir::IrGenerator::processEqualityExpression(AstNode *node, bool isInGlobalScope) {
 
 
     /*
@@ -1535,7 +1525,7 @@ string tcir::IrGenerator::processEqualityExpression(AstNode* node, bool isInGlob
 
     */
 
-   
+
 
     if (node->children.size() == 1) {
         return this->processRelationalExpression(node->children[0], isInGlobalScope);
@@ -1553,7 +1543,7 @@ string tcir::IrGenerator::processEqualityExpression(AstNode* node, bool isInGlob
 
     if (isInGlobalScope) {
         auto relationExpRes = processRelationalExpression(
-            node->children[2], isInGlobalScope
+                node->children[2], isInGlobalScope
         );
 
         if (errorList.size() - errCount) {
@@ -1574,7 +1564,7 @@ string tcir::IrGenerator::processEqualityExpression(AstNode* node, bool isInGlob
         this->instructionList.push_back(__tcMakeIrInstruction("push 4 vreg 0"));
 
         auto relationExpRes = processRelationalExpression(
-            node->children[2], isInGlobalScope
+                node->children[2], isInGlobalScope
         );
 
         if (errorList.size() - errCount) {
@@ -1584,7 +1574,7 @@ string tcir::IrGenerator::processEqualityExpression(AstNode* node, bool isInGlob
         this->instructionList.push_back(__tcMakeIrInstruction("pop 4 vreg 1"));
 
         auto ins = __tcMakeIrInstruction("cmp vreg 1 vreg 0");
-        
+
 
         if (opToken == TokenKind::equalequal) {
 
@@ -1601,10 +1591,9 @@ string tcir::IrGenerator::processEqualityExpression(AstNode* node, bool isInGlob
     }
 
 
-
 }
 
-string tcir::IrGenerator::processRelationalExpression(AstNode* node, bool isInGlobalScope) {
+string tcir::IrGenerator::processRelationalExpression(AstNode *node, bool isInGlobalScope) {
 
     /*
     
@@ -1627,7 +1616,7 @@ string tcir::IrGenerator::processRelationalExpression(AstNode* node, bool isInGl
 
 
     auto relationalExpResult = processRelationalExpression(
-        node->children[0], isInGlobalScope
+            node->children[0], isInGlobalScope
     );
 
     if (errorList.size() - errCount) {
@@ -1639,7 +1628,7 @@ string tcir::IrGenerator::processRelationalExpression(AstNode* node, bool isInGl
 
     if (isInGlobalScope) {
         auto shiftExpRes = this->processShiftExpression(node->children[2], isInGlobalScope);
-        
+
         if (errorList.size() - errCount) {
             return "";
         }
@@ -1648,13 +1637,13 @@ string tcir::IrGenerator::processRelationalExpression(AstNode* node, bool isInGl
         long long shiftRes = stoll(shiftExpRes);
 
         if (opToken == TokenKind::less) {
-            result = !!(result < shiftRes);
+            result = result < shiftRes;
         } else if (opToken == TokenKind::greater) {
-            result = !!(result > shiftRes);
+            result = result > shiftRes;
         } else if (opToken == TokenKind::lessequal) {
-            result = !!(result <= shiftRes);
+            result = result <= shiftRes;
         } else {
-            result = !!(result >= shiftRes);
+            result = result >= shiftRes;
         }
 
         return to_string(result);
@@ -1678,7 +1667,7 @@ string tcir::IrGenerator::processRelationalExpression(AstNode* node, bool isInGl
         ins.push_back("1");
         ins.push_back("vreg");
         ins.push_back("0");
-        
+
         if (opToken == TokenKind::less) {
             ins.push_back("l");
         } else if (opToken == TokenKind::greater) {
@@ -1698,7 +1687,7 @@ string tcir::IrGenerator::processRelationalExpression(AstNode* node, bool isInGl
 }
 
 
-string tcir::IrGenerator::processShiftExpression(AstNode* node, bool isInGlobalScope) {
+string tcir::IrGenerator::processShiftExpression(AstNode *node, bool isInGlobalScope) {
 
     /*
     
@@ -1719,7 +1708,7 @@ string tcir::IrGenerator::processShiftExpression(AstNode* node, bool isInGlobalS
 
 }
 
-string tcir::IrGenerator::processAdditiveExpression(AstNode* node, bool isInGlobalScope) {
+string tcir::IrGenerator::processAdditiveExpression(AstNode *node, bool isInGlobalScope) {
 
     /*
     
@@ -1738,7 +1727,7 @@ string tcir::IrGenerator::processAdditiveExpression(AstNode* node, bool isInGlob
     }
 
     auto addResult = processAdditiveExpression(
-        node->children[0], isInGlobalScope
+            node->children[0], isInGlobalScope
     );
 
 
@@ -1749,15 +1738,15 @@ string tcir::IrGenerator::processAdditiveExpression(AstNode* node, bool isInGlob
     auto opToken = node->children[1]->tokenKind;
     if (isInGlobalScope) {
 
-        
+
         auto multiplicationResult = processMultiplicativeExpression(
-            node->children[2], isInGlobalScope
+                node->children[2], isInGlobalScope
         );
 
         if (errorList.size() - errCount) {
             return "";
         }
-    
+
         long long result = stoll(addResult);
         long long mulRes = stoll(multiplicationResult);
         if (opToken == TokenKind::plus) {
@@ -1767,13 +1756,13 @@ string tcir::IrGenerator::processAdditiveExpression(AstNode* node, bool isInGlob
         }
 
         return to_string(result);
-    
+
     } else {
 
         this->instructionList.push_back(__tcMakeIrInstruction("push 4 vreg 0"));
 
         auto multiplicationResult = processMultiplicativeExpression(
-            node->children[2], isInGlobalScope
+                node->children[2], isInGlobalScope
         );
 
         if (errorList.size() - errCount) {
@@ -1805,7 +1794,7 @@ string tcir::IrGenerator::processAdditiveExpression(AstNode* node, bool isInGlob
 
 }
 
-string tcir::IrGenerator::processMultiplicativeExpression(AstNode* node, bool isInGlobalScope) {
+string tcir::IrGenerator::processMultiplicativeExpression(AstNode *node, bool isInGlobalScope) {
 
     /*
 
@@ -1824,12 +1813,12 @@ string tcir::IrGenerator::processMultiplicativeExpression(AstNode* node, bool is
 
     // 下方代码执行时，children size 一定是 3.
 
-    auto&& res1 = processMultiplicativeExpression(node->children[0], isInGlobalScope);
+    auto &&res1 = processMultiplicativeExpression(node->children[0], isInGlobalScope);
 
     if (isInGlobalScope) {
 
-        
-        auto&& res2 = processCastExpression(node->children[2], isInGlobalScope);
+
+        auto &&res2 = processCastExpression(node->children[2], isInGlobalScope);
 
         switch (node->children[1]->tokenKind) {
             case TokenKind::star: {
@@ -1850,33 +1839,33 @@ string tcir::IrGenerator::processMultiplicativeExpression(AstNode* node, bool is
             }
         }
 
-    } 
-    
-    
+    }
+
+
     // 执行到这里时，处理的代码不在全局。
     // 即：isInGlobalScope = false
 
     this->instructionList.push_back(__tcMakeIrInstruction("push 4 vreg 0"));
 
-    auto&& mulResult = res1;
+    auto &&mulResult = res1;
 
     auto errCount = errorList.size();
 
-    auto&& castResult = processCastExpression(node->children[2], isInGlobalScope);
+    auto &&castResult = processCastExpression(node->children[2], isInGlobalScope);
 
     if (errorList.size() - errCount) {
         return "";
     }
 
     this->instructionList.push_back(__tcMakeIrInstruction("pop 4 vreg 1"));
-    
+
     if (node->children[1]->tokenKind == TokenKind::star) {
 
-        
+
         // 乘法
         this->instructionList.push_back(__tcMakeIrInstruction("mul vreg 0 vreg 1"));
 
-        
+
     } else if (node->children[1]->tokenKind == TokenKind::slash) {
 
         // 除法
@@ -1892,7 +1881,7 @@ string tcir::IrGenerator::processMultiplicativeExpression(AstNode* node, bool is
 
 }
 
-string tcir::IrGenerator::processCastExpression(AstNode* node, bool isInGlobalScope) {
+string tcir::IrGenerator::processCastExpression(AstNode *node, bool isInGlobalScope) {
 
     /*
     
@@ -1912,18 +1901,18 @@ string tcir::IrGenerator::processCastExpression(AstNode* node, bool isInGlobalSc
 
 }
 
-void tcir::IrGenerator::processExpressionStatement(AstNode* node) {
+void tcir::IrGenerator::processExpressionStatement(AstNode *node) {
 
     if (node->children.size() > 1) {
         processExpression(node->children[0], false);
     }
 
-    
+
     directResultSymbol = nullptr; // 防止该值被设置。
 
 }
 
-string tcir::IrGenerator::processExpression(AstNode* node, bool isInGlobalScope) {
+string tcir::IrGenerator::processExpression(AstNode *node, bool isInGlobalScope) {
 
     /*
     
@@ -1952,7 +1941,7 @@ string tcir::IrGenerator::processExpression(AstNode* node, bool isInGlobalScope)
 
 }
 
-string tcir::IrGenerator::processUnaryExpression(AstNode* node, bool isInGlobalScope) {
+string tcir::IrGenerator::processUnaryExpression(AstNode *node, bool isInGlobalScope) {
 
 
     /*
@@ -1969,7 +1958,8 @@ string tcir::IrGenerator::processUnaryExpression(AstNode* node, bool isInGlobalS
     */
 
     if (node->children.size() == 1) {
-        return processPostfixExpression(node->children[0], isInGlobalScope);
+        vector<string> dimensions;
+        return processPostfixExpression(node->children[0], dimensions, isInGlobalScope);
     }
 
     if (node->children[0]->symbolType == grammar::SymbolType::TERMINAL) {
@@ -1981,7 +1971,7 @@ string tcir::IrGenerator::processUnaryExpression(AstNode* node, bool isInGlobalS
 
         if (isInGlobalScope) {
 
-            auto& err = errorList.emplace_back();
+            auto &err = errorList.emplace_back();
             err.astNode = node;
             err.msg = "cannot use ++/-- in global scope.";
 
@@ -1989,7 +1979,7 @@ string tcir::IrGenerator::processUnaryExpression(AstNode* node, bool isInGlobalS
         }
 
         if (!directResultSymbol) {
-            auto& err = errorList.emplace_back();
+            auto &err = errorList.emplace_back();
             err.astNode = node;
             err.msg = "cannot use ++/-- on constant value.";
 
@@ -1999,23 +1989,23 @@ string tcir::IrGenerator::processUnaryExpression(AstNode* node, bool isInGlobalS
         string valueCode = this->symbolToIrValueCode(directResultSymbol);
 
         if (node->children[0]->tokenKind == TokenKind::plusplus) {
-            
+
             // ++i
             this->instructionList.push_back(__tcMakeIrInstruction(
-                "add " + valueCode + " imm 1"
+                    "add " + valueCode + " imm 1"
             ));
 
         } else {
-        
+
             // --i
             this->instructionList.push_back(__tcMakeIrInstruction(
-                "sub " + valueCode + " imm 1"
+                    "sub " + valueCode + " imm 1"
             ));
-        
+
         }
 
         this->instructionList.push_back(__tcMakeIrInstruction(
-            "mov vreg 0 " + valueCode
+                "mov vreg 0 " + valueCode
         ));
 
     }
@@ -2037,7 +2027,7 @@ string tcir::IrGenerator::processUnaryExpression(AstNode* node, bool isInGlobalS
 }
 
 
-string tcir::IrGenerator::processPostfixExpression(AstNode* node, bool isInGlobalScope) {
+string tcir::IrGenerator::processPostfixExpression(AstNode *node, vector<string> &dimensions, bool isInGlobalScope) {
 
     /*
         postfix_expression
@@ -2059,18 +2049,18 @@ string tcir::IrGenerator::processPostfixExpression(AstNode* node, bool isInGloba
     int errCount = errorList.size();
 
     if (node->children.size() == 1) {
-        
-        return processPrimaryExpression(node->children[0], isInGlobalScope);
+
+        return processPrimaryExpression(node->children[0], dimensions, isInGlobalScope);
 
     } else if (node->children.size() == 2) {
 
         TokenKind op = node->children[1]->tokenKind;
 
-        auto postfixExpRes = processPostfixExpression(node->children[0], isInGlobalScope);
+        auto postfixExpRes = processPostfixExpression(node->children[0], dimensions, isInGlobalScope);
 
         if (resultValueType != ValueType::s32) {
 
-            auto& err = errorList.emplace_back();
+            auto &err = errorList.emplace_back();
             err.astNode = node->children[0];
             err.msg += "cannot assign ++/-- on non int32 value.";
             return "";
@@ -2078,15 +2068,15 @@ string tcir::IrGenerator::processPostfixExpression(AstNode* node, bool isInGloba
         }
 
         if (isInGlobalScope) {
-            auto& err = errorList.emplace_back();
+            auto &err = errorList.emplace_back();
             err.astNode = node->children[0];
             err.msg += "cannot assign ++/-- in global scope.";
             return "";
         }
 
         if (!directResultSymbol) {
-            
-            auto& err = errorList.emplace_back();
+
+            auto &err = errorList.emplace_back();
             err.astNode = node->children[0];
             err.msg += "cannot assign ++/-- to constants.";
             return "";
@@ -2095,27 +2085,41 @@ string tcir::IrGenerator::processPostfixExpression(AstNode* node, bool isInGloba
         string symbolCode = this->symbolToIrValueCode(directResultSymbol);
 
         instructionList.push_back(__tcMakeIrInstruction(
-            "mov vreg 0 " + symbolCode
+                "mov vreg 0 " + symbolCode
         ));
 
         if (op == TokenKind::plusplus) {
             // postfix_exp INC_OP
 
             instructionList.push_back(__tcMakeIrInstruction(
-                "add " + symbolCode + " imm 1"
+                    "add " + symbolCode + " imm 1"
             ));
 
         } else {
             // postfix_exp DEC_OP
 
             instructionList.push_back(__tcMakeIrInstruction(
-                "sub " + symbolCode + " imm 1"
+                    "sub " + symbolCode + " imm 1"
             ));
         }
 
         return "";
 
     }
+
+    if (node->children[1]->tokenKind == TokenKind::l_square) {// []
+        AstNode *assignmentExp = node->children[2]->children[0];
+
+        auto prevErrCount = this->errorList.size();
+        string expRes = this->processAssignmentExpression(assignmentExp, isInGlobalScope);
+
+        if (errorList.size() - prevErrCount > 0) {
+            return ""; // 遇到错误，不继续。
+        }
+        dimensions.push_back(expRes);
+        processPostfixExpression(node->children[0], dimensions, isInGlobalScope);
+    }
+
 
     if (node->children[0]->symbolType == grammar::SymbolType::TERMINAL) {
         this->addUnsupportedGrammarError(node);
@@ -2124,10 +2128,9 @@ string tcir::IrGenerator::processPostfixExpression(AstNode* node, bool isInGloba
         return "";
     }
 
-    if (node->children[1]->tokenKind == TokenKind::l_square // []
-        || node->children[1]->tokenKind == TokenKind::period // x . y
+    if (node->children[1]->tokenKind == TokenKind::period // x . y
         || node->children[1]->tokenKind == TokenKind::arrow // x -> y
-    ) {
+            ) {
         this->addUnsupportedGrammarError(node->children[1]);
         return "";
     }
@@ -2151,7 +2154,7 @@ string tcir::IrGenerator::processPostfixExpression(AstNode* node, bool isInGloba
 
         // 带参数的函数调用。
         processArgumentExpressionList(node->children[2]);
-        
+
     }
 
     IrInstructionCode code;
@@ -2159,11 +2162,11 @@ string tcir::IrGenerator::processPostfixExpression(AstNode* node, bool isInGloba
 
     // 假设只有最简单的名称，如 func()
     //   而不存在如 (func)() 这种麻烦的。
-    auto&& funcName = node->children[0]->children[0]->children[0]->token.content;
+    auto &&funcName = node->children[0]->children[0]->children[0]->token.content;
 
     auto funcPtr = this->globalSymbolTable.getFunction(funcName);
-    if ( !funcPtr ) {
-        auto&& err = this->errorList.emplace_back();
+    if (!funcPtr) {
+        auto &&err = this->errorList.emplace_back();
         err.astNode = node->children[0];
         err.msg = "this function is undefined: ";
         err.msg += funcName;
@@ -2177,7 +2180,7 @@ string tcir::IrGenerator::processPostfixExpression(AstNode* node, bool isInGloba
 
 }
 
-void tcir::IrGenerator::processArgumentExpressionList(AstNode* node) {
+void tcir::IrGenerator::processArgumentExpressionList(AstNode *node) {
     /*
     
         argument_expression_list
@@ -2196,8 +2199,8 @@ void tcir::IrGenerator::processArgumentExpressionList(AstNode* node) {
 
 }
 
-string tcir::IrGenerator::processPrimaryExpression(AstNode* node, bool isInGlobalScope) {
-    
+string tcir::IrGenerator::processPrimaryExpression(AstNode *node, std::vector<string> &dimensions, bool isInGlobalScope) {
+
     /*
     
         primary_expression
@@ -2218,7 +2221,7 @@ string tcir::IrGenerator::processPrimaryExpression(AstNode* node, bool isInGloba
     }
 
     auto tokenKind = node->children[0]->tokenKind;
-    auto& content = node->children[0]->token.content;
+    auto &content = node->children[0]->token.content;
 
     if (tokenKind == TokenKind::string_literal) {
         // 暂不支持字符串。后续应该考虑支持。
@@ -2228,15 +2231,15 @@ string tcir::IrGenerator::processPrimaryExpression(AstNode* node, bool isInGloba
     } else if (tokenKind == TokenKind::identifier) {
 
         if (isInGlobalScope) {
-            
-            auto& err = errorList.emplace_back();
+
+            auto &err = errorList.emplace_back();
             err.astNode = node->children[0];
             err.msg = "cannot use variable to init value in global scope. (";
             err.msg += content;
             err.msg += ")";
 
         } else {
-            
+
             IrInstructionCode ir;
             ir.push_back("mov");
             ir.push_back("vreg");
@@ -2249,7 +2252,7 @@ string tcir::IrGenerator::processPrimaryExpression(AstNode* node, bool isInGloba
 
             if (symbolFromTable && symbolFromTable->valueType != ValueType::s32) {
                 this->errorList.emplace_back();
-                auto& err = errorList.back();
+                auto &err = errorList.back();
                 err.astNode = node->children[0];
                 err.msg += "only support int32.";
                 return "";
@@ -2270,9 +2273,9 @@ string tcir::IrGenerator::processPrimaryExpression(AstNode* node, bool isInGloba
             auto symFromFuncParams = currentFunction->findParamSymbol(content);
 
             if (symFromFuncParams && symFromFuncParams->valueType != ValueType::s32) {
-                
+
                 this->errorList.emplace_back();
-                auto& err = errorList.back();
+                auto &err = errorList.back();
                 err.astNode = node->children[0];
                 err.msg += "only support int32.";
                 return "";
@@ -2295,7 +2298,7 @@ string tcir::IrGenerator::processPrimaryExpression(AstNode* node, bool isInGloba
 
             if (symFromGlobalVar && symFromGlobalVar->valueType != ValueType::s32) {
                 this->errorList.emplace_back();
-                auto& err = errorList.back();
+                auto &err = errorList.back();
                 err.astNode = node->children[0];
                 err.msg += "only support int32.";
                 return "";
@@ -2313,7 +2316,7 @@ string tcir::IrGenerator::processPrimaryExpression(AstNode* node, bool isInGloba
             }
 
             errorList.emplace_back();
-            auto& err = errorList.back();
+            auto &err = errorList.back();
             err.astNode = node->children[0];
             err.msg = "symbol not found: ";
             err.msg += content;
@@ -2330,23 +2333,19 @@ string tcir::IrGenerator::processPrimaryExpression(AstNode* node, bool isInGloba
 
         resultValueType = ValueType::s32;
 
-        if (isInGlobalScope) {
-            return content;
-        } else {
+        if (!isInGlobalScope) {
             instructionList.push_back(__tcMakeIrInstruction(
-                "mov vreg 0 imm " + content
+                    "mov vreg 0 imm " + content
             ));
-
-            return "";
         }
+        return content;
     }
 
 }
 
 int tcir::IrGenerator::processDeclarationSpecifiers(
-    AstNode* node, vector< TokenKind >& tokenListContainer
+        AstNode *node, vector<TokenKind> &tokenListContainer
 ) {
-
 
 
     int prevErrors = this->errorList.size();
@@ -2354,7 +2353,7 @@ int tcir::IrGenerator::processDeclarationSpecifiers(
     if (node->children.size() != 1) {
         this->addUnsupportedGrammarError(node);
 
-        return 1;  
+        return 1;
     }
 
     if (node->children[0]->symbolKind != SymbolKind::type_specifier) {
@@ -2382,7 +2381,7 @@ int tcir::IrGenerator::processDeclarationSpecifiers(
     
     */
 
-    AstNode* returnTypeSpecifier = node->children[0]->children[0];
+    AstNode *returnTypeSpecifier = node->children[0]->children[0];
 
     if (!returnTypeSpecifier->children.empty()) {
         this->addUnsupportedGrammarError(returnTypeSpecifier);
@@ -2405,9 +2404,9 @@ int tcir::IrGenerator::processDeclarationSpecifiers(
 }
 
 
-string tcir::IrGenerator::symbolToIrValueCode(SymbolBase* symbol) {
+string tcir::IrGenerator::symbolToIrValueCode(SymbolBase *symbol) {
 
-    VariableSymbol* varSymbol = (VariableSymbol*) symbol;
+    auto *varSymbol = (VariableSymbol *) symbol;
 
     if (varSymbol->visibility == SymbolVisibility::global) {
         return "val " + varSymbol->name;
