@@ -110,6 +110,9 @@ namespace tc::tcir {
         int nextVarId = 1;
         int nextBlockSymTabId = 1;
 
+        bool notPrintSymbol = false;
+        int isArray = 0;
+
         std::vector<IrGeneratorError> errorList;
         std::vector<IrGeneratorError> warningList;
 

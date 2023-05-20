@@ -1002,7 +1002,9 @@ void tcir::IrGenerator::processVariableDirectDeclarator(
         AstNode *assignmentExp = node->children[2];
 
         auto prevErrCount = this->errorList.size();
+        notPrintSymbol = true;
         string expRes = this->processAssignmentExpression(assignmentExp, isInGlobalScope);
+        notPrintSymbol = false;
 
         if (errorList.size() - prevErrCount > 0) {
             return; // 遇到错误，不继续。
@@ -1013,6 +1015,7 @@ void tcir::IrGenerator::processVariableDirectDeclarator(
         return;
     }
 
+    std::reverse(dimensions.begin(), dimensions.end());
     string &idName = node->children[0]->token.content;
     int sizes = 1;
     for (int size: dimensions) {
@@ -1024,6 +1027,9 @@ void tcir::IrGenerator::processVariableDirectDeclarator(
     symbol->valueType = valueType;
     symbol->symbolType = SymbolType::variableDefine;
     symbol->bytes = ValueTypeUtils::getBytes(valueType) * sizes;
+    if (!dimensions.empty()) {
+        symbol->dims = dimensions;
+    }
 
     if (isInGlobalScope) {
         symbol->visibility = SymbolVisibility::global;
@@ -1113,9 +1119,6 @@ void tcir::IrGenerator::processVariableDirectDeclarator(
                 this->globalSymbolTable.variables[idName]->initValue = stoi(expRes);
             } else {
                 this->currentBlockSymbolTable->put(symbol);
-                instructionList.push_back(__tcMakeIrInstruction(
-                        "mov vreg 0 imm " + expRes
-                ));
                 auto &inst = this->instructionList.emplace_back();
                 int varId = symbol->id;
                 // 因为只考虑 int，这里直接等号就行。
@@ -1191,8 +1194,15 @@ string tcir::IrGenerator::processAssignmentExpression(
     switch (op) {
         case TokenKind::equal: {
 
+            string offset = dirSymbol->isOffset ? "+" : "";
+
+            if (offset == "+") {
+                instructionList.push_back(__tcMakeIrInstruction("pop 4 vreg 1"));
+                instructionList.push_back(__tcMakeIrInstruction("neg vreg 1"));
+            }
+
             instructionList.push_back(__tcMakeIrInstruction(
-                    "mov " + valueName + " vreg 0"
+                    "mov " + valueName + offset + " vreg 0"
             ));
 
             break;
@@ -1726,6 +1736,7 @@ string tcir::IrGenerator::processAdditiveExpression(AstNode *node, bool isInGlob
         return processMultiplicativeExpression(node->children[0], isInGlobalScope);
     }
 
+    isArray = 0; // 这里置0，之后会改变
     auto addResult = processAdditiveExpression(
             node->children[0], isInGlobalScope
     );
@@ -1759,8 +1770,17 @@ string tcir::IrGenerator::processAdditiveExpression(AstNode *node, bool isInGlob
 
     } else {
 
+        if (isArray) {
+            this->instructionList.push_back(__tcMakeIrInstruction("pop 4 vreg 1"));
+            this->instructionList.push_back(__tcMakeIrInstruction("neg vreg 1"));
+            this->instructionList.push_back(__tcMakeIrInstruction("mov vreg 0 val " + to_string(isArray) + "+"));
+            isArray = 0;
+        }
+
+
         this->instructionList.push_back(__tcMakeIrInstruction("push 4 vreg 0"));
 
+        isArray = 0;
         auto multiplicationResult = processMultiplicativeExpression(
                 node->children[2], isInGlobalScope
         );
@@ -1768,6 +1788,14 @@ string tcir::IrGenerator::processAdditiveExpression(AstNode *node, bool isInGlob
         if (errorList.size() - errCount) {
             return "";
         }
+
+        if (isArray) {
+            this->instructionList.push_back(__tcMakeIrInstruction("pop 4 vreg 1"));
+            this->instructionList.push_back(__tcMakeIrInstruction("neg vreg 1"));
+            this->instructionList.push_back(__tcMakeIrInstruction("mov vreg 0 val " + to_string(isArray) + "+"));
+            isArray = 0;
+        }
+
 
         this->instructionList.push_back(__tcMakeIrInstruction("pop 4 vreg 1"));
 
@@ -2109,15 +2137,17 @@ string tcir::IrGenerator::processPostfixExpression(AstNode *node, vector<string>
 
     if (node->children[1]->tokenKind == TokenKind::l_square) {// []
         AstNode *assignmentExp = node->children[2]->children[0];
-
         auto prevErrCount = this->errorList.size();
+        notPrintSymbol = true;
         string expRes = this->processAssignmentExpression(assignmentExp, isInGlobalScope);
+        notPrintSymbol = false;
 
         if (errorList.size() - prevErrCount > 0) {
             return ""; // 遇到错误，不继续。
         }
         dimensions.push_back(expRes);
         processPostfixExpression(node->children[0], dimensions, isInGlobalScope);
+        return "";
     }
 
 
@@ -2194,7 +2224,16 @@ void tcir::IrGenerator::processArgumentExpressionList(AstNode *node) {
         this->processArgumentExpressionList(node->children[0]);
     }
 
+    isArray = 0;
     processAssignmentExpression(node->children.back(), false);
+
+    if (isArray) {
+        this->instructionList.push_back(__tcMakeIrInstruction("pop 4 vreg 1"));
+        this->instructionList.push_back(__tcMakeIrInstruction("neg vreg 1"));
+        this->instructionList.push_back(__tcMakeIrInstruction("mov vreg 0 val " + to_string(isArray) + "+"));
+        isArray = 0;
+    }
+
     instructionList.push_back(__tcMakeIrInstruction("pushfc 4 vreg 0"));
 
 }
@@ -2239,16 +2278,66 @@ string tcir::IrGenerator::processPrimaryExpression(AstNode *node, std::vector<st
             err.msg += ")";
 
         } else {
-
-            IrInstructionCode ir;
-            ir.push_back("mov");
-            ir.push_back("vreg");
-            ir.push_back("0");
-
             // 寻找这个符号的含义。
 
             // 先从块符号表找。
             auto symbolFromTable = currentBlockSymbolTable->get(content, true);
+            IrInstructionCode ir;
+
+            if (!dimensions.empty()) {
+                isArray = symbolFromTable->id;
+                if (dimensions.size() != symbolFromTable->dims.size()) {
+                    this->errorList.emplace_back();
+                    auto &err = errorList.back();
+                    err.astNode = node->children[0];
+                    err.msg += "array size error.";
+                    return "";
+                }
+                std::reverse(dimensions.begin(), dimensions.end());
+                for (int i = 0; i < dimensions.size(); ++i) {
+                    if (i == 0) {
+                        ir.push_back("mov");
+                    } else {
+                        ir.push_back("add");
+                    }
+                    ir.push_back("vreg");
+                    ir.push_back("0");
+                    if (isdigit(dimensions[i][0])) {
+                        ir.push_back("imm");
+                        ir.push_back(dimensions[i]);
+                    } else {
+                        auto blankPos = dimensions[i].find_first_of(' ');
+                        ir.push_back(dimensions[i].substr(0, blankPos));
+                        ir.push_back(dimensions[i].substr(blankPos + 1));
+                    }
+                    instructionList.push_back(ir);
+                    ir.clear();
+                    if (i > 0) {
+                        instructionList.push_back(__tcMakeIrInstruction("xchg vreg 0 vreg 1"));
+                    }
+                    if (i < dimensions.size() - 1) {
+                        ir.push_back("mul");
+                        ir.push_back("vreg");
+                        ir.push_back("0");
+                        ir.push_back("imm");
+                        ir.push_back(to_string(symbolFromTable->dims[i + 1]));
+                        instructionList.push_back(ir);
+                        ir.clear();
+                        instructionList.push_back(__tcMakeIrInstruction("xchg vreg 0 vreg 1"));
+                    }
+                }
+                instructionList.push_back(__tcMakeIrInstruction("push 4 vreg 0"));
+                resultValueType = symbolFromTable->valueType;
+                directResultSymbol = symbolFromTable;
+                directResultSymbol->isOffset = true;
+                return "";
+            }
+
+
+            ir.push_back("mov");
+            ir.push_back("vreg");
+            ir.push_back("0");
+
 
             if (symbolFromTable && symbolFromTable->valueType != ValueType::s32) {
                 this->errorList.emplace_back();
@@ -2261,12 +2350,13 @@ string tcir::IrGenerator::processPrimaryExpression(AstNode *node, std::vector<st
             if (symbolFromTable) {
                 ir.push_back("val");
                 ir.push_back(to_string(symbolFromTable->id));
+
                 instructionList.push_back(ir);
                 resultValueType = symbolFromTable->valueType;
 
                 directResultSymbol = symbolFromTable;
 
-                return "";
+                return "val " + to_string(symbolFromTable->id);
             }
 
             // 从函数参数表找。
@@ -2289,7 +2379,7 @@ string tcir::IrGenerator::processPrimaryExpression(AstNode *node, std::vector<st
                 resultValueType = symFromFuncParams->valueType;
 
                 directResultSymbol = symFromFuncParams;
-                return "";
+                return "fval" + content;
 
             }
 
@@ -2305,13 +2395,13 @@ string tcir::IrGenerator::processPrimaryExpression(AstNode *node, std::vector<st
             }
 
             if (symFromGlobalVar) {
-                ir.push_back("val");
+                ir.push_back("var");
                 ir.push_back(content);
                 instructionList.push_back(ir);
                 resultValueType = symFromGlobalVar->valueType;
 
                 directResultSymbol = symFromGlobalVar;
-                return "";
+                return "var" + content;
 
             }
 
@@ -2333,7 +2423,7 @@ string tcir::IrGenerator::processPrimaryExpression(AstNode *node, std::vector<st
 
         resultValueType = ValueType::s32;
 
-        if (!isInGlobalScope) {
+        if (!isInGlobalScope && !notPrintSymbol) {
             instructionList.push_back(__tcMakeIrInstruction(
                     "mov vreg 0 imm " + content
             ));

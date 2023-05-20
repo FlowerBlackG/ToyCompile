@@ -261,6 +261,12 @@ void Intel386AssemblyGenerator::parseVariable(
 
     } else if (type == "val") { // 变量
 
+        bool isOffset = false;
+        if (name.find('+') != string::npos) {
+            isOffset = true;
+            name.pop_back();
+        }
+
         int valId = -1;
         try {
             valId = stoi(name);
@@ -277,15 +283,17 @@ void Intel386AssemblyGenerator::parseVariable(
             // 因此，栈内存位置应该比 esp 的值大。
 
             auto offset = this->variableStackOffsetMap[valId] - 4;
-            out << "[ebp ";
+            out << "[ebp";
             if (offset > 0) {
-                out << "+ ";
+                out << " + ";
                 out << offset;
             } else if (offset == 0) {
                 // do nothing
             } else { // offset < 0
-                
-                out << offset;
+                out << " - " << -offset;
+            }
+            if (isOffset) {
+                out << ", edx * 4";
             }
             out << "]";
         }
@@ -456,7 +464,9 @@ void Intel386AssemblyGenerator::parseCode(
         out << endl;
 
     } else if (code[0] == "neg") {
-        // todo
+        out << "  neg ";
+        parseVariable(code[1], code[2], out);
+        out << endl;
     } else if (code[0] == "mul") {
 
         out << "  imul dword ";
@@ -498,7 +508,7 @@ void Intel386AssemblyGenerator::buildVariableOffsetMap() {
 
         for (auto it : curr->symbols) {
             this->variableStackOffsetMap[it->id] = memoryUsed;
-            memoryUsed += 4; // todo: should be it->bytes;
+            memoryUsed += it->bytes; // todo: should be it->bytes;
         }
 
         for (auto it : curr->children) {

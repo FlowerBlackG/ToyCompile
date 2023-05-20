@@ -46,6 +46,7 @@ namespace tc::tcir {
         SymbolType symbolType;
         SymbolVisibility visibility;
         std::string name;
+        bool isOffset = false; // 是否使用 vreg 1 中的地址进行偏移寻址
     };
 
     struct FunctionParamSymbol : SymbolBase {
