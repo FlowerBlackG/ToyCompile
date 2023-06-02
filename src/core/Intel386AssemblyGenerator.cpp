@@ -7,10 +7,10 @@
 */
 
 
-#include <tc/core/Intel386AssemblyGenerator.h>
-#include <tc/core/tcir/IrContainer.h>
+#include <core/Intel386AssemblyGenerator.h>
+#include <core/tcir/IrContainer.h>
 
-#include <tc/utils/ConsoleColorPad.h>
+#include <utils/ConsoleColorPad.h>
 
 #include <functional>
 

@@ -5,12 +5,12 @@
 
 #include <fstream>
 
-#include <tc/core/Dfa.h>
-#include <tc/core/Token.h>
+#include <core/Dfa.h>
+#include <core/Token.h>
 
-#include <tc/core/Lexer.h>
+#include <core/Lexer.h>
 
-#include "tc/main/LexerCli/LexerCli.h"
+#include "main/LexerCli/LexerCli.h"
 
 using namespace std;
 using namespace tc;

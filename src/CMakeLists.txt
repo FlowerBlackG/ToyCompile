@@ -11,6 +11,9 @@ project(ToyCompile)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+
+#[[  暂时取消对网络服务器代码的支持。
+
 IF (CMAKE_SYSTEM_NAME MATCHES "Linux")
     
     MESSAGE(STATUS "current platform: Linux ")
@@ -41,6 +44,8 @@ ELSE ()
 
 ENDIF (CMAKE_SYSTEM_NAME MATCHES "Linux")
 
+]]
+
 # 子目录。
 add_subdirectory(main)
 add_subdirectory(core)
@@ -50,11 +55,13 @@ add_executable(
     ${PROJECT_NAME} main/main.cpp
 )
 
+message(STATUS "Project Root: ${PROJECT_SOURCE_DIR}")
+
 # 包含文件路径。
 target_include_directories(
     ${PROJECT_NAME} PUBLIC
-    ${PROJECT_SOURCE_DIR}/include
-    ${PROJECT_SOURCE_DIR}/lib/include
+    ${PROJECT_SOURCE_DIR}
+    ${PROJECT_SOURCE_DIR}/lib
     ${PROJECT_BINARY_DIR}
 )
 

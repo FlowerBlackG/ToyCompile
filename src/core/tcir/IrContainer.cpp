@@ -6,7 +6,7 @@
 
 */
 
-#include <tc/core/tcir/IrContainer.h>
+#include <core/tcir/IrContainer.h>
 
 using namespace tc;
 using namespace std;

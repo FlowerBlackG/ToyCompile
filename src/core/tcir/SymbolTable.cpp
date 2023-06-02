@@ -4,7 +4,7 @@
 */
 
 
-#include <tc/core/tcir/SymbolTable.h>
+#include <core/tcir/SymbolTable.h>
 #include <iostream>
 
 using namespace std;

@@ -7,7 +7,7 @@
 
 */
 
-#include <tc/core/AstNode.h>
+#include <core/AstNode.h>
 
 using namespace std;
 using namespace tc;

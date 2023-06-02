@@ -7,7 +7,7 @@
 
 */
 
-#include <tc/core/LrParserTable.h>
+#include <core/LrParserTable.h>
 
 using namespace std;
 using namespace tc;

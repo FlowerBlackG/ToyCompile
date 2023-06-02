@@ -4,8 +4,8 @@
     created on 2022.12.3
 */
 
-#include <tc/core/tcir/IrGenerator.h>
-#include <tc/utils/ConsoleColorPad.h>
+#include <core/tcir/IrGenerator.h>
+#include <utils/ConsoleColorPad.h>
 
 using namespace std;
 using namespace tc;

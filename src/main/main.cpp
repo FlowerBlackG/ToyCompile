@@ -25,11 +25,11 @@
 #include <string>
 #include <vector>
 
-#include <tc/main/UniServer/UniServer.h>
-#include <tc/main/TcSubProgram.h>
-#include <tc/main/LexerCli/LexerCli.h>
-#include <tc/main/ParserCli/ParserCli.h>
-#include <tc/main/UniCli/UniCli.h>
+// #include <main/UniServer/UniServer.h>
+#include <main/TcSubProgram.h>
+#include <main/LexerCli/LexerCli.h>
+#include <main/ParserCli/ParserCli.h>
+#include <main/UniCli/UniCli.h>
 
 using namespace std;
 
@@ -130,7 +130,10 @@ static unique_ptr<TcSubProgram> createSubProgram(const std::string& programName)
     
     if (programName == "UniServer") {
 
-        return make_unique<UniServer>();
+        cout << "Uni Server is deprecated." << endl;
+        exit(-1);
+
+        //  return make_unique<UniServer>();
 
     } else if (programName == "LexerCli") {
 

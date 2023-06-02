@@ -5,18 +5,18 @@
 
 */
 
-#include <tc/main/ParserCli/ParserCli.h>
-#include <tc/core/YaccTcey.h>
-#include <tc/core/Lr1Grammar.h>
-#include <tc/core/config.h>
+#include <main/ParserCli/ParserCli.h>
+#include <core/YaccTcey.h>
+#include <core/Lr1Grammar.h>
+#include <core/config.h>
 
-#include <tc/core/Lexer.h>
-#include <tc/core/Parser.h>
+#include <core/Lexer.h>
+#include <core/Parser.h>
 
 #include <fstream>
 #include <iostream>
 
-#include <tc/utils/ConsoleColorPad.h>
+#include <utils/ConsoleColorPad.h>
 
 using namespace std;
 using namespace tc;

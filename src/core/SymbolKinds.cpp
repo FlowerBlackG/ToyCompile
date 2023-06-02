@@ -4,7 +4,7 @@
     created on 2022.12.2
 */
 
-#include <tc/core/SymbolKinds.h>
+#include <core/SymbolKinds.h>
 
 using namespace std;
 

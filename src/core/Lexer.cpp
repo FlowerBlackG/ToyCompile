@@ -8,8 +8,8 @@
 #include <sstream>
 #include <string>
 
-#include "tc/core/Lexer.h"
-#include "tc/core/config.h"
+#include "core/Lexer.h"
+#include "core/config.h"
 
 using namespace std;
 using namespace tc;

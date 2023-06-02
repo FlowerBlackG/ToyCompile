@@ -1,5 +1,5 @@
 
-#include <tc/core/tcir/ValueType.h>
+#include <core/tcir/ValueType.h>
 #include <cstdlib>
 
 using namespace tc::tcir;

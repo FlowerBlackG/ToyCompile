@@ -7,7 +7,7 @@
 
 */
 
-#include <tc/core/Grammar.h>
+#include <core/Grammar.h>
 
 using namespace std;
 using namespace tc;

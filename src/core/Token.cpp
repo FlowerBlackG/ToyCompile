@@ -5,7 +5,7 @@
 
 #include <magic_enum/magic_enum.hpp>
 
-#include "tc/core/Token.h"
+#include "core/Token.h"
 
 
 using namespace std;

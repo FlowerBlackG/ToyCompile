@@ -4,8 +4,8 @@
             "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/src/include",
-                "${workspaceFolder}/src/lib/include"
+                "${workspaceFolder}/src",
+                "${workspaceFolder}/src/lib"
             ],
             "defines": [
                 "_DEBUG",
@@ -21,8 +21,8 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/src/include",
-                "${workspaceFolder}/src/lib/include"
+                "${workspaceFolder}/src",
+                "${workspaceFolder}/src/lib"
             ],
             "compilerPath": "/usr/bin/g++",
             "cStandard": "c17",

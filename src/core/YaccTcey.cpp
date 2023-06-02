@@ -7,10 +7,10 @@
 
 */
 
-#include <tc/core/YaccTcey.h>
+#include <core/YaccTcey.h>
 #include <fstream>
 
-#include <tc/core/config.h>
+#include <core/config.h>
 
 using namespace std;
 using namespace tc;

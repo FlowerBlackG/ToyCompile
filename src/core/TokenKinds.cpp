@@ -4,7 +4,7 @@
 
 */
 
-#include <tc/core/TokenKinds.h>
+#include <core/TokenKinds.h>
 
 using namespace std;
 

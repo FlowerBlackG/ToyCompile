@@ -7,8 +7,8 @@
 
 */
 
-#include <tc/core/Lr1Grammar.h>
-#include <tc/core/LrParserTable.h>
+#include <core/Lr1Grammar.h>
+#include <core/LrParserTable.h>
 
 #include <memory>
 #include <vector>

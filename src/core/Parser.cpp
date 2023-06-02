@@ -6,7 +6,7 @@
 
 */
 
-#include <tc/core/Parser.h>
+#include <core/Parser.h>
 
 using namespace std;
 using namespace tc;

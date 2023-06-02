@@ -1,9 +1,9 @@
 /*
- * 词法分析器。
+ * DFA。词法分析器依赖它。
  * 创建于 2022年9月26日
  */
 
-#include "tc/core/Dfa.h"
+#include "core/Dfa.h"
 
 using namespace std;
 
@@ -36,7 +36,7 @@ void Dfa::build(istream& inStream) {
 
         inStream >> operation;
 
-        if (operation == "def") {
+        if (operation == "def") { // 节点定义
 
             // 读入。
 

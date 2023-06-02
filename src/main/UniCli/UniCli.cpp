@@ -11,15 +11,15 @@
 #include <map>
 #include <vector>
 
-#include <tc/main/UniCli/UniCli.h>
-#include <tc/utils/ConsoleColorPad.h>
+#include <main/UniCli/UniCli.h>
+#include <utils/ConsoleColorPad.h>
 
-#include <tc/core/Lexer.h>
-#include <tc/core/Parser.h>
-#include <tc/core/YaccTcey.h>
-#include <tc/core/Lr1Grammar.h>
-#include <tc/core/tcir/IrGenerator.h>
-#include <tc/core/Intel386AssemblyGenerator.h>
+#include <core/Lexer.h>
+#include <core/Parser.h>
+#include <core/YaccTcey.h>
+#include <core/Lr1Grammar.h>
+#include <core/tcir/IrGenerator.h>
+#include <core/Intel386AssemblyGenerator.h>
 
 using namespace std;
 using namespace tc;

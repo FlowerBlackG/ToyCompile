@@ -9,21 +9,21 @@ add_library(
     main 
 
     # UniServer
-    UniServer/UniServer.cpp
+    # UniServer/UniServer.cpp  # 暂不启用网络功能
 
     # LexerCli
     LexerCli/LexerCli.cpp
 
     ParserCli/ParserCli.cpp
     
-    UniCli/UniCli.cpp
+    UniCli/UniCli.cpp  
 )
 
 target_include_directories(
     main PUBLIC
-    ${PROJECT_SOURCE_DIR}/include
+    ${PROJECT_SOURCE_DIR}
     ${PROJECT_BINARY_DIR}
-    ${PROJECT_SOURCE_DIR}/lib/include
+    ${PROJECT_SOURCE_DIR}/lib
 )
 
 # 链接库。
