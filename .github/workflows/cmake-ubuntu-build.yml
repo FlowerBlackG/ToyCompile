@@ -20,7 +20,7 @@ jobs:
     - name: cmake build
       run: |
         cd ${{ github.workspace }}
-        mkdir build
+        mkdir -p build
         cd build
         cmake --version
         cmake -G"Unix Makefiles" ../src
