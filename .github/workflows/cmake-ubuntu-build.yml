@@ -1,0 +1,32 @@
+name: CMake Ubuntu Build
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+    
+  # allows to run this workflow manually from the actions tab
+  workflow_dispatch:
+
+
+jobs:
+  build:
+    name: "CMake Ubuntu Build"
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: cmake build
+      run: |
+        cd ${{ github.workspace }}
+        mkdir build
+        cd build
+        cmake --version
+        cmake -G"Unix Makefiles" ../src
+        cmake --build .
+    - name: try run ToyCompile
+      run: |
+        cd ${{ github.workspace }}/build
+        ./ToyCompile help
+        ./ToyCompile sUniCli help
