@@ -149,7 +149,7 @@ static unique_ptr<TcSubProgram> createSubProgram(const std::string& programName)
 
     } else {
 
-        cout << "[Info] not subprogram specified. use UniCli as default." << endl;
+        cout << "[Info] no subprogram specified. use UniCli as default." << endl;
         printUsage();
         return make_unique<UniCli>();
     }

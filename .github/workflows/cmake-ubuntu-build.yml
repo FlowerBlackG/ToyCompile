@@ -17,6 +17,11 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    - name: see environment
+      run: |
+        lsb_release -a
+        uname -a
+        g++ -v
     - name: cmake build
       run: |
         cd ${{ github.workspace }}
@@ -28,5 +33,5 @@ jobs:
     - name: try run ToyCompile
       run: |
         cd ${{ github.workspace }}/build
-        ./ToyCompile help
-        ./ToyCompile sUniCli help
+        ./ToyCompile -help
+        ./ToyCompile sUniCli -help
