@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MulanPSL-2.0
 
 /*
  * Token 结构

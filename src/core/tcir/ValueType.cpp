@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MulanPSL-2.0
 
 #include <core/tcir/ValueType.h>
 #include <cstdlib>

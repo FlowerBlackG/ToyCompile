@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MulanPSL-2.0
+
 /*
  * C++ 编译期反射。
  * 创建：2022.9.27

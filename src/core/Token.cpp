@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MulanPSL-2.0
+
 /*
  * Token 结构。
  * 创建于 2022年9月27日。

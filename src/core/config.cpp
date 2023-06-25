@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MulanPSL-2.0
+
 /*
  * 参数配置文件。
  * 创建：2022.10.30

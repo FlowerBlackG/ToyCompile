@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MulanPSL-2.0
+
 /*
  * DFA。
  * 创建于 2022年9月26日

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MulanPSL-2.0
+
 /*
 
     i386 汇编代码生成。
@@ -13,6 +15,7 @@
 #include <utils/ConsoleColorPad.h>
 
 #include <functional>
+#include <cstdint>
 
 using namespace std;
 using namespace tc;

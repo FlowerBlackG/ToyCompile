@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MulanPSL-2.0
+
 /*
  * ToyCompile 子程序基类。
  * 创建于 2022年9月28日。

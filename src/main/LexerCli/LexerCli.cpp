@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MulanPSL-2.0
+
 /*
  * Lexer 本地交互工具。
  * 创建：2022年9月28日。
